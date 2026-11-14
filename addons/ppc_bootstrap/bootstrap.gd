@@ -72,13 +72,18 @@ func _run() -> void:
 
 	for r in ROOMS:
 		var dir := "res://game/rooms/%s" % r.to_snake_case()
-		if not DirAccess.dir_exists_absolute(dir):
+		var scene_path := "%s/room_%s.tscn" % [dir, r.to_snake_case()]
+		# Check for the scene, not the folder: tools/pixelate.py writes props/ into the room folder
+		# before the room exists, and a skipped room put its hotspots in the previous scene.
+		if not FileAccess.file_exists(scene_path):
 			print("[ppc] room ", r, " -> ", PopochiuRoomFactory.new().create(r, ROOMS[r].main))
 			await _wait()
-		var scene_path := "%s/room_%s.tscn" % [dir, r.to_snake_case()]
 		EditorInterface.open_scene_from_path(scene_path)
 		await _wait()
 		var room: PopochiuRoom = EditorInterface.get_edited_scene_root()
+		if not room or room.scene_file_path != scene_path:
+			push_error("[ppc] could not open %s, skipping its objects" % scene_path)
+			continue
 		if not room.has_node("WalkableAreas/Floor"):
 			var wp := PopochiuWalkableAreaFactory.PopochiuWalkableAreaFactoryParam.new()
 			wp.obj_name = "Floor"

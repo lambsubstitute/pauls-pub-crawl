@@ -279,6 +279,7 @@ def bar_front(room, spec):
             f'position = Vector2(0, {y1})\ntexture_filter = 1\ntexture = ExtResource("{eid}")\n'
             f'centered = false\noffset = Vector2({x0}, {y0 - y1})\n\n')
     text = text.replace('[node name="Hotspots"', node + '[node name="Hotspots"', 1)
+    text = re.sub(r"\n{3,}", "\n\n", text)  # removing/re-adding nodes each run used to pile up blank lines
     path.write_text(text)
     print("bar front", (x0, y0, x1, y1))
 

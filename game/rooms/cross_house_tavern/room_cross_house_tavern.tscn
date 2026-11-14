@@ -32,18 +32,12 @@ interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 120, 316,
 
 [node name="Props" type="Node2D" parent="." unique_id=1933364783]
 
-
-
-
-
 [node name="DoorstopPin" type="Sprite2D" parent="Props"]
 position = Vector2(283, 104)
 texture_filter = 1
 texture = ExtResource("10_doorstop")
 centered = false
 offset = Vector2(-4, -14)
-
-
 
 [node name="BarFront" type="Sprite2D" parent="Props"]
 position = Vector2(0, 118)
