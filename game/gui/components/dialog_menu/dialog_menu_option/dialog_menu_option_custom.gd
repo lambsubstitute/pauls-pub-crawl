@@ -1,1 +1,0 @@
-extends "dialog_menu_option.gd"

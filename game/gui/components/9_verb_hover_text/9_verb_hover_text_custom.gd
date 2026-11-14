@@ -1,1 +1,0 @@
-extends "9_verb_hover_text.gd"
