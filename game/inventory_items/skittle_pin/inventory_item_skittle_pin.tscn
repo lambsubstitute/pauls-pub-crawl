@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bjtnrqwpf1d0b"]
+
+[ext_resource type="Script" path="res://game/inventory_items/skittle_pin/inventory_item_skittle_pin.gd" id="1_i8fn8"]
+[ext_resource type="Texture2D" path="res://game/inventory_items/skittle_pin/skittle_pin.png" id="9_skittle_pin"]
+
+[node name="ItemSkittlePin" type="TextureRect" unique_id=2048264843]
+texture = ExtResource("9_skittle_pin")
+texture_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 0
+stretch_mode = 5
+script = ExtResource("1_i8fn8")
+script_name = "SkittlePin"
+description = "Skittle Pin"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=504114599]

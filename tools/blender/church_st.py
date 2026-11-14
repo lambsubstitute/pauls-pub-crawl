@@ -137,12 +137,42 @@ K.box("sign_arm", (0.08, 1.2, 0.08), (tx0 + tw / 2 - 0.1, -0.6, 4.3), M["iron"])
 K.box("pub_sign", (0.08, 1.0, 0.75), (tx0 + tw / 2 - 0.1, -1.0, 3.45), M["sign"])
 K.box("pub_sign_face", (0.1, 0.8, 0.5), (tx0 + tw / 2 - 0.1, -1.0, 3.57), M["sign_text"])
 
-K.tudor_house(7.2, 4.4, 6, 2, rng, tudor_mats, gable=False)
-K.tudor_house(11.6, 4.0, 6, 2, rng, tudor_mats, roof_rise=2.6)
+# Royal Hop Pole: wide Georgian coaching inn, cream stucco, pillared porch, sash windows.
+hx0, hw, hh = 8.6, 7.8, 6.4
+STUCCO = K.mat("stucco", (0.86, 0.80, 0.66), noise=0.12, scale=3, bump=0.2)
+K.box("hoppole", (hw, 7, hh), (hx0, 3.5, 0), STUCCO)
+K.box("hoppole_plinth", (hw + 0.05, 0.12, 0.5), (hx0, -0.04, 0), M["stone"])
+K.box("hoppole_band", (hw + 0.1, 0.18, 0.22), (hx0, -0.08, 3.0), M["frame"])
+K.box("hoppole_cornice", (hw + 0.4, 0.45, 0.3), (hx0, -0.15, hh - 0.35), M["frame"])
+K.box("hoppole_parapet", (hw + 0.2, 0.35, 0.7), (hx0, -0.05, hh), STUCCO)
+K.gable_roof("hoppole_roof", hw, 7, 1.6, (hx0, 3.6, hh), M["slate"], ridge_along_x=True)
+K.box("hoppole_chimney", (0.8, 0.8, 1.6), (hx0 + 3.0, 4.0, hh + 0.8), BRICK)
+for wx in (-2.9, -1.0, 1.0, 2.9):                       # first-floor sash windows
+    K.window(hx0 + wx, 0, 3.55, 0.95, 1.75, M["frame"], M["glass_lit"] if rng.random() < 0.6 else M["glass_dark"],
+             panes=(2, 4))
+for wx in (-2.9, 2.9):                                   # ground-floor bar windows
+    K.window(hx0 + wx, 0, 0.8, 1.3, 1.7, M["frame"], M["glass_lit"], panes=(3, 4))
+# porch: two columns, entablature and pediment over a panelled door
+HP_DOOR = K.mat("hp_door", (0.30, 0.06, 0.07), noise=0.15, scale=12)  # oxblood
+hpd = K.box("hoppole_door", (1.25, 0.2, 2.4), (hx0 - 0.1, -0.05, 0.12), HP_DOOR)
+K.box("hoppole_fanlight", (1.25, 0.12, 0.35), (hx0 - 0.1, -0.08, 2.55), M["glass_lit"])
+for cx in (-1.05, 0.85):
+    K.cyl("porch_column", 0.13, 2.75, (hx0 + cx, -0.85, 0.14), M["frame"], verts=12)
+K.box("porch_entablature", (2.5, 1.1, 0.3), (hx0 - 0.1, -0.5, 2.9), M["frame"])
+K.gable_roof("porch_pediment", 2.5, 1.1, 0.55, (hx0 - 0.1, -0.5, 3.2), M["frame"], overhang=0.08, ridge_along_x=True)
+K.box("porch_step", (2.6, 1.2, 0.12), (hx0 - 0.1, -0.6, 0.0), M["stone"])
+K.box("hp_door_knob", (0.08, 0.08, 0.08), (hx0 + 0.35, -0.18, 1.15), M["gold"])
+K.box("lantern", (0.25, 0.25, 0.35), (hx0 - 0.1, -0.6, 2.45), M["lamp"])
+K.point_light("porch_light", (hx0 - 0.1, -1.4, 2.4), (1.0, 0.7, 0.4), 60, radius=0.3)
+tag("HopPoleDoor", hpd)
+# hanging sign on an iron bracket at the left corner
+K.box("hp_sign_arm", (0.08, 1.4, 0.08), (hx0 - hw / 2 + 0.3, -0.7, 4.0), M["iron"])
+K.box("hp_sign", (0.08, 1.1, 0.8), (hx0 - hw / 2 + 0.3, -1.1, 3.1), K.mat("hp_sign", (0.10, 0.12, 0.30), noise=0.1))
+K.box("hp_sign_face", (0.1, 0.85, 0.5), (hx0 - hw / 2 + 0.3, -1.1, 3.25), M["sign_text"])
 
 # ------------------------------------------------------- street props ----
 K.lamp_post(-2.7, -2.75, {"iron": M["iron"], "lamp": M["lamp"]}, light_energy=500)
-K.lamp_post(9.2, -2.75, {"iron": M["iron"], "lamp": M["lamp"]}, light_energy=400)
+K.lamp_post(11.6, -2.75, {"iron": M["iron"], "lamp": M["lamp"]}, light_energy=400)
 
 # bench (with a pound coin glinting underneath)
 bx, by = 6.6, -1.2
@@ -198,10 +228,12 @@ data = {
     "hotspots": {k: rect_of(v) for k, v in hotspots.items()},
     "walk_points": {
         "TavernDoor": to_px((tx0, -1.0, 0.14)),
+        "HopPoleDoor": to_px((hx0 - 0.1, -1.6, 0.14)),
         "Bench": to_px((bx, -2.2, 0.14)),
         "Abbey": to_px((-4.0, -2.4, 0.14)),
     },
-    "spawn": {"start": to_px((-6.0, -2.3, 0.14)), "from_tavern": to_px((tx0, -1.2, 0.14))},
+    "spawn": {"start": to_px((-6.0, -2.3, 0.14)), "from_tavern": to_px((tx0, -1.2, 0.14)),
+              "from_hop_pole": to_px((hx0 - 0.1, -1.8, 0.14))},
     "floor": [list(p) for p in floor],
     # how tall a 1.8 m person is, in game pixels, standing on the pavement
     "person_px": to_px((0, -2.2, 0.14))[1] - to_px((0, -2.2, 1.94))[1],

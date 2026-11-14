@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://lugatvg0nc5i"]
+
+[ext_resource type="Script" path="res://game/inventory_items/skittle_pin/inventory_item_skittle_pin_state.gd" id="1_vk1tq"]
+
+[resource]
+resource_name = "SkittlePin"
+script = ExtResource("1_vk1tq")
+script_name = "SkittlePin"
+scene = "res://game/inventory_items/skittle_pin/inventory_item_skittle_pin.tscn"

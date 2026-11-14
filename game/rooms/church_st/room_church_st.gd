@@ -11,6 +11,10 @@ func _on_room_entered() -> void:
 	C.player.set_height(30)
 	if Globals.last_room == "CrossHouseTavern":
 		C.player.position = Vector2(157, 124)
+	elif Globals.last_room == "HopPole":
+		C.player.position = Vector2(272, 127)
+		C.player.face_left()
+		return
 	else:
 		C.player.position = Vector2(60, 132)
 	C.player.face_right()

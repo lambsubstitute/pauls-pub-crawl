@@ -15,9 +15,14 @@ var found_coin := false
 var quiz_won := false
 var had_free_pint := false
 var last_room := ""
+# Royal Hop Pole
+var pin_taken := false        # picked the skittle pin up off the Cross House door
+var pin_returned := false     # gave it back to Reg, so the alley has nine pins again
+var skittles_won := false
+var skittles_best := 0
+var hop_pole_pint := false
 
 var _t := 0.0
-var _dbg_t := 0.0
 var _hud: CanvasLayer
 var _bar: ColorRect
 var _label: Label
@@ -68,13 +73,6 @@ func mood() -> String:
 
 func _process(delta: float) -> void:
 	_t += delta
-	_dbg_t += delta
-	if OS.is_debug_build() and _dbg_t > 1.0:
-		_dbg_t = 0.0
-		var cc = get_node_or_null("/root/C")
-		if cc and cc.player:
-			var pl = cc.player
-			print("[dbg] player pos ", pl.position, " gpos ", pl.global_position, " vis ", pl.visible, " scale ", pl.scale, " parent ", pl.get_parent().name if pl.get_parent() else "none", " cam ", get_node("/root/E").camera.offset if get_node_or_null("/root/E") else "")
 	var cam = get_node_or_null("/root/E")
 	if cam and cam.get("camera"):
 		cam.camera.offset = sway(0.6).round()

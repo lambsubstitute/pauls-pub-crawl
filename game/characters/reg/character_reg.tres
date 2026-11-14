@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://cv7uf26ittgrj"]
+
+[ext_resource type="Script" path="res://game/characters/reg/character_reg_state.gd" id="1_p7nnh"]
+
+[resource]
+resource_name = "Reg"
+script = ExtResource("1_p7nnh")
+script_name = "Reg"
+scene = "res://game/characters/reg/character_reg.tscn"

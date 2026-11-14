@@ -21,8 +21,9 @@ BAYER4 = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
 
 ROOM_FX = {
     # sky_rows: how far down (in 320x200 px) stars may appear; moon: centre in game px
-    "church_st": {"stars": 60, "sky_rows": 34, "moon": (276, 14, 7)},
+    "church_st": {"stars": 60, "sky_rows": 34, "moon": (236, 9, 7)},
     # accents: palette slots kept for small saturated details median-cut would merge into brown
+    "hop_pole": {"accents": [(40, 92, 64), (150, 26, 26), (240, 232, 214), (255, 190, 70), (70, 110, 200)]},
     "cross_house_tavern": {"accents": [(70, 140, 255), (40, 70, 170), (70, 220, 100), (170, 35, 30), (255, 190, 70)]},
 }
 
@@ -45,16 +46,29 @@ def add_sky(img, fx, seed=3):
             c = rng.choice([(255, 250, 230), (210, 220, 255), (255, 240, 200)])
             d.rectangle([x, y, x + size, y + size], fill=c)
     if fx.get("moon"):
+        # Draw moon + glow on a separate layer, then keep it only where the render is sky, so
+        # it rises from behind rooftops instead of being painted over them.
+        sky = img.convert("RGB").point(lambda v: v)  # copy
+        spx = sky.load()
+        mask = Image.new("L", img.size, 0)
+        mp = mask.load()
+        for yy in range(int(fx["sky_rows"] * s * 1.6)):
+            for xx in range(w):
+                r, g, b = spx[xx, yy][:3]
+                if r + g + b < 140 and b >= r:
+                    mp[xx, yy] = 255
         mx, my, mr = (v * s for v in fx["moon"])
-        glow = Image.new("RGBA", img.size, (0, 0, 0, 0))
-        gd = ImageDraw.Draw(glow)
+        layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        gd = ImageDraw.Draw(layer)
         gd.ellipse([mx - mr * 2.6, my - mr * 2.6, mx + mr * 2.6, my + mr * 2.6], fill=(150, 160, 210, 60))
-        glow = glow.filter(ImageFilter.GaussianBlur(mr * 1.2))
-        img = Image.alpha_composite(img.convert("RGBA"), glow).convert("RGB")
-        d = ImageDraw.Draw(img)
-        d.ellipse([mx - mr, my - mr, mx + mr, my + mr], fill=(242, 236, 214))
-        d.ellipse([mx - mr * 0.35, my - mr * 0.5, mx + mr * 0.05, my - mr * 0.1], fill=(214, 206, 186))
-        d.ellipse([mx + mr * 0.2, my + mr * 0.1, mx + mr * 0.55, my + mr * 0.45], fill=(222, 214, 194))
+        layer = layer.filter(ImageFilter.GaussianBlur(mr * 1.2))
+        ld = ImageDraw.Draw(layer)
+        ld.ellipse([mx - mr, my - mr, mx + mr, my + mr], fill=(242, 236, 214, 255))
+        ld.ellipse([mx - mr * 0.35, my - mr * 0.5, mx + mr * 0.05, my - mr * 0.1], fill=(214, 206, 186, 255))
+        ld.ellipse([mx + mr * 0.2, my + mr * 0.1, mx + mr * 0.55, my + mr * 0.45], fill=(222, 214, 194, 255))
+        alpha = Image.composite(layer.getchannel("A"), Image.new("L", img.size, 0), mask)
+        layer.putalpha(alpha)
+        img = Image.alpha_composite(img.convert("RGBA"), layer).convert("RGB")
     return img
 
 

@@ -26,7 +26,7 @@ the Mythe end.
 | # | Pub | Address | Main game | Role |
 |---|-----|---------|-----------|------|
 | 1 | Cross House Tavern | 108 Church St | Quiz machine | Tutorial: verbs, inventory, first stamp |
-| 2 | Royal Hop Pole | 94 Church St | Skittles | First real puzzle chain |
+| 2 | Royal Hop Pole | 94 Church St | Skittles | Pin chain: Cross House doorstop pin -> Reg -> skittles -> Bev stamps |
 | 3 | Berkeley Arms | 8 Church St | Darts | Darts intro, drunk meter matters |
 | 4 | Britannia Inn | 30 High St | Shove ha'penny | Double-vision puzzle |
 | 5 | Nottingham Arms | 129 High St | Pool | Hardest mid-game puzzle |

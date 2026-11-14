@@ -12,6 +12,15 @@ func _on_room_entered() -> void:
 	C.Landlord.set_height(46)
 	C.player.position = Vector2(288, 126)
 	C.player.face_left()
+	_update_doorstop()
+
+
+func _update_doorstop() -> void:
+	# The pin is a sprite over the background; once Paul has it, hide it and its hotspot.
+	var taken := Globals.pin_taken
+	$Props/DoorstopPin.visible = not taken
+	$Hotspots/Doorstop.visible = not taken
+	$Hotspots/Doorstop.clickable = not taken
 
 
 func _on_room_transition_finished() -> void:
@@ -24,4 +33,4 @@ func _on_room_exited() -> void:
 
 
 func _on_restore_from_savegame() -> void:
-	pass
+	_update_doorstop()

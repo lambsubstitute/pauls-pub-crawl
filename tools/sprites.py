@@ -39,8 +39,25 @@ CHARS = {
         "build": 1.18, "hair_style": "bald", "beard": True, "apron": (44, 92, 64), "apron_d": (26, 58, 40),
         "collar": None,
     },
+    "barmaid": {
+        "skin": (240, 196, 164), "skin_d": (204, 146, 118),
+        "hair": (226, 180, 92), "hair_d": (170, 120, 50),
+        "top": (124, 30, 52), "top_d": (82, 16, 32),
+        "legs": (34, 32, 40), "legs_d": (20, 18, 24),
+        "shoe": (30, 22, 22), "shoe_d": (18, 12, 12),
+        "build": 0.92, "hair_style": "bun", "beard": False, "apron": False, "collar": (236, 230, 220),
+    },
+    "reg": {
+        "skin": (222, 166, 134), "skin_d": (178, 118, 92),
+        "hair": (196, 192, 186), "hair_d": (140, 136, 132),
+        "top": (70, 96, 58), "top_d": (44, 62, 36),
+        "legs": (96, 92, 86), "legs_d": (64, 60, 56),
+        "shoe": (60, 36, 24), "shoe_d": (36, 22, 14),
+        "build": 1.05, "hair_style": "cap", "cap": (118, 92, 62), "cap_d": (80, 60, 40),
+        "beard": False, "apron": False, "collar": (214, 206, 186),
+    },
 }
-SIZES = {"paul": (30, 46), "landlord": (30, 46)}
+SIZES = {"paul": (30, 46), "landlord": (30, 46), "barmaid": (30, 46), "reg": (30, 46)}
 
 
 def poly(d, pts, fill, s, ox, oy):
@@ -145,6 +162,17 @@ def draw(c, H, frame):
         poly(d, [(hx - 10, y(hy + 1)), (hx - 9, y(hy + 9)), (hx - 2, y(hy + 13)), (hx + 7, y(hy + 12)),
                  (hx + 10, y(hy + 6)), (hx + 6, y(hy + 7)), (hx - 2, y(hy + 6)), (hx - 6, y(hy + 2))], c["hair"], s, ox, oy)
         poly(d, [(hx - 10, y(hy + 1)), (hx - 9, y(hy + 9)), (hx - 4, y(hy + 11)), (hx - 6, y(hy + 2))], c["hair_d"], s, ox, oy)
+    elif c["hair_style"] == "bun":
+        poly(d, [(hx - 10, y(hy - 4)), (hx - 10, y(hy + 8)), (hx - 3, y(hy + 13)), (hx + 7, y(hy + 12)),
+                 (hx + 10, y(hy + 5)), (hx + 5, y(hy + 7)), (hx - 3, y(hy + 5)), (hx - 6, y(hy - 4))], c["hair"], s, ox, oy)
+        ell(d, hx - 10, y(hy + 7), 4.5, 4.5, c["hair"], s, ox, oy)          # the bun
+        ell(d, hx - 11, y(hy + 6), 2.5, 2.5, c["hair_d"], s, ox, oy)
+        poly(d, [(hx - 10, y(hy - 4)), (hx - 10, y(hy + 8)), (hx - 5, y(hy + 10)), (hx - 6, y(hy - 4))], c["hair_d"], s, ox, oy)
+    elif c["hair_style"] == "cap":
+        poly(d, [(hx - 10, y(hy - 3)), (hx - 9, y(hy + 4)), (hx - 5, y(hy + 3)), (hx - 6, y(hy - 4))], c["hair"], s, ox, oy)
+        poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx + 3, y(hy + 13)), (hx + 9, y(hy + 9)),
+                 (hx + 15, y(hy + 6)), (hx + 14, y(hy + 4)), (hx + 6, y(hy + 5))], c["cap"], s, ox, oy)  # flat cap + peak
+        poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx - 3, y(hy + 12)), (hx - 4, y(hy + 4))], c["cap_d"], s, ox, oy)
     else:  # bald on top, grey at the sides
         poly(d, [(hx - 10, y(hy - 2)), (hx - 9, y(hy + 5)), (hx - 5, y(hy + 4)), (hx - 6, y(hy - 3))], c["hair"], s, ox, oy)
         ell(d, hx + 2, y(hy + 7), 3, 1.5, (255, 220, 190, 255), s, ox, oy)  # shine
@@ -220,3 +248,43 @@ if __name__ == "__main__":
         yy += p.height + 4
     (ROOT / "art" / "previews").mkdir(parents=True, exist_ok=True)
     prev.resize((pw * 4, ph * 4), Image.Resampling.NEAREST).save(ROOT / "art" / "previews" / "sprites_x4.png")
+
+
+# ------------------------------------------------------------ skittle pin ----
+def pin_sprite(h):
+    """Wooden skittle pin, h px tall: cream body, red neck band, dark outline."""
+    w = max(5, round(h * 0.5))
+    img = Image.new("RGBA", (w + 2, h + 2), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    cx = (w + 2) / 2
+    body, shade, band = (236, 226, 200, 255), (186, 170, 140, 255), (176, 34, 30, 255)
+    # silhouette: round head, narrow neck, fat belly, flat base
+    for yy in range(h):
+        t = yy / (h - 1)
+        if t < 0.18:
+            r = 0.30 * math.sin(math.pi * (t / 0.18) * 0.5 + 0.6)
+        elif t < 0.32:
+            r = 0.22
+        else:
+            r = 0.22 + 0.28 * math.sin(math.pi * min(1.0, (t - 0.32) / 0.62))
+            if t > 0.94:
+                r = 0.34
+        half = max(0.6, r * w)
+        col = band if 0.20 <= t <= 0.28 else body
+        d.line([cx - half, yy + 1, cx + half - 1, yy + 1], fill=col)
+        d.point((cx - half, yy + 1), fill=shade if col == body else band)
+    return outline(img)
+
+
+def pin_icon():
+    icon = Image.new("RGBA", (24, 16), (0, 0, 0, 0))
+    p = pin_sprite(14).rotate(-35, expand=True, resample=Image.Resampling.NEAREST)
+    icon.alpha_composite(p, ((24 - p.width) // 2, (16 - p.height) // 2))
+    return icon
+
+
+if __name__ == "__main__":
+    pin = pin_sprite(12)
+    pin.save(ROOT / "game" / "rooms" / "cross_house_tavern" / "props" / "doorstop_pin.png")
+    pin_icon().save(ROOT / "game" / "inventory_items" / "skittle_pin" / "skittle_pin.png")
+    print("wrote doorstop_pin.png and skittle_pin.png")

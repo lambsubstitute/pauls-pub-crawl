@@ -28,6 +28,7 @@ ROOMS = {
         "TavernDoor": {"poly": rect(198, 70, 220, 100), "walk": (209, 106), "desc": "Cross House Tavern door", "baseline": 100},
         "Abbey": {"poly": rect(18, 14, 66, 86), "walk": (60, 108), "desc": "Tewkesbury Abbey", "baseline": 0},
         "Bench": {"poly": rect(270, 84, 306, 102), "walk": (288, 108), "desc": "Bench", "baseline": 101},
+        "HopPoleDoor": {"poly": rect(259, 81, 280, 118), "walk": (270, 126), "desc": "Royal Hop Pole door", "baseline": 118},
         "npcs": {},
     },
     "cross_house_tavern": {
@@ -35,15 +36,24 @@ ROOMS = {
         "Bar": {"poly": rect(90, 76, 240, 104), "walk": (200, 112), "desc": "Bar", "baseline": 104},
         "QuizMachine": {"poly": rect(20, 44, 54, 104), "walk": (44, 112), "desc": "Quiz machine", "baseline": 104},
         "ExitDoor": {"poly": rect(272, 34, 304, 104), "walk": (288, 110), "desc": "Door to Church Street", "baseline": 104},
+        # Doorstop pin is a sprite drawn by tools/sprites.py, not part of the render.
+        "Doorstop": {"poly": rect(278, 89, 289, 105), "walk": (284, 123), "desc": "Skittle pin", "baseline": 104, "manual": True},
         "npcs": {"Landlord": (165, 74)},
     },
+    "hop_pole": {
+        "Floor": {"poly": rect(4, 122, 316, 148)},
+        "Bar": {}, "SkittleAlley": {}, "ExitDoor": {}, "Portrait": {},
+        "npcs": {},
+    },
 }
+BAR_ROOMS = {"cross_house_tavern", "hop_pole"}
 
 import json
 
 DESC = {
     "TavernDoor": "Cross House Tavern door", "Abbey": "Tewkesbury Abbey", "Bench": "Bench",
     "Bar": "Bar", "QuizMachine": "Quiz machine", "ExitDoor": "Door to Church Street",
+    "HopPoleDoor": "Royal Hop Pole door", "SkittleAlley": "Skittle alley", "Portrait": "Portrait",
 }
 
 
@@ -54,7 +64,11 @@ def from_render(room, fallback):
     d = json.loads(j.read_text())
     spec = {"Floor": {"poly": [(round(x), round(y)) for x, y in d["floor"]]}, "npcs": {}}
     for name in fallback:
-        if name in ("Floor", "npcs") or name not in d["hotspots"]:
+        if name in ("Floor", "npcs"):
+            continue
+        if name not in d["hotspots"]:
+            if fallback[name].get("manual"):
+                spec[name] = fallback[name]
             continue
         x0, y0, x1, y1 = d["hotspots"][name]
         wx, wy = d["walk_points"].get(name, ((x0 + x1) / 2, y1 + 4))
@@ -66,13 +80,17 @@ def from_render(room, fallback):
                       "baseline": y1 if name != "Abbey" else 0}
     if "landlord_pos" in d:
         spec["npcs"]["Landlord"] = tuple(round(v) for v in d["landlord_pos"])
+    for npc, pos in d.get("npc", {}).items():
+        spec["npcs"][npc] = tuple(round(v) for v in pos)
+    # where Paul stands to talk to each NPC, stored relative to the NPC (Popochiu walk_to_point)
+    spec["npc_walk"] = {n: (round(d["walk_points"][n][0] - p[0]), round(d["walk_points"][n][1] - p[1]))
+                        for n, p in spec["npcs"].items() if n in d.get("walk_points", {})}
     spec["_meta"] = d
     return spec
 
 
-CHAR_SCENES = {
-    "Landlord": "res://game/characters/landlord/character_landlord.tscn",
-}
+CHAR_SCENES = {c: f"res://game/characters/{c.lower()}/character_{c.lower()}.tscn"
+               for c in ("Landlord", "Barmaid", "Reg")}
 
 
 def vec_array(pts):
@@ -106,7 +124,7 @@ def layout(room, spec):
     text = path.read_text()
 
     for name, s in spec.items():
-        if name in ("npcs", "_meta"):
+        if name in ("npcs", "npc_walk", "_meta"):
             continue
         if name == "Floor":
             text = set_node_props(text, "Floor", "WalkableAreas", {
@@ -137,6 +155,10 @@ def layout(room, spec):
         if f'name="Character{npc}"' in text:
             text = re.sub(r'(\[node name="Character%s"[^\]]*\]\n)position = Vector2\([^)]*\)' % npc,
                           r"\1position = Vector2(%d, %d)" % (x, y), text)
+            if npc in spec.get("npc_walk", {}):
+                wx, wy = spec["npc_walk"][npc]
+                text = re.sub(r'(\[node name="Character%s"[^\]]*\]\nposition = Vector2\([^)]*\)\n)(?:walk_to_point = Vector2\([^)]*\)\n)?' % npc,
+                              r"\1walk_to_point = Vector2(%d, %d)\n" % (wx, wy), text)
             continue
         eid = f"{next_ext_id(text)}_{npc.lower()}"
         text = add_ext(text, f'[ext_resource type="PackedScene" path="{CHAR_SCENES[npc]}" id="{eid}"]')
@@ -174,11 +196,21 @@ def bake_floor(room, poly):
 
 def sprite_chars():
     """Point each character at its 46px sprite sheet (10 frames). PixelActor swaps sizes per room."""
-    for c in ("paul", "landlord"):
+    for c in ("paul", "landlord", "barmaid", "reg"):
         p = ROOT / f"game/characters/{c}/character_{c}.tscn"
         t = p.read_text()
+        if f'id="9_{c}tex"' not in t:
+            t = add_ext(t, f'[ext_resource type="Texture2D" path="res://game/characters/{c}/{c}_46.png" id="9_{c}tex"]')
         t = re.sub(r'path="res://game/characters/%s/%s(?:_\d+)?\.png"' % (c, c),
                    f'path="res://game/characters/{c}/{c}_46.png"', t)
+        if "sheet_base" not in t:
+            t = t.replace('cursor = 8\n', f'cursor = 8\nsheet_base = "res://game/characters/{c}/{c}"\n', 1)
+        t = re.sub(r"^interaction_polygon = PackedVector2Array\(\)$",
+                   "interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)", t, flags=re.M)
+        g = ROOT / f"game/characters/{c}/character_{c}.gd"
+        gs = g.read_text()
+        if "extends PopochiuCharacter" in gs:
+            g.write_text(gs.replace("extends PopochiuCharacter", "extends PixelActor", 1))
         t = re.sub(r'(\[node name="Sprite2D" type="Sprite2D" parent="\."[^\]]*\]\n)(?:texture = [^\n]*\n)?(?:hframes = \d+\n)?(?:offset = [^\n]*\n)?',
                    lambda m: m.group(1) + 'texture = ExtResource("9_%stex")\nhframes = 10\noffset = Vector2(0, -23)\n' % c, t)
         t = re.sub(r"^flips_when = \d+\n", "", t, flags=re.M)
@@ -187,10 +219,30 @@ def sprite_chars():
         print("sprite", c)
 
 
+def doorstop_sprite(room):
+    """Skittle pin propping the Cross House exit door open. A separate sprite so it can vanish
+    when Paul picks it up (room script hides Props/DoorstopPin)."""
+    if room != "cross_house_tavern":
+        return
+    path = ROOT / f"game/rooms/{room}/room_{room}.tscn"
+    text = path.read_text()
+    if 'name="DoorstopPin"' in text:
+        return
+    res = f"res://game/rooms/{room}/props/doorstop_pin.png"
+    eid = f"{next_ext_id(text)}_doorstop"
+    text = add_ext(text, f'[ext_resource type="Texture2D" path="{res}" id="{eid}"]')
+    node = (f'[node name="DoorstopPin" type="Sprite2D" parent="Props"]\n'
+            f'position = Vector2(283, 104)\ntexture_filter = 1\ntexture = ExtResource("{eid}")\n'
+            f'centered = false\noffset = Vector2(-4, -14)\n\n')
+    text = text.replace('[node name="Hotspots"', node + '[node name="Hotspots"', 1)
+    path.write_text(text)
+    print("doorstop sprite")
+
+
 def bar_front(room, spec):
     """Cut the bar counter out of the background as a y-sorted sprite, so the landlord stands
     behind it and Paul in front of it."""
-    if room != "cross_house_tavern" or "Bar" not in spec:
+    if room not in BAR_ROOMS or "Bar" not in spec:
         return
     from PIL import Image
     x0, y0, x1, y1 = spec["_meta"]["hotspots"]["Bar"] if "_meta" in spec else (
@@ -214,7 +266,7 @@ def bar_front(room, spec):
 
 
 def item_icons():
-    for k in ("coin", "pint", "crawl_card"):
+    for k in ("coin", "pint", "crawl_card", "skittle_pin"):
         p = ROOT / f"game/inventory_items/{k}/inventory_item_{k}.tscn"
         t = p.read_text()
         if "texture = " in t:
@@ -234,5 +286,6 @@ if __name__ == "__main__":
         layout(r, s)
         bake_floor(r, s["Floor"]["poly"])
         bar_front(r, s)
+        doorstop_sprite(r)
     sprite_chars()
     item_icons()

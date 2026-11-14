@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://h13pt755jodm"]
+
+[ext_resource type="Script" path="res://game/rooms/hop_pole/hotspots/portrait/hotspot_portrait.gd" id="1_5busk"]
+
+[node name="Portrait" type="Area2D" unique_id=666982013]
+script = ExtResource("1_5busk")
+script_name = "Portrait"
+description = "Portrait"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1701730461]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -7,15 +7,19 @@ extends EditorPlugin
 const ROOMS := {
 	"ChurchSt": {
 		"main": true,
-		"hotspots": ["TavernDoor", "Abbey", "Bench"],
+		"hotspots": ["TavernDoor", "Abbey", "Bench", "HopPoleDoor"],
 	},
 	"CrossHouseTavern": {
 		"main": false,
-		"hotspots": ["Bar", "QuizMachine", "ExitDoor"],
+		"hotspots": ["Bar", "QuizMachine", "ExitDoor", "Doorstop"],
+	},
+	"HopPole": {
+		"main": false,
+		"hotspots": ["Bar", "SkittleAlley", "ExitDoor", "Portrait"],
 	},
 }
-const CHARACTERS := {"Paul": true, "Landlord": false}
-const ITEMS := ["CrawlCard", "Coin", "Pint"]
+const CHARACTERS := {"Paul": true, "Landlord": false, "Barmaid": false, "Reg": false}
+const ITEMS := ["CrawlCard", "Coin", "Pint", "SkittlePin"]
 const PopochiuGuiTemplatesHelper = preload(
 	"res://addons/popochiu/editor/helpers/popochiu_gui_templates_helper.gd"
 )

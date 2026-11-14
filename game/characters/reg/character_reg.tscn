@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ce2qbt61el65d"]
+
+[ext_resource type="Script" path="res://game/characters/reg/character_reg.gd" id="1_u6crs"]
+[ext_resource type="Texture2D" path="res://game/characters/reg/reg_46.png" id="9_regtex"]
+
+[node name="CharacterReg" type="Area2D" unique_id=2072244019]
+script = ExtResource("1_u6crs")
+script_name = "Reg"
+description = "Reg"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/reg/reg"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=1278250252]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=518227598]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=336877561]
+texture = ExtResource("9_regtex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=2116884055]
+visible = false
+polygon = PackedVector2Array(-10, -10, 10, -10, 10, 10, -10, 10)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=912336301]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

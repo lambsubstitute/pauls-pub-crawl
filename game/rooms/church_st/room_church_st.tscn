@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://bkmha2qob5sg3"]
 
-[ext_resource type="Script" path="res://game/rooms/church_st/room_church_st.gd" id="1_cvlq4"]
+[ext_resource type="Script" uid="uid://502vlm1vgp8y" path="res://game/rooms/church_st/room_church_st.gd" id="1_cvlq4"]
 [ext_resource type="PackedScene" uid="uid://c6icabaxcvkcq" path="res://game/rooms/church_st/walkable_areas/floor/walkable_area_floor.tscn" id="2_83mqr"]
 [ext_resource type="PackedScene" uid="uid://c23vkmrf6b16l" path="res://game/rooms/church_st/hotspots/tavern_door/hotspot_tavern_door.tscn" id="3_x1731"]
 [ext_resource type="PackedScene" uid="uid://8cev8nemolfw" path="res://game/rooms/church_st/hotspots/abbey/hotspot_abbey.tscn" id="4_mp3ad"]
 [ext_resource type="PackedScene" uid="uid://4lta42j64xdj" path="res://game/rooms/church_st/hotspots/bench/hotspot_bench.tscn" id="5_r4mb6"]
-[ext_resource type="Texture2D" path="res://game/rooms/church_st/props/bg_church_st.png" id="6_bg"]
+[ext_resource type="Texture2D" uid="uid://7gqvjw60rxy4" path="res://game/rooms/church_st/props/bg_church_st.png" id="6_bg"]
+[ext_resource type="PackedScene" uid="uid://c1fnlodvnbkem" path="res://game/rooms/church_st/hotspots/hop_pole_door/hotspot_hop_pole_door.tscn" id="7_m8oq3"]
 
 [node name="RoomChurchSt" type="Node2D" unique_id=2112324511]
 script = ExtResource("1_cvlq4")
@@ -13,7 +14,7 @@ script_name = "ChurchSt"
 width = 320
 height = 200
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="." unique_id=1473290889]
 z_index = -10
 texture_filter = 1
 texture = ExtResource("6_bg")
@@ -49,6 +50,13 @@ description = "Bench"
 baseline = 120
 walk_to_point = Vector2(257, 130)
 interaction_polygon = PackedVector2Array(231, 107, 267, 107, 267, 120, 231, 120)
+
+[node name="HopPoleDoor" parent="Hotspots" unique_id=480945477 instance=ExtResource("7_m8oq3")]
+position = Vector2(0, 0)
+description = "Royal Hop Pole door"
+baseline = 118
+walk_to_point = Vector2(280, 126)
+interaction_polygon = PackedVector2Array(259, 81, 280, 81, 280, 118, 259, 118)
 
 [node name="Regions" type="Node2D" parent="." unique_id=1644366990]
 

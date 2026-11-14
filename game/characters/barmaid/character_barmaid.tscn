@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://c3xkjarm5kt21"]
+
+[ext_resource type="Script" path="res://game/characters/barmaid/character_barmaid.gd" id="1_eudjk"]
+[ext_resource type="Texture2D" path="res://game/characters/barmaid/barmaid_46.png" id="9_barmaidtex"]
+
+[node name="CharacterBarmaid" type="Area2D" unique_id=768373422]
+script = ExtResource("1_eudjk")
+script_name = "Barmaid"
+description = "Barmaid"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/barmaid/barmaid"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=2093802330]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=121901702]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1290751750]
+texture = ExtResource("9_barmaidtex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1824297393]
+visible = false
+polygon = PackedVector2Array(-10, -10, 10, -10, 10, 10, -10, 10)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=1617735798]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

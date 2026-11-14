@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://dabxec0gffv63"]
+
+[ext_resource type="Script" path="res://game/rooms/hop_pole/room_hop_pole.gd" id="1_73xek"]
+[ext_resource type="PackedScene" uid="uid://ctaebr0igkjvg" path="res://game/rooms/hop_pole/walkable_areas/floor/walkable_area_floor.tscn" id="2_ab0s4"]
+[ext_resource type="PackedScene" uid="uid://cacfu1hw842pb" path="res://game/rooms/hop_pole/hotspots/bar/hotspot_bar.tscn" id="3_gk0lx"]
+[ext_resource type="PackedScene" uid="uid://ckxpjqb4kgpge" path="res://game/rooms/hop_pole/hotspots/skittle_alley/hotspot_skittle_alley.tscn" id="4_lbs6l"]
+[ext_resource type="PackedScene" uid="uid://b8fbkml3er7oa" path="res://game/rooms/hop_pole/hotspots/exit_door/hotspot_exit_door.tscn" id="5_npc45"]
+[ext_resource type="PackedScene" uid="uid://h13pt755jodm" path="res://game/rooms/hop_pole/hotspots/portrait/hotspot_portrait.tscn" id="6_b0p23"]
+[ext_resource type="Texture2D" path="res://game/rooms/hop_pole/props/bg_hop_pole.png" id="7_bg"]
+[ext_resource type="PackedScene" path="res://game/characters/barmaid/character_barmaid.tscn" id="8_barmaid"]
+[ext_resource type="PackedScene" path="res://game/characters/reg/character_reg.tscn" id="9_reg"]
+[ext_resource type="Texture2D" path="res://game/rooms/hop_pole/props/bar_front.png" id="10_barfront"]
+
+[node name="RoomHopPole" type="Node2D" unique_id=1059517649]
+script = ExtResource("1_73xek")
+script_name = "HopPole"
+width = 320
+height = 200
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+texture = ExtResource("7_bg")
+centered = false
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=931150362]
+
+[node name="Floor" parent="WalkableAreas" unique_id=1841382414 instance=ExtResource("2_ab0s4")]
+position = Vector2(0, 0)
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 122, 316, 122, 316, 148, 4, 148)])
+
+[node name="Props" type="Node2D" parent="." unique_id=767826199]
+
+
+
+
+[node name="BarFront" type="Sprite2D" parent="Props"]
+position = Vector2(0, 120)
+texture_filter = 1
+texture = ExtResource("10_barfront")
+centered = false
+offset = Vector2(0, -31)
+
+[node name="Hotspots" type="Node2D" parent="." unique_id=553679135]
+
+[node name="Bar" parent="Hotspots" unique_id=535860507 instance=ExtResource("3_gk0lx")]
+position = Vector2(0, 0)
+description = "Bar"
+baseline = 120
+walk_to_point = Vector2(55, 124)
+interaction_polygon = PackedVector2Array(0, 102, 106, 102, 106, 120, 0, 120)
+
+[node name="SkittleAlley" parent="Hotspots" unique_id=1322762771 instance=ExtResource("4_lbs6l")]
+position = Vector2(0, 0)
+description = "Skittle alley"
+baseline = 107
+walk_to_point = Vector2(297, 124)
+interaction_polygon = PackedVector2Array(216, 67, 297, 67, 297, 107, 216, 107)
+
+[node name="ExitDoor" parent="Hotspots" unique_id=1294122085 instance=ExtResource("5_npc45")]
+position = Vector2(0, 0)
+description = "Door to Church Street"
+baseline = 103
+walk_to_point = Vector2(128, 124)
+interaction_polygon = PackedVector2Array(122, 57, 146, 57, 146, 103, 122, 103)
+
+[node name="Portrait" parent="Hotspots" unique_id=666982013 instance=ExtResource("6_b0p23")]
+position = Vector2(0, 0)
+description = "Portrait"
+baseline = 69
+walk_to_point = Vector2(200, 124)
+interaction_polygon = PackedVector2Array(175, 42, 207, 42, 207, 69, 175, 69)
+
+[node name="Regions" type="Node2D" parent="." unique_id=1898070694]
+
+[node name="Markers" type="Node2D" parent="." unique_id=505265522]
+
+[node name="Characters" type="Node2D" parent="." unique_id=557115032]
+
+[node name="CharacterBarmaid" parent="Characters" instance=ExtResource("8_barmaid")]
+position = Vector2(58, 111)
+walk_to_point = Vector2(-11, 13)
+
+[node name="CharacterReg" parent="Characters" instance=ExtResource("9_reg")]
+position = Vector2(278, 124)
+walk_to_point = Vector2(-24, 5)
