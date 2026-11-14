@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://drla50vcm8jp4"]
+
+[ext_resource type="Script" path="res://game/inventory_items/crawl_card/inventory_item_crawl_card_state.gd" id="1_ysqca"]
+
+[resource]
+resource_name = "CrawlCard"
+script = ExtResource("1_ysqca")
+script_name = "CrawlCard"
+scene = "res://game/inventory_items/crawl_card/inventory_item_crawl_card.tscn"

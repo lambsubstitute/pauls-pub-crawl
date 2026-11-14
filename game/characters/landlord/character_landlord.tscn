@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://517gl0kjd6b4"]
+
+[ext_resource type="Script" path="res://game/characters/landlord/character_landlord.gd" id="1_33el0"]
+[ext_resource type="Texture2D" path="res://game/characters/landlord/landlord_46.png" id="9_landlordtex"]
+
+[node name="CharacterLandlord" type="Area2D" unique_id=240618803]
+script = ExtResource("1_33el0")
+script_name = "Landlord"
+description = "Landlord"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/landlord/landlord"
+interaction_polygon = PackedVector2Array(-8, -40, 8, -40, 8, 0, -8, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=1752697024]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=728718543]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=936145860]
+texture = ExtResource("9_landlordtex")
+hframes = 8
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1112540167]
+visible = false
+polygon = PackedVector2Array(-8, -40, 8, -40, 8, 0, -8, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=1633808526]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

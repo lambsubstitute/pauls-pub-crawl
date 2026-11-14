@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://63mlsfjmfmv7"]
+
+[ext_resource type="Script" path="res://game/inventory_items/crawl_card/inventory_item_crawl_card.gd" id="1_afmtw"]
+[ext_resource type="Texture2D" path="res://game/inventory_items/crawl_card/crawl_card.png" id="9_crawl_card"]
+
+[node name="ItemCrawlCard" type="TextureRect" unique_id=1551259786]
+texture = ExtResource("9_crawl_card")
+texture_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 0
+stretch_mode = 5
+script = ExtResource("1_afmtw")
+script_name = "CrawlCard"
+description = "Crawl Card"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1095317232]

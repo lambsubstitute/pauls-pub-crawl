@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c6icabaxcvkcq"]
+
+[ext_resource type="Script" path="res://game/rooms/church_st/walkable_areas/floor/walkable_area_floor.gd" id="1_5j66y"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_0je8s"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(4, 119, 316, 119, 316, 148, 4, 148)])
+vertices = PackedVector2Array(4, 119, 316, 119, 316, 148, 4, 148)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+agent_radius = 0.0
+
+[node name="Floor" type="Node2D" unique_id=351906660]
+position = Vector2(0, 0)
+script = ExtResource("1_5j66y")
+script_name = "Floor"
+description = "Floor"
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 119, 316, 119, 316, 148, 4, 148)])
+
+[node name="Perimeter" type="NavigationRegion2D" parent="." unique_id=170430166]
+modulate = Color(0, 1, 0, 1)
+navigation_polygon = SubResource("NavigationPolygon_0je8s")

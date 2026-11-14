@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "pubcrawl-web",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/beef/pauls-pub-crawl/build/web && exec python3 -m http.server ${PORT:-8790}"],
+      "port": 8790
+    }
+  ]
+}
