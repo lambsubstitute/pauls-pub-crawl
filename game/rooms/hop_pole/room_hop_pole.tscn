@@ -34,6 +34,7 @@ interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 122, 316,
 
 
 
+
 [node name="BarFront" type="Sprite2D" parent="Props"]
 position = Vector2(0, 120)
 texture_filter = 1
@@ -54,8 +55,8 @@ interaction_polygon = PackedVector2Array(0, 102, 106, 102, 106, 120, 0, 120)
 position = Vector2(0, 0)
 description = "Skittle alley"
 baseline = 107
-walk_to_point = Vector2(297, 124)
-interaction_polygon = PackedVector2Array(216, 67, 297, 67, 297, 107, 216, 107)
+walk_to_point = Vector2(266, 124)
+interaction_polygon = PackedVector2Array(216, 67, 266, 67, 266, 107, 216, 107)
 
 [node name="ExitDoor" parent="Hotspots" unique_id=1294122085 instance=ExtResource("5_npc45")]
 position = Vector2(0, 0)

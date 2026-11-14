@@ -82,6 +82,21 @@ def from_render(room, fallback):
         spec["npcs"]["Landlord"] = tuple(round(v) for v in d["landlord_pos"])
     for npc, pos in d.get("npc", {}).items():
         spec["npcs"][npc] = tuple(round(v) for v in pos)
+    # NPCs win over scenery: trim any hotspot that overlaps an NPC's body (~22x46 px) back to the
+    # side away from them, otherwise clicking the NPC hits the hotspot (Reg vs the skittle alley).
+    for npc, (nx, ny) in spec["npcs"].items():
+        bx0, bx1, by0 = nx - 12, nx + 12, ny - 48
+        for name, h in spec.items():
+            if name in ("Floor", "npcs", "_meta", "Bar") or not isinstance(h, dict) or "poly" not in h:
+                continue
+            (x0, y0), _, (x1, y1), _ = h["poly"]
+            if x0 < bx1 and x1 > bx0 and y1 > by0:
+                if (nx - x0) > (x1 - nx):
+                    x1 = bx0
+                else:
+                    x0 = bx1
+                h["poly"] = rect(x0, y0, x1, y1)
+                h["walk"] = (min(x1, max(x0, h["walk"][0])), h["walk"][1])
     # where Paul stands to talk to each NPC, stored relative to the NPC (Popochiu walk_to_point)
     spec["npc_walk"] = {n: (round(d["walk_points"][n][0] - p[0]), round(d["walk_points"][n][1] - p[1]))
                         for n, p in spec["npcs"].items() if n in d.get("walk_points", {})}
