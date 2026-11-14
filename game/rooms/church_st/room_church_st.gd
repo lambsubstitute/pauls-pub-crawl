@@ -8,6 +8,9 @@ var state: Data = load("res://game/rooms/church_st/room_church_st.tres")
 
 func _on_room_entered() -> void:
 	# Spawn points and figure height come from art/renders/church_st.json (Blender projection).
+	# A walk started in the previous room (e.g. click then double-click a door) must not
+	# carry on here towards that room's coordinates.
+	C.player.stop_walking()
 	C.player.set_height(30)
 	if Globals.last_room == "CrossHouseTavern":
 		C.player.position = Vector2(157, 124)

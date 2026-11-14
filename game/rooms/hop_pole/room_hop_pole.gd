@@ -10,6 +10,9 @@ var state: Data = load("res://game/rooms/hop_pole/room_hop_pole.tres")
 
 func _on_room_entered() -> void:
 	# Spawn and figure height come from art/renders/hop_pole.json.
+	# A walk started in the previous room (e.g. click then double-click a door) must not
+	# carry on here towards that room's coordinates.
+	C.player.stop_walking()
 	C.player.set_height(46)
 	C.Barmaid.set_height(46)
 	C.Reg.set_height(46)

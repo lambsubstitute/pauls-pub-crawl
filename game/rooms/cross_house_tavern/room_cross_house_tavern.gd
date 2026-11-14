@@ -8,6 +8,9 @@ var state: Data = load("res://game/rooms/cross_house_tavern/room_cross_house_tav
 
 func _on_room_entered() -> void:
 	# Pub is a closer cutaway than the street, so figures are drawn at 46px here.
+	# A walk started in the previous room (e.g. click then double-click a door) must not
+	# carry on here towards that room's coordinates.
+	C.player.stop_walking()
 	C.player.set_height(46)
 	C.Landlord.set_height(46)
 	C.Landlord.walk_to_point = Vector2(8, 13)  # see HopPole: room overrides don't survive
