@@ -6,7 +6,7 @@ func _ready() -> void:
 	await get_tree().create_timer(2.0).timeout
 	R.goto_room("HopPole")
 	await get_tree().create_timer(3.0).timeout
-	E.clicked = C.Reg
+	E.clicked = R.current.get_node("Characters").get_children().filter(func(n): return n.script_name == "Reg")[0]
 	var done := [false]
 	var run := func():
 		await C.Reg.on_talk_to()

@@ -19,9 +19,18 @@ func on_look_at() -> void:
 	await C.player.say("A man in a flat cap who has clearly been here since about 1974.")
 
 
+## Where Paul stands to talk to Reg (left of him, from art/renders/hop_pole.json). Explicit,
+## because walk_to_clicked() on a character can target its feet, which its obstacle blocks.
+const TALK_SPOT := Vector2(254, 129)
+
+
+func _walk_up() -> void:
+	await C.player.walk_to(TALK_SPOT)
+	C.player.face_right()
+
+
 func on_talk_to() -> void:
-	await C.player.walk_to_clicked()
-	await C.player.face_clicked()
+	await _walk_up()
 	if Globals.skittles_won:
 		await C.Reg.say("Beginner's luck, that's all.")
 		return
@@ -36,7 +45,7 @@ func on_talk_to() -> void:
 
 func _on_item_used(item: PopochiuInventoryItem) -> void:
 	if item == I.SkittlePin:
-		await C.player.walk_to_clicked()
+		await _walk_up()
 		await C.player.say("Lose one of these?")
 		await C.Reg.say("Number nine! Where'd you find her?")
 		await C.player.say("Holding a door open at the Cross House.")
