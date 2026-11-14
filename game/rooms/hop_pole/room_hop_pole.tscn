@@ -35,6 +35,7 @@ interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 122, 316,
 
 
 
+
 [node name="BarFront" type="Sprite2D" parent="Props"]
 position = Vector2(0, 120)
 texture_filter = 1

@@ -222,6 +222,9 @@ def sprite_chars():
             t = t.replace('cursor = 8\n', f'cursor = 8\nsheet_base = "res://game/characters/{c}/{c}"\n', 1)
         t = re.sub(r"^interaction_polygon = PackedVector2Array\(\)$",
                    "interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)", t, flags=re.M)
+        # the collision shape itself (what Popochiu actually hit-tests for characters)
+        t = re.sub(r'(\[node name="InteractionPolygon"[^\]]*\]\n(?:visible = false\n)?)polygon = PackedVector2Array\([^)]*\)',
+                   r"\1polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)", t)
         g = ROOT / f"game/characters/{c}/character_{c}.gd"
         gs = g.read_text()
         if "extends PopochiuCharacter" in gs:

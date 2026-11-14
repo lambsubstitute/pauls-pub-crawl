@@ -36,6 +36,13 @@ func set_height(px: int) -> void:
 	var hw := px * 0.22
 	interaction_polygon = PackedVector2Array([
 		Vector2(-hw, -px), Vector2(hw, -px), Vector2(hw, 0), Vector2(-hw, 0)])
+	# Popochiu does not copy interaction_polygon onto a character's collision shape at runtime
+	# (issue #158), so set the shape itself: otherwise only the scene's default 20px square at
+	# the feet is clickable and a click on the body counts as a floor click.
+	var shape := get_node_or_null("InteractionPolygon") as CollisionPolygon2D
+	if shape:
+		shape.polygon = interaction_polygon
+		shape.position = Vector2.ZERO
 	dialog_pos = Vector2(0, -px - 4)
 	walk_speed = px * SPEED_PER_HEIGHT
 
