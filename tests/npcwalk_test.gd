@@ -26,4 +26,8 @@ func _ready() -> void:
 	R.goto_room("CrossHouseTavern")
 	await get_tree().create_timer(3.0).timeout
 	print("[test] ", await _walk_to_npc(C.Landlord))
+	R.goto_room("BerkeleyArms")
+	await get_tree().create_timer(3.0).timeout
+	print("[test] ", await _walk_to_npc(C.Clive))
+	print("[test] ", await _walk_to_npc(C.Dot))
 	get_tree().quit()

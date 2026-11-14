@@ -27,7 +27,7 @@ the Mythe end.
 |---|-----|---------|-----------|------|
 | 1 | Cross House Tavern | 108 Church St | Quiz machine | Tutorial: verbs, inventory, first stamp |
 | 2 | Royal Hop Pole | 94 Church St | Skittles | Pin chain: Cross House doorstop pin -> Reg -> skittles -> Bev stamps |
-| 3 | Berkeley Arms | 8 Church St | Darts | Darts intro, drunk meter matters |
+| 3 | Berkeley Arms | 8 Church St | Darts | Darts intro, drunk meter matters: house darts stuck in the beam over the oche -> get merry (a pint, or Clive's free halves) and wobble into the oak post to shake them down -> give them to Dot -> beat her 70 with three darts (drink widens the aim wobble, water sobers) -> Clive stamps |
 | 4 | Britannia Inn | 30 High St | Shove ha'penny | Double-vision puzzle |
 | 5 | Nottingham Arms | 129 High St | Pool | Hardest mid-game puzzle |
 | 6 | Ye Olde Black Bear | 68 High St | Darts + pool rematch | Finale vs the pub champion |
@@ -36,6 +36,8 @@ Fallbacks if any close: Anchor 1774 (42 High St), New Plough (85 Barton St).
 
 Street scenes between pubs: Abbey gates, Church St, the Cross, High St,
 riverside / Mill Avon, Mythe bridge (ending).
+Built so far: Church St (Cross House, Hop Pole; walk off the right edge towards the Cross) and
+the Cross (Berkeley Arms; High St exit on the right waits for the next pubs).
 
 ## Controls / UI
 - 320×200 game area, integer-scaled. Bottom panel: verb grid + inventory.
