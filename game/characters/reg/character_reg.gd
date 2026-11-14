@@ -14,6 +14,13 @@ func _on_click() -> void:
 	E.command_fallback()
 
 
+# Default "Walk to" would aim at this character's feet, which their navigation obstacle blocks,
+# so the walk never finishes. Walk to the spot beside them instead.
+func on_walk_to() -> void:
+	await C.player.walk_to(Vector2(254, 129))
+	C.player.face_right()
+
+
 func on_look_at() -> void:
 	await C.player.face_clicked()
 	await C.player.say("A man in a flat cap who has clearly been here since about 1974.")
