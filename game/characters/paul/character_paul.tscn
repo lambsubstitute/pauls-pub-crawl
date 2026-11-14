@@ -19,7 +19,7 @@ polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1079068862]
 texture = ExtResource("9_paultex")
-hframes = 8
+hframes = 10
 offset = Vector2(0, -23)
 texture_filter = 1
 

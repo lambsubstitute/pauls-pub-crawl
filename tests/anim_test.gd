@@ -1,5 +1,5 @@
 extends Node
-## Walk animation check: frames should cycle 1-6 and sprite flip while walking left.
+## Walk animation check: frames should cycle 1-8 and sprite flip while walking left.
 
 func _ready() -> void:
 	await get_tree().create_timer(2.0).timeout

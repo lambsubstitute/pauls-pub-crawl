@@ -6,8 +6,8 @@ Each character is drawn as vector shapes and rasterised fresh at every target he
 30 px street version and the 46 px pub version are both crisp pixel art (never resampled).
 Sheet layout, one row, facing right:
     frame 0      idle
-    frames 1-6   walk cycle
-    frame 7      talk (mouth open)
+    frames 1-8   walk cycle (contact, down, passing, up for each leg)
+    frame 9      talk (mouth open)
 Writes game/characters/<name>/<name>_<height>.png and art/previews/sprites_x4.png.
 """
 import math
@@ -16,7 +16,9 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
-FRAMES = 8
+WALK_N = 8
+FRAMES = WALK_N + 2
+TALK_FRAME = WALK_N + 1
 OUTLINE = (24, 16, 20, 255)
 
 CHARS = {
@@ -67,35 +69,56 @@ def draw(c, H, frame):
     ox, oy = W / 2, H + 1 - 0.5          # feet at bottom-centre
     k = c["build"]
 
-    walk = 1 <= frame <= 6
-    ph = (frame - 1) / 6 * 2 * math.pi if walk else 0.0
-    swing = math.sin(ph) * 13 if walk else 0.0
-    bob = -abs(math.sin(ph)) * 2.0 if walk else 0.0
-    lift_a = max(0.0, math.sin(ph)) * 6 if walk else 0.0
-    lift_b = max(0.0, -math.sin(ph)) * 6 if walk else 0.0
-    y = lambda v: -v + bob  # design y-up -> image y-down
+    walk = 1 <= frame <= WALK_N
+    ph = (frame - 1) / WALK_N * 2 * math.pi if walk else 0.0
+    # Body is lowest at heel-strike (|cos|=1) and highest when the legs pass (|cos|=0).
+    up = (1 - abs(math.cos(ph))) * 3.0 if walk else 0.0
+    y = lambda v: -(v + up)   # upper body: design y-up -> image y-down, with bob
+    g = lambda v: -v          # ground-anchored parts (feet) never bob
 
-    hip_y, knee_y = 48, 25
-    # ---- back leg (darker) then back arm, so the near side overlaps
-    def leg(sign, colors, lift):
-        hx = -2 * k + sign * 2
-        kx = hx + sign * swing * 0.6
-        fx = hx + sign * swing
-        limb(d, hx, y(hip_y), kx, y(knee_y + lift * 0.5), 6 * k, 5, colors[0], s, ox, oy)
-        limb(d, kx, y(knee_y + lift * 0.5), fx, y(4 + lift), 5, 4.2, colors[0], s, ox, oy)
-        poly(d, [(fx - 5, y(lift)), (fx + 10, y(lift)), (fx + 10, y(4 + lift)), (fx - 4, y(7 + lift))], colors[1], s, ox, oy)
+    SX, LIFT = 14.0, 10.0     # foot reach either side of the hip, and swing-foot lift
+    THIGH, SHIN = 23.0, 22.0
+    hip_y = 48
 
-    leg(-1, (c["legs_d"], c["shoe_d"]), lift_b)
+    def knee_for(hx, hy, ax, ay):
+        """Two-bone IK in y-up design space; knee always bends forward (+x)."""
+        dx, dy = ax - hx, ay - hy
+        dist = max(1e-3, min(math.hypot(dx, dy), THIGH + SHIN - 0.01))
+        a = math.acos(max(-1.0, min(1.0, (THIGH ** 2 + dist ** 2 - SHIN ** 2) / (2 * THIGH * dist))))
+        base = math.atan2(dy, dx)
+        c1 = (hx + THIGH * math.cos(base + a), hy + THIGH * math.sin(base + a))
+        c2 = (hx + THIGH * math.cos(base - a), hy + THIGH * math.sin(base - a))
+        return c1 if c1[0] > c2[0] else c2
 
-    def arm(sign, col, hand):
+    def leg(p, colors):
+        hx, hy = -1 * k, hip_y + up
+        if walk:
+            fx = SX * math.cos(p)                  # p=0 heel-strike in front, p=pi push-off behind
+            lift = LIFT * max(0.0, -math.sin(p))   # foot only leaves the ground while swinging forward
+        else:
+            fx, lift = (2.0 if colors[0] == c["legs"] else -3.0), 0.0
+        ax, ay = fx, 5 + lift
+        kx, ky = knee_for(hx, hy, ax, ay)
+        limb(d, hx, -hy, kx, -ky, 6 * k, 5, colors[0], s, ox, oy)
+        limb(d, kx, -ky, ax, -ay, 5, 4.2, colors[0], s, ox, oy)
+        toe_tilt = lift * 0.35
+        poly(d, [(fx - 5, g(lift)), (fx + 10, g(lift + toe_tilt)), (fx + 10, g(4 + lift + toe_tilt)),
+                 (fx - 4, g(7 + lift))], colors[1], s, ox, oy)
+
+    near_p, far_p = ph, ph + math.pi
+    leg(far_p, (c["legs_d"], c["shoe_d"]))
+
+    def arm(p, col, hand):
+        # arms swing opposite to the leg on the same side
+        sw = 10 * math.cos(p + math.pi) if walk else 0.0
         sx, sy = 1 * k, 72
-        ex = sx - sign * swing * 0.5
-        hx = sx - sign * swing * 0.9 + 2
+        ex = sx + sw * 0.55
+        hx = sx + sw + 2
         limb(d, sx, y(sy), ex, y(58), 4.5 * k, 4, col, s, ox, oy)
-        limb(d, ex, y(58), hx, y(46), 4, 3.5, col if c.get("collar") is None else col, s, ox, oy)
-        ell(d, hx + 0.5, y(44), 3.6, 3.6, hand, s, ox, oy)
+        limb(d, ex, y(58), hx, y(46 + abs(sw) * 0.25), 4, 3.5, col, s, ox, oy)
+        ell(d, hx + 0.5, y(44 + abs(sw) * 0.25), 3.6, 3.6, hand, s, ox, oy)
 
-    arm(1, c["top_d"], c["skin_d"])
+    arm(far_p, c["top_d"], c["skin_d"])
 
     # ---- torso
     torso = [(-11 * k, y(48)), (11 * k, y(48)), (12 * k, y(73)), (6 * k, y(78)), (-7 * k, y(78)), (-12 * k, y(73))]
@@ -109,7 +132,7 @@ def draw(c, H, frame):
     # belt line / hips
     poly(d, [(-11 * k, y(49)), (11 * k, y(49)), (11 * k, y(46)), (-11 * k, y(46))], c["legs_d"], s, ox, oy)
 
-    leg(1, (c["legs"], c["shoe"]), lift_a)
+    leg(near_p, (c["legs"], c["shoe"]))
 
     # ---- head (3/4 facing right)
     hx, hy = 2, 88
@@ -136,14 +159,14 @@ def draw(c, H, frame):
         d.point((ox + ex * s, oy + y(hy + 1) * s + 1), fill=(20, 16, 18, 255))
         d.line([ox + (ex - 2) * s, oy + y(hy + 4.5) * s, ox + (ex + 2) * s, oy + y(hy + 5) * s],
                fill=c["hair_d"] if c["hair_style"] == "short" else c["hair"])
-    talking = frame == 7
+    talking = frame == TALK_FRAME
     mouth_col = (110, 40, 40, 255)
     if talking:
         ell(d, hx + 6, y(hy - 6), 2.0, 2.2 if H >= 40 else 1.4, mouth_col, s, ox, oy)
     else:
         d.line([ox + (hx + 4) * s, oy + y(hy - 6) * s, ox + (hx + 7.5) * s, oy + y(hy - 6) * s], fill=mouth_col)
 
-    arm(-1, c["top"], c["skin"])
+    arm(near_p, c["top"], c["skin"])
     return outline(img)
 
 

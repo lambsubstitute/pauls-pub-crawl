@@ -173,14 +173,14 @@ def bake_floor(room, poly):
 
 
 def sprite_chars():
-    """Point each character at its 46px sprite sheet (8 frames). PixelActor swaps sizes per room."""
+    """Point each character at its 46px sprite sheet (10 frames). PixelActor swaps sizes per room."""
     for c in ("paul", "landlord"):
         p = ROOT / f"game/characters/{c}/character_{c}.tscn"
         t = p.read_text()
         t = re.sub(r'path="res://game/characters/%s/%s(?:_\d+)?\.png"' % (c, c),
                    f'path="res://game/characters/{c}/{c}_46.png"', t)
         t = re.sub(r'(\[node name="Sprite2D" type="Sprite2D" parent="\."[^\]]*\]\n)(?:texture = [^\n]*\n)?(?:hframes = \d+\n)?(?:offset = [^\n]*\n)?',
-                   lambda m: m.group(1) + 'texture = ExtResource("9_%stex")\nhframes = 8\noffset = Vector2(0, -23)\n' % c, t)
+                   lambda m: m.group(1) + 'texture = ExtResource("9_%stex")\nhframes = 10\noffset = Vector2(0, -23)\n' % c, t)
         t = re.sub(r"^flips_when = \d+\n", "", t, flags=re.M)
         t = t.replace('cursor = 8\n', 'cursor = 8\nflips_when = 2\n', 1)
         p.write_text(t)
