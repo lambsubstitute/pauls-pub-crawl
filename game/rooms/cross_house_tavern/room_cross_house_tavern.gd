@@ -10,6 +10,7 @@ func _on_room_entered() -> void:
 	# Pub is a closer cutaway than the street, so figures are drawn at 46px here.
 	C.player.set_height(46)
 	C.Landlord.set_height(46)
+	C.Landlord.walk_to_point = Vector2(8, 13)  # see HopPole: room overrides don't survive
 	C.player.position = Vector2(288, 126)
 	C.player.face_left()
 	_update_doorstop()

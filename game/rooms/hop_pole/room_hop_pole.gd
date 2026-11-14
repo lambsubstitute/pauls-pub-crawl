@@ -14,6 +14,10 @@ func _on_room_entered() -> void:
 	C.Barmaid.set_height(46)
 	C.Reg.set_height(46)
 	C.Reg.face_left()  # watching the room, not the alley
+	# Popochiu re-instances characters on room entry and keeps only their position, so the
+	# per-room talk spots (from art/renders/hop_pole.json) are applied here.
+	C.Barmaid.walk_to_point = Vector2(-11, 13)
+	C.Reg.walk_to_point = Vector2(-24, 5)
 	C.player.position = Vector2(128, 126)
 	C.player.face_right()
 
