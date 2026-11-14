@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://d1cusgt3kfq3h"]
+
+[ext_resource type="Script" path="res://game/rooms/cross_house_tavern/room_cross_house_tavern_state.gd" id="1_k2yvc"]
+
+[resource]
+resource_name = "CrossHouseTavern"
+script = ExtResource("1_k2yvc")
+script_name = "CrossHouseTavern"
+scene = "res://game/rooms/cross_house_tavern/room_cross_house_tavern.tscn"

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://8cev8nemolfw"]
+
+[ext_resource type="Script" path="res://game/rooms/church_st/hotspots/abbey/hotspot_abbey.gd" id="1_grm3n"]
+
+[node name="Abbey" type="Area2D" unique_id=684716221]
+script = ExtResource("1_grm3n")
+script_name = "Abbey"
+description = "Abbey"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1820552248]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
