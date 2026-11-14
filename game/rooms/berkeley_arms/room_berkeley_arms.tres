@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://cjcg6yxosp3en"]
+
+[ext_resource type="Script" path="res://game/rooms/berkeley_arms/room_berkeley_arms_state.gd" id="1_aedsl"]
+
+[resource]
+resource_name = "BerkeleyArms"
+script = ExtResource("1_aedsl")
+script_name = "BerkeleyArms"
+scene = "res://game/rooms/berkeley_arms/room_berkeley_arms.tscn"

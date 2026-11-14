@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b5drjrst87sqi"]
+
+[ext_resource type="Script" path="res://game/rooms/berkeley_arms/walkable_areas/floor/walkable_area_floor.gd" id="1_fn05v"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_7ebsk"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(4, 124, 316, 124, 316, 147, 4, 147)])
+vertices = PackedVector2Array(4, 124, 316, 124, 316, 147, 4, 147)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+agent_radius = 0.0
+
+[node name="Floor" type="Node2D" unique_id=2109845223]
+position = Vector2(0, 0)
+script = ExtResource("1_fn05v")
+script_name = "Floor"
+description = "Floor"
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 124, 316, 124, 316, 147, 4, 147)])
+
+[node name="Perimeter" type="NavigationRegion2D" parent="." unique_id=776770739]
+modulate = Color(0, 1, 0, 1)
+navigation_polygon = SubResource("NavigationPolygon_7ebsk")

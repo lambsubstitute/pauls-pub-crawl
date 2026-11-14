@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://clcydgiqlo2dt"]
+
+[ext_resource type="Script" path="res://game/rooms/berkeley_arms/hotspots/exit_door/hotspot_exit_door.gd" id="1_c40hi"]
+
+[node name="ExitDoor" type="Area2D" unique_id=765535399]
+script = ExtResource("1_c40hi")
+script_name = "ExitDoor"
+description = "Exit Door"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1774465152]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

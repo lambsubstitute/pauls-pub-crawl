@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c80halw7rwky1"]
+
+[ext_resource type="Script" path="res://game/rooms/the_cross/hotspots/berkeley_sign/hotspot_berkeley_sign.gd" id="1_1rd2s"]
+
+[node name="BerkeleySign" type="Area2D" unique_id=606844544]
+script = ExtResource("1_1rd2s")
+script_name = "BerkeleySign"
+description = "Berkeley Sign"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=310590114]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -188,6 +188,21 @@ for i, bxp in enumerate((-8.0, -7.0, 4.6)):
     K.cyl("bollard", 0.12, 0.9, (bxp, -2.9, 0.14), M["iron"], verts=10)
 K.cyl("bin", 0.28, 0.9, (-0.9, -2.6, 0.14), K.mat("bin", (0.05, 0.12, 0.08)), verts=12)
 
+# ------------------------------------------------- way to the Cross ----
+# Church St numbers fall towards the Cross (Cross House 108, Hop Pole 94, Berkeley Arms 8), so the
+# Cross is off the right-hand edge, beyond the Hop Pole. A fingerpost marks the way; the exit
+# hotspot is an unrendered volume over the pavement at the screen edge.
+fpx, fpy = 8.75, -2.95
+K.cyl("fingerpost", 0.05, 2.7, (fpx, fpy, 0.14), M["iron"], verts=8)
+K.box("fingerpost_cap", (0.14, 0.14, 0.12), (fpx, fpy, 2.84), M["iron"])
+FP_BOARD = K.mat("fp_board", (0.86, 0.84, 0.78), noise=0.05)
+for z, ang in ((2.45, 0.0), (2.12, 0.5)):
+    arm = K.box("fingerpost_arm", (0.9, 0.05, 0.2), (fpx + 0.42, fpy, z), FP_BOARD, rot=(0, 0, ang))
+    K.box("fingerpost_text", (0.6, 0.06, 0.05), (fpx + 0.42, fpy - 0.01, z + 0.075), M["iron"], rot=(0, 0, ang))
+exit_vol = K.box("exit_cross", (2.0, 3.0, 2.6), (10.6, -1.9, 0.14), None)
+exit_vol.hide_render = True
+tag("ToTheCross", exit_vol)
+
 # ------------------------------------------------------------- lights ----
 K.sun("moon", (0.9, 0.25, -0.5), (0.50, 0.62, 1.0), 0.9)
 K.sun("dusk_fill", (1.35, 0.0, 2.6), (1.0, 0.50, 0.30), 0.12)
@@ -231,9 +246,11 @@ data = {
         "HopPoleDoor": to_px((hx0 - 0.1, -1.6, 0.14)),
         "Bench": to_px((bx, -2.2, 0.14)),
         "Abbey": to_px((-4.0, -2.4, 0.14)),
+        "ToTheCross": to_px((10.2, -2.2, 0.14)),
     },
     "spawn": {"start": to_px((-6.0, -2.3, 0.14)), "from_tavern": to_px((tx0, -1.2, 0.14)),
-              "from_hop_pole": to_px((hx0 - 0.1, -1.8, 0.14))},
+              "from_hop_pole": to_px((hx0 - 0.1, -1.8, 0.14)),
+              "from_cross": to_px((9.6, -2.2, 0.14))},
     "floor": [list(p) for p in floor],
     # how tall a 1.8 m person is, in game pixels, standing on the pavement
     "person_px": to_px((0, -2.2, 0.14))[1] - to_px((0, -2.2, 1.94))[1],

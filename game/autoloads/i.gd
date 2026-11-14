@@ -6,6 +6,7 @@ const PIICrawlCard := preload("res://game/inventory_items/crawl_card/inventory_i
 const PIICoin := preload("res://game/inventory_items/coin/inventory_item_coin.gd")
 const PIIPint := preload("res://game/inventory_items/pint/inventory_item_pint.gd")
 const PIISkittlePin := preload("res://game/inventory_items/skittle_pin/inventory_item_skittle_pin.gd")
+const PIIDarts := preload("res://game/inventory_items/darts/inventory_item_darts.gd")
 # ---- classes
 
 # nodes ----
@@ -13,6 +14,7 @@ var CrawlCard: PIICrawlCard : get = get_CrawlCard
 var Coin: PIICoin : get = get_Coin
 var Pint: PIIPint : get = get_Pint
 var SkittlePin: PIISkittlePin : get = get_SkittlePin
+var Darts: PIIDarts : get = get_Darts
 # ---- nodes
 
 # functions ----
@@ -20,5 +22,6 @@ func get_CrawlCard() -> PIICrawlCard: return get_item_instance("CrawlCard")
 func get_Coin() -> PIICoin: return get_item_instance("Coin")
 func get_Pint() -> PIIPint: return get_item_instance("Pint")
 func get_SkittlePin() -> PIISkittlePin: return get_item_instance("SkittlePin")
+func get_Darts() -> PIIDarts: return get_item_instance("Darts")
 # ---- functions
 

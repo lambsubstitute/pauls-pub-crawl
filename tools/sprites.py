@@ -56,8 +56,27 @@ CHARS = {
         "build": 1.05, "hair_style": "cap", "cap": (118, 92, 62), "cap_d": (80, 60, 40),
         "beard": False, "apron": False, "collar": (214, 206, 186),
     },
+    # Berkeley Arms: Clive behind the bar, Dot the darts champion (small, permed, sharp-eyed)
+    "clive": {
+        "skin": (238, 186, 156), "skin_d": (198, 138, 110),
+        "hair": (186, 92, 40), "hair_d": (128, 58, 24),
+        "top": (106, 30, 34), "top_d": (68, 16, 22),
+        "legs": (40, 38, 44), "legs_d": (24, 22, 28),
+        "shoe": (30, 22, 20), "shoe_d": (18, 12, 12),
+        "build": 1.1, "hair_style": "short", "beard": True, "apron": False, "collar": (240, 238, 230),
+    },
+    "dot": {
+        "skin": (236, 196, 172), "skin_d": (196, 150, 128),
+        "hair": (214, 212, 222), "hair_d": (156, 154, 170),
+        "top": (150, 110, 180), "top_d": (100, 70, 128),
+        "legs": (88, 84, 96), "legs_d": (58, 54, 64),
+        "shoe": (70, 40, 50), "shoe_d": (44, 24, 30),
+        "build": 0.9, "hair_style": "perm", "beard": False, "apron": False, "collar": (240, 236, 226),
+        "stature": 0.88, "glasses": True,
+    },
 }
-SIZES = {"paul": (30, 46), "landlord": (30, 46), "barmaid": (30, 46), "reg": (30, 46)}
+SIZES = {"paul": (30, 46), "landlord": (30, 46), "barmaid": (30, 46), "reg": (30, 46),
+         "clive": (30, 46), "dot": (30, 46)}
 
 
 def poly(d, pts, fill, s, ox, oy):
@@ -82,7 +101,7 @@ def draw(c, H, frame):
     W = int(H * 0.62) + 4
     img = Image.new("RGBA", (W, H + 2), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    s = H / 100.0
+    s = H / 100.0 * c.get("stature", 1.0)   # stature < 1 draws a shorter person on the same sheet
     ox, oy = W / 2, H + 1 - 0.5          # feet at bottom-centre
     k = c["build"]
 
@@ -173,6 +192,13 @@ def draw(c, H, frame):
         poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx + 3, y(hy + 13)), (hx + 9, y(hy + 9)),
                  (hx + 15, y(hy + 6)), (hx + 14, y(hy + 4)), (hx + 6, y(hy + 5))], c["cap"], s, ox, oy)  # flat cap + peak
         poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx - 3, y(hy + 12)), (hx - 4, y(hy + 4))], c["cap_d"], s, ox, oy)
+    elif c["hair_style"] == "perm":
+        # tight grey curls: a cloud of small blobs over the crown and down to the ears
+        for (dx, dy, r) in ((-9, 2, 4.2), (-8, 7, 4.4), (-4, 11, 4.6), (2, 12.5, 4.6), (6, 11, 3.8),
+                            (-10, -3, 3.6), (-5, 6, 4.0), (3, 8, 3.6)):
+            ell(d, hx + dx, y(hy + dy), r, r, c["hair"], s, ox, oy)
+        for (dx, dy, r) in ((-10, 3, 2.4), (-9, -3, 2.2), (-6, 10, 2.2), (0, 13, 2.0)):
+            ell(d, hx + dx, y(hy + dy), r, r, c["hair_d"], s, ox, oy)
     else:  # bald on top, grey at the sides
         poly(d, [(hx - 10, y(hy - 2)), (hx - 9, y(hy + 5)), (hx - 5, y(hy + 4)), (hx - 6, y(hy - 3))], c["hair"], s, ox, oy)
         ell(d, hx + 2, y(hy + 7), 3, 1.5, (255, 220, 190, 255), s, ox, oy)  # shine
@@ -187,6 +213,14 @@ def draw(c, H, frame):
         d.point((ox + ex * s, oy + y(hy + 1) * s + 1), fill=(20, 16, 18, 255))
         d.line([ox + (ex - 2) * s, oy + y(hy + 4.5) * s, ox + (ex + 2) * s, oy + y(hy + 5) * s],
                fill=c["hair_d"] if c["hair_style"] == "short" else c["hair"])
+    if c.get("glasses"):
+        # thin silver rims: a bar across the eye line plus the arm back to the ear (a black
+        # outline at this size reads as a mask)
+        gcol = (96, 84, 110, 255)
+        d.line([ox + (ex - 2.5) * s, oy + y(hy + 3) * s, ox + (ex + 3) * s, oy + y(hy + 3) * s], fill=gcol)
+        d.line([ox + (hx - 4) * s, oy + y(hy + 2) * s, ox + (ex - 2.5) * s, oy + y(hy + 3) * s], fill=gcol)
+        if H >= 40:
+            d.point((ox + (ex + 3) * s, oy + y(hy + 1) * s), fill=gcol)
     talking = frame == TALK_FRAME
     mouth_col = (110, 40, 40, 255)
     if talking:
@@ -288,3 +322,34 @@ if __name__ == "__main__":
     pin.save(ROOT / "game" / "rooms" / "cross_house_tavern" / "props" / "doorstop_pin.png")
     pin_icon().save(ROOT / "game" / "inventory_items" / "skittle_pin" / "skittle_pin.png")
     print("wrote doorstop_pin.png and skittle_pin.png")
+
+
+# ------------------------------------------------------------- house darts ----
+def darts_sprite():
+    """Three darts stuck point-up into the underside of a beam: shafts and flights hang down."""
+    img = Image.new("RGBA", (9, 9), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for x0, tilt, flight in ((1, 1, (190, 30, 24, 255)), (4, 0, (30, 140, 60, 255)), (7, -1, (190, 30, 24, 255))):
+        d.line([x0, 0, x0 + tilt, 4], fill=(200, 196, 186, 255))        # steel barrel + shaft
+        d.point((x0 + tilt, 5), fill=flight)                             # flight
+        d.point((x0 + tilt - 1, 6), fill=flight)
+        d.point((x0 + tilt + 1, 6), fill=flight)
+    return img
+
+
+def darts_icon():
+    icon = Image.new("RGBA", (24, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(icon)
+    for i, col in enumerate(((190, 30, 24, 255), (30, 140, 60, 255), (190, 30, 24, 255))):
+        y0 = 4 + i * 4
+        d.line([3, y0 + 2, 15, y0 - 1], fill=(205, 200, 190, 255))      # barrel
+        d.line([8, y0 + 1, 12, y0], fill=(120, 110, 100, 255))            # knurled grip
+        d.polygon([(15, y0 - 1), (20, y0 - 4), (21, y0), (17, y0 + 1)], fill=col)  # flight
+        d.point((2, y0 + 2), fill=(240, 240, 240, 255))                   # point
+    return outline(icon)
+
+
+if __name__ == "__main__":
+    darts_sprite().save(ROOT / "game" / "rooms" / "berkeley_arms" / "props" / "beam_darts.png")
+    darts_icon().save(ROOT / "game" / "inventory_items" / "darts" / "darts.png")
+    print("wrote beam_darts.png and darts.png")

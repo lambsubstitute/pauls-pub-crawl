@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dcc8naag2rd80"]
+
+[ext_resource type="Script" path="res://game/rooms/berkeley_arms/hotspots/post/hotspot_post.gd" id="1_sbgrm"]
+
+[node name="Post" type="Area2D" unique_id=300365248]
+script = ExtResource("1_sbgrm")
+script_name = "Post"
+description = "Post"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1167508151]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -29,6 +29,7 @@ ROOMS = {
         "Abbey": {"poly": rect(18, 14, 66, 86), "walk": (60, 108), "desc": "Tewkesbury Abbey", "baseline": 0},
         "Bench": {"poly": rect(270, 84, 306, 102), "walk": (288, 108), "desc": "Bench", "baseline": 101},
         "HopPoleDoor": {"poly": rect(259, 81, 280, 118), "walk": (270, 126), "desc": "Royal Hop Pole door", "baseline": 118},
+        "ToTheCross": {},
         "npcs": {},
     },
     "cross_house_tavern": {
@@ -45,8 +46,20 @@ ROOMS = {
         "Bar": {}, "SkittleAlley": {}, "ExitDoor": {}, "Portrait": {},
         "npcs": {},
     },
+    # the_cross / berkeley_arms only exist as renders: everything comes from their JSON
+    "the_cross": {
+        "Floor": {"poly": rect(4, 119, 316, 148)},
+        "BerkeleyDoor": {}, "BerkeleySign": {}, "Memorial": {}, "ToChurchSt": {}, "ToHighSt": {},
+        "npcs": {},
+    },
+    "berkeley_arms": {
+        "Floor": {"poly": rect(4, 124, 316, 147)},
+        "Bar": {}, "Pumps": {}, "WaterJug": {}, "Snug": {}, "ExitDoor": {}, "Fireplace": {}, "Post": {},
+        "Dartboard": {}, "Scoreboard": {}, "BeamDarts": {},
+        "npcs": {},
+    },
 }
-BAR_ROOMS = {"cross_house_tavern", "hop_pole"}
+BAR_ROOMS = {"cross_house_tavern", "hop_pole", "berkeley_arms"}
 
 import json
 
@@ -54,6 +67,10 @@ DESC = {
     "TavernDoor": "Cross House Tavern door", "Abbey": "Tewkesbury Abbey", "Bench": "Bench",
     "Bar": "Bar", "QuizMachine": "Quiz machine", "ExitDoor": "Door to Church Street",
     "HopPoleDoor": "Royal Hop Pole door", "SkittleAlley": "Skittle alley", "Portrait": "Portrait",
+    "ToTheCross": "Way to the Cross", "BerkeleyDoor": "Berkeley Arms door", "BerkeleySign": "Pub sign",
+    "Memorial": "War memorial", "ToChurchSt": "Church Street", "ToHighSt": "High Street",
+    "Pumps": "Beer pumps", "WaterJug": "Water jug", "Snug": "Snug", "Fireplace": "Inglenook",
+    "Post": "Oak post", "Dartboard": "Dartboard", "Scoreboard": "Chalk scoreboard", "BeamDarts": "Darts",
 }
 
 
@@ -105,7 +122,7 @@ def from_render(room, fallback):
 
 
 CHAR_SCENES = {c: f"res://game/characters/{c.lower()}/character_{c.lower()}.tscn"
-               for c in ("Landlord", "Barmaid", "Reg")}
+               for c in ("Landlord", "Barmaid", "Reg", "Clive", "Dot")}
 
 
 def vec_array(pts):
@@ -211,7 +228,7 @@ def bake_floor(room, poly):
 
 def sprite_chars():
     """Point each character at its 46px sprite sheet (10 frames). PixelActor swaps sizes per room."""
-    for c in ("paul", "landlord", "barmaid", "reg"):
+    for c in ("paul", "landlord", "barmaid", "reg", "clive", "dot"):
         p = ROOT / f"game/characters/{c}/character_{c}.tscn"
         t = p.read_text()
         if f'id="9_{c}tex"' not in t:
@@ -257,6 +274,27 @@ def doorstop_sprite(room):
     print("doorstop sprite")
 
 
+def beam_darts_sprite(room, spec):
+    """House darts stuck in the beam over the oche. A sprite, not part of the background, because
+    they fall out when Paul thumps the oak post (the room script hides Props/BeamDarts)."""
+    if room != "berkeley_arms" or "beam_darts" not in spec.get("_meta", {}):
+        return
+    x, y = (round(v) for v in spec["_meta"]["beam_darts"])
+    path = ROOT / f"game/rooms/{room}/room_{room}.tscn"
+    text = path.read_text()
+    text = re.sub(r'\n\[node name="BeamDarts" type="Sprite2D"[^\]]*\]\n(?:[^\[\n][^\n]*\n)*', "\n", text)
+    res = f"res://game/rooms/{room}/props/beam_darts.png"
+    if f'path="{res}"' not in text:
+        text = add_ext(text, f'[ext_resource type="Texture2D" path="{res}" id="{next_ext_id(text)}_beamdarts"]')
+    eid = re.search(r'path="%s" id="([^"]+)"' % re.escape(res), text).group(1)
+    node = (f'[node name="BeamDarts" type="Sprite2D" parent="Props"]\n'
+            f'position = Vector2({x}, {y})\ntexture_filter = 1\ntexture = ExtResource("{eid}")\n'
+            f'centered = false\noffset = Vector2(-4, 0)\n\n')
+    text = text.replace('[node name="Hotspots"', node + '[node name="Hotspots"', 1)
+    path.write_text(text)
+    print("beam darts sprite", (x, y))
+
+
 def bar_front(room, spec):
     """Cut the bar counter out of the background as a y-sorted sprite, so the landlord stands
     behind it and Paul in front of it."""
@@ -285,7 +323,7 @@ def bar_front(room, spec):
 
 
 def item_icons():
-    for k in ("coin", "pint", "crawl_card", "skittle_pin"):
+    for k in ("coin", "pint", "crawl_card", "skittle_pin", "darts"):
         p = ROOT / f"game/inventory_items/{k}/inventory_item_{k}.tscn"
         t = p.read_text()
         if "texture = " in t:
@@ -306,5 +344,6 @@ if __name__ == "__main__":
         bake_floor(r, s["Floor"]["poly"])
         bar_front(r, s)
         doorstop_sprite(r)
+        beam_darts_sprite(r, s)
     sprite_chars()
     item_icons()

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://jtwbw5qummni"]
+
+[ext_resource type="Script" path="res://game/rooms/berkeley_arms/hotspots/dartboard/hotspot_dartboard.gd" id="1_1bn0b"]
+
+[node name="Dartboard" type="Area2D" unique_id=1497953336]
+script = ExtResource("1_1bn0b")
+script_name = "Dartboard"
+description = "Dartboard"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1289737113]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

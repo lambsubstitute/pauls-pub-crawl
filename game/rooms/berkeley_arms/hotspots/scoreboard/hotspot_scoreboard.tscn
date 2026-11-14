@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ni78vmbv7l4j"]
+
+[ext_resource type="Script" path="res://game/rooms/berkeley_arms/hotspots/scoreboard/hotspot_scoreboard.gd" id="1_agx03"]
+
+[node name="Scoreboard" type="Area2D" unique_id=987456505]
+script = ExtResource("1_agx03")
+script_name = "Scoreboard"
+description = "Scoreboard"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1071643819]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dmfmq0j3530fu"]
+
+[ext_resource type="Script" path="res://game/rooms/the_cross/hotspots/to_high_st/hotspot_to_high_st.gd" id="1_wjsc7"]
+
+[node name="ToHighSt" type="Area2D" unique_id=544864898]
+script = ExtResource("1_wjsc7")
+script_name = "ToHighSt"
+description = "To High St"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1938098213]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

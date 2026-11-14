@@ -7,7 +7,7 @@ extends EditorPlugin
 const ROOMS := {
 	"ChurchSt": {
 		"main": true,
-		"hotspots": ["TavernDoor", "Abbey", "Bench", "HopPoleDoor"],
+		"hotspots": ["TavernDoor", "Abbey", "Bench", "HopPoleDoor", "ToTheCross"],
 	},
 	"CrossHouseTavern": {
 		"main": false,
@@ -17,9 +17,22 @@ const ROOMS := {
 		"main": false,
 		"hotspots": ["Bar", "SkittleAlley", "ExitDoor", "Portrait"],
 	},
+	"TheCross": {
+		"main": false,
+		"hotspots": ["BerkeleyDoor", "BerkeleySign", "Memorial", "ToChurchSt", "ToHighSt"],
+	},
+	"BerkeleyArms": {
+		"main": false,
+		"hotspots": [
+			"Bar", "Pumps", "WaterJug", "Snug", "ExitDoor", "Fireplace", "Post", "Dartboard",
+			"Scoreboard", "BeamDarts",
+		],
+	},
 }
-const CHARACTERS := {"Paul": true, "Landlord": false, "Barmaid": false, "Reg": false}
-const ITEMS := ["CrawlCard", "Coin", "Pint", "SkittlePin"]
+const CHARACTERS := {
+	"Paul": true, "Landlord": false, "Barmaid": false, "Reg": false, "Clive": false, "Dot": false,
+}
+const ITEMS := ["CrawlCard", "Coin", "Pint", "SkittlePin", "Darts"]
 const PopochiuGuiTemplatesHelper = preload(
 	"res://addons/popochiu/editor/helpers/popochiu_gui_templates_helper.gd"
 )

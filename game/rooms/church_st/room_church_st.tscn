@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://4lta42j64xdj" path="res://game/rooms/church_st/hotspots/bench/hotspot_bench.tscn" id="5_r4mb6"]
 [ext_resource type="Texture2D" uid="uid://7gqvjw60rxy4" path="res://game/rooms/church_st/props/bg_church_st.png" id="6_bg"]
 [ext_resource type="PackedScene" uid="uid://c1fnlodvnbkem" path="res://game/rooms/church_st/hotspots/hop_pole_door/hotspot_hop_pole_door.tscn" id="7_m8oq3"]
+[ext_resource type="PackedScene" uid="uid://d2xw3a7c2pche" path="res://game/rooms/church_st/hotspots/to_the_cross/hotspot_to_the_cross.tscn" id="8_4jp8e"]
 
 [node name="RoomChurchSt" type="Node2D" unique_id=2112324511]
 script = ExtResource("1_cvlq4")
@@ -57,6 +58,13 @@ description = "Royal Hop Pole door"
 baseline = 118
 walk_to_point = Vector2(280, 126)
 interaction_polygon = PackedVector2Array(259, 81, 280, 81, 280, 118, 259, 118)
+
+[node name="ToTheCross" parent="Hotspots" unique_id=804994612 instance=ExtResource("8_4jp8e")]
+position = Vector2(0, 0)
+description = "Way to the Cross"
+baseline = 141
+walk_to_point = Vector2(317, 130)
+interaction_polygon = PackedVector2Array(287, 79, 320, 79, 320, 141, 287, 141)
 
 [node name="Regions" type="Node2D" parent="." unique_id=1644366990]
 

@@ -18,6 +18,10 @@ func _on_room_entered() -> void:
 		C.player.position = Vector2(272, 127)
 		C.player.face_left()
 		return
+	elif Globals.last_room == "TheCross":
+		C.player.position = Vector2(307, 130)  # from_cross: just in from the right-hand edge
+		C.player.face_left()
+		return
 	else:
 		C.player.position = Vector2(60, 132)
 	C.player.face_right()

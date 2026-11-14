@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dxm1c5a68rrl3"]
+
+[ext_resource type="Script" path="res://game/rooms/berkeley_arms/hotspots/fireplace/hotspot_fireplace.gd" id="1_fif4d"]
+
+[node name="Fireplace" type="Area2D" unique_id=462626751]
+script = ExtResource("1_fif4d")
+script_name = "Fireplace"
+description = "Fireplace"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=2066415800]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

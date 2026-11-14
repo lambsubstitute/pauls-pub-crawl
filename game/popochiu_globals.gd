@@ -8,6 +8,10 @@ const PUBS := [
 	"Britannia Inn", "Nottingham Arms", "Ye Olde Black Bear",
 ]
 
+## Merry enough to sway into things (DESIGN.md: 30+ is cursor drift and screen sway). The
+## Berkeley Arms darts only come down when Paul leans on the post this wobbly.
+const WOBBLY := 30
+
 ## 0 sober .. 100 "has a sit down". See DESIGN.md drunk table.
 var drunk := 0: set = set_drunk
 var stamps := 0: set = set_stamps
@@ -21,6 +25,12 @@ var pin_returned := false     # gave it back to Reg, so the alley has nine pins 
 var skittles_won := false
 var skittles_best := 0
 var hop_pole_pint := false
+# Berkeley Arms
+var darts_down := false       # knocked the house darts out of the beam over the oche
+var darts_given := false      # handed them to Dot, so she'll play
+var darts_won := false
+var darts_best := 0
+var berkeley_halves := 0      # halves Clive has pulled for Paul
 
 var _t := 0.0
 var _hud: CanvasLayer
@@ -48,6 +58,11 @@ func set_stamps(v: int) -> void:
 
 func drink(amount := 15) -> void:
 	drunk += amount
+
+
+## Water, chips, fresh air: the other way down the drunk table.
+func sober(amount := 25) -> void:
+	drunk -= amount
 
 
 ## How far things wobble right now, in pixels. Mini-games use this too.

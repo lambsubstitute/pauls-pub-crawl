@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dau3hkbykucum"]
+
+[ext_resource type="Script" path="res://game/characters/dot/character_dot.gd" id="1_85mbf"]
+[ext_resource type="Texture2D" path="res://game/characters/dot/dot_46.png" id="9_dottex"]
+
+[node name="CharacterDot" type="Area2D" unique_id=650568105]
+script = ExtResource("1_85mbf")
+script_name = "Dot"
+description = "Dot"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/dot/dot"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=180654559]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=697034720]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=50830891]
+texture = ExtResource("9_dottex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=667676699]
+visible = false
+polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=351021098]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

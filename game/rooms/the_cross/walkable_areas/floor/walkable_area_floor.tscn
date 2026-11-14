@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d0crmsd4h1ym6"]
+
+[ext_resource type="Script" path="res://game/rooms/the_cross/walkable_areas/floor/walkable_area_floor.gd" id="1_g55i7"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_f48mj"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(4, 119, 316, 119, 316, 148, 4, 148)])
+vertices = PackedVector2Array(4, 119, 316, 119, 316, 148, 4, 148)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+agent_radius = 0.0
+
+[node name="Floor" type="Node2D" unique_id=769073717]
+position = Vector2(0, 0)
+script = ExtResource("1_g55i7")
+script_name = "Floor"
+description = "Floor"
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 119, 316, 119, 316, 148, 4, 148)])
+
+[node name="Perimeter" type="NavigationRegion2D" parent="." unique_id=1245748670]
+modulate = Color(0, 1, 0, 1)
+navigation_polygon = SubResource("NavigationPolygon_f48mj")

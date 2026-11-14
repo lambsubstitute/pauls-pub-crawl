@@ -22,8 +22,13 @@ BAYER4 = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
 ROOM_FX = {
     # sky_rows: how far down (in 320x200 px) stars may appear; moon: centre in game px
     "church_st": {"stars": 60, "sky_rows": 34, "moon": (236, 9, 7)},
+    # Berkeley sign red + white kept as accents so the shield doesn't dither into brown
+    "the_cross": {"stars": 70, "sky_rows": 40, "moon": (52, 12, 7),
+                  "accents": [(170, 24, 20), (236, 232, 220), (255, 190, 70)]},
     # accents: palette slots kept for small saturated details median-cut would merge into brown
     "hop_pole": {"accents": [(40, 92, 64), (150, 26, 26), (240, 232, 214), (255, 190, 70), (70, 110, 200)]},
+    # dartboard red/green/cream, water-jug blue, brass and fire
+    "berkeley_arms": {"accents": [(190, 30, 24), (30, 140, 60), (236, 222, 180), (255, 190, 70), (120, 170, 230)]},
     "cross_house_tavern": {"accents": [(70, 140, 255), (40, 70, 170), (70, 220, 100), (170, 35, 30), (255, 190, 70)]},
 }
 

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dk02s785icuql"]
+
+[ext_resource type="Script" path="res://game/characters/clive/character_clive.gd" id="1_oyqtf"]
+[ext_resource type="Texture2D" path="res://game/characters/clive/clive_46.png" id="9_clivetex"]
+
+[node name="CharacterClive" type="Area2D" unique_id=269805228]
+script = ExtResource("1_oyqtf")
+script_name = "Clive"
+description = "Clive"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/clive/clive"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=71390884]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2112020882]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1197868155]
+texture = ExtResource("9_clivetex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=907788437]
+visible = false
+polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=1217739469]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

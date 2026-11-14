@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://opih4op2aptv"]
+
+[ext_resource type="Script" path="res://game/rooms/the_cross/room_the_cross.gd" id="1_jfvlq"]
+[ext_resource type="PackedScene" uid="uid://d0crmsd4h1ym6" path="res://game/rooms/the_cross/walkable_areas/floor/walkable_area_floor.tscn" id="2_rinaq"]
+[ext_resource type="PackedScene" uid="uid://bypbjgatu3pi0" path="res://game/rooms/the_cross/hotspots/berkeley_door/hotspot_berkeley_door.tscn" id="3_7y6j3"]
+[ext_resource type="PackedScene" uid="uid://c80halw7rwky1" path="res://game/rooms/the_cross/hotspots/berkeley_sign/hotspot_berkeley_sign.tscn" id="4_4y7i1"]
+[ext_resource type="PackedScene" uid="uid://d3118goq1ry3" path="res://game/rooms/the_cross/hotspots/memorial/hotspot_memorial.tscn" id="5_oo44d"]
+[ext_resource type="PackedScene" uid="uid://ddstjcj6cha7i" path="res://game/rooms/the_cross/hotspots/to_church_st/hotspot_to_church_st.tscn" id="6_1cds2"]
+[ext_resource type="PackedScene" uid="uid://dmfmq0j3530fu" path="res://game/rooms/the_cross/hotspots/to_high_st/hotspot_to_high_st.tscn" id="7_ucvsy"]
+[ext_resource type="Texture2D" path="res://game/rooms/the_cross/props/bg_the_cross.png" id="8_bg"]
+
+[node name="RoomTheCross" type="Node2D" unique_id=874833138]
+script = ExtResource("1_jfvlq")
+script_name = "TheCross"
+width = 320
+height = 200
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+texture = ExtResource("8_bg")
+centered = false
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=13950454]
+
+[node name="Floor" parent="WalkableAreas" unique_id=769073717 instance=ExtResource("2_rinaq")]
+position = Vector2(0, 0)
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 119, 316, 119, 316, 148, 4, 148)])
+
+[node name="Props" type="Node2D" parent="." unique_id=152486201]
+
+[node name="Hotspots" type="Node2D" parent="." unique_id=473002749]
+
+[node name="BerkeleyDoor" parent="Hotspots" unique_id=731842955 instance=ExtResource("3_7y6j3")]
+position = Vector2(0, 0)
+description = "Berkeley Arms door"
+baseline = 119
+walk_to_point = Vector2(79, 122)
+interaction_polygon = PackedVector2Array(76, 90, 92, 90, 92, 119, 76, 119)
+
+[node name="BerkeleySign" parent="Hotspots" unique_id=606844544 instance=ExtResource("4_4y7i1")]
+position = Vector2(0, 0)
+description = "Pub sign"
+baseline = 95
+walk_to_point = Vector2(153, 129)
+interaction_polygon = PackedVector2Array(145, 75, 161, 75, 161, 95, 145, 95)
+
+[node name="Memorial" parent="Hotspots" unique_id=155781416 instance=ExtResource("5_oo44d")]
+position = Vector2(0, 0)
+description = "War memorial"
+baseline = 98
+walk_to_point = Vector2(270, 121)
+interaction_polygon = PackedVector2Array(223, 28, 270, 28, 270, 98, 223, 98)
+
+[node name="ToChurchSt" parent="Hotspots" unique_id=935837249 instance=ExtResource("6_1cds2")]
+position = Vector2(0, 0)
+description = "Church Street"
+baseline = 141
+walk_to_point = Vector2(8, 130)
+interaction_polygon = PackedVector2Array(0, 79, 30, 79, 30, 141, 0, 141)
+
+[node name="ToHighSt" parent="Hotspots" unique_id=544864898 instance=ExtResource("7_ucvsy")]
+position = Vector2(0, 0)
+description = "High Street"
+baseline = 122
+walk_to_point = Vector2(315, 122)
+interaction_polygon = PackedVector2Array(291, 71, 320, 71, 320, 122, 291, 122)
+
+[node name="Regions" type="Node2D" parent="." unique_id=379410926]
+
+[node name="Markers" type="Node2D" parent="." unique_id=104270846]
+
+[node name="Characters" type="Node2D" parent="." unique_id=708832431]

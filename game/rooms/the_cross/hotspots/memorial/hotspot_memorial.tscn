@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://d3118goq1ry3"]
+
+[ext_resource type="Script" path="res://game/rooms/the_cross/hotspots/memorial/hotspot_memorial.gd" id="1_3q6dq"]
+
+[node name="Memorial" type="Area2D" unique_id=155781416]
+script = ExtResource("1_3q6dq")
+script_name = "Memorial"
+description = "Memorial"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1319931965]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
