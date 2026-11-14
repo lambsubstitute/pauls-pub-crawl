@@ -23,6 +23,8 @@ func on_use() -> void:
 	else:
 		await C.player.say("It wants a pound.")
 		await C.player.say("And my wallet's at home on the sideboard.")
+		if not Globals.found_coin:
+			await C.player.say("Maybe someone's dropped some change out on Church Street.")
 
 
 func on_push() -> void:

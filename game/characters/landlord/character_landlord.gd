@@ -37,6 +37,9 @@ func on_talk_to() -> void:
 	else:
 		await C.Landlord.say("Beat the quiz machine and I'll stamp your card.")
 		await C.player.say("How hard can it be?")
+		if not I.is_item_in_inventory("Coin") and not Globals.found_coin:
+			await C.player.say("...Don't suppose you'd lend me a pound for it?")
+			await C.Landlord.say("Ha! Have a look outside. Folk drop change by that bench all night.")
 
 
 func on_give() -> void:

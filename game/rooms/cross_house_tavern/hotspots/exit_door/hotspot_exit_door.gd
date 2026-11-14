@@ -28,7 +28,7 @@ func on_walk_to() -> void:
 
 func _leave() -> void:
 	await C.player.walk_to_clicked()
-	if Globals.stamps == 0:
-		await C.player.say("Not leaving without my first stamp.")
-		return
+	# Never block the exit: the coin for the quiz machine is outside, so blocking here softlocks.
+	if Globals.stamps == 0 and not Globals.quiz_won:
+		await C.player.say("I'll be back for that stamp.")
 	R.goto_room("ChurchSt")
