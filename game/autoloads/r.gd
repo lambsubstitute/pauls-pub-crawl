@@ -7,6 +7,7 @@ const PRCrossHouseTavern := preload("res://game/rooms/cross_house_tavern/room_cr
 const PRHopPole := preload("res://game/rooms/hop_pole/room_hop_pole.gd")
 const PRTheCross := preload("res://game/rooms/the_cross/room_the_cross.gd")
 const PRBerkeleyArms := preload("res://game/rooms/berkeley_arms/room_berkeley_arms.gd")
+const PRNottinghamArms := preload("res://game/rooms/nottingham_arms/room_nottingham_arms.gd")
 # ---- classes
 
 # nodes ----
@@ -15,6 +16,7 @@ var CrossHouseTavern: PRCrossHouseTavern : get = get_CrossHouseTavern
 var HopPole: PRHopPole : get = get_HopPole
 var TheCross: PRTheCross : get = get_TheCross
 var BerkeleyArms: PRBerkeleyArms : get = get_BerkeleyArms
+var NottinghamArms: PRNottinghamArms : get = get_NottinghamArms
 # ---- nodes
 
 # functions ----
@@ -23,5 +25,6 @@ func get_CrossHouseTavern() -> PRCrossHouseTavern: return get_runtime_room("Cros
 func get_HopPole() -> PRHopPole: return get_runtime_room("HopPole")
 func get_TheCross() -> PRTheCross: return get_runtime_room("TheCross")
 func get_BerkeleyArms() -> PRBerkeleyArms: return get_runtime_room("BerkeleyArms")
+func get_NottinghamArms() -> PRNottinghamArms: return get_runtime_room("NottinghamArms")
 # ---- functions
 

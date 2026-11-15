@@ -31,6 +31,16 @@ var darts_given := false      # handed them to Dot, so she'll play
 var darts_won := false
 var darts_best := 0
 var berkeley_halves := 0      # halves Clive has pulled for Paul
+# Nottingham Arms
+var butt_taken := false       # took the house cue's butt end out of the wall rack
+var rest_taken := false       # took the pool rest from beside the cue rack
+var norman_laughed := false   # laughed at Norman's story (only a merry Paul manages it)
+var shaft_swapped := false    # Norman swapped his "jukebox poker" (the cue shaft) for the rest
+var cue_made := false         # screwed the butt and shaft together into the house cue
+var cue_given := false        # handed the house cue to Gaz, so he'll play
+var pool_won := false
+var pool_best := 0            # most balls Paul has potted in one match
+var nottingham_halves := 0    # halves Jackie has pulled for Paul
 
 var _t := 0.0
 var _hud: CanvasLayer

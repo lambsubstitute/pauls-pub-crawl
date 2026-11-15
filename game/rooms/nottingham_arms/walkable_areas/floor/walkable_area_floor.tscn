@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dnslut5e4kjrl"]
+
+[ext_resource type="Script" path="res://game/rooms/nottingham_arms/walkable_areas/floor/walkable_area_floor.gd" id="1_oexoi"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_raytt"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(4, 109, 316, 109, 316, 147, 4, 147), PackedVector2Array(157, 114, 156, 123, 222, 123, 215, 114)])
+vertices = PackedVector2Array(4, 109, 316, 109, 316, 147, 4, 147, 157, 114, 156, 123, 222, 123, 215, 114)
+polygons = [PackedInt32Array(0, 1, 7, 4), PackedInt32Array(7, 1, 2, 6), PackedInt32Array(5, 6, 2, 3), PackedInt32Array(0, 4, 5, 3)]
+agent_radius = 0.0
+
+[node name="Floor" type="Node2D" unique_id=1153341787]
+position = Vector2(0, 0)
+script = ExtResource("1_oexoi")
+script_name = "Floor"
+description = "Floor"
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 109, 316, 109, 316, 147, 4, 147), PackedVector2Array(157, 114, 156, 123, 222, 123, 215, 114)])
+
+[node name="Perimeter" type="NavigationRegion2D" parent="." unique_id=1965340922]
+modulate = Color(0, 1, 0, 1)
+navigation_polygon = SubResource("NavigationPolygon_raytt")

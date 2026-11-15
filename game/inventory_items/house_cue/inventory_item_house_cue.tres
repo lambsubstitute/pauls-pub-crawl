@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://ca487hly7d4pa"]
+
+[ext_resource type="Script" path="res://game/inventory_items/house_cue/inventory_item_house_cue_state.gd" id="1_eibv3"]
+
+[resource]
+resource_name = "HouseCue"
+script = ExtResource("1_eibv3")
+script_name = "HouseCue"
+scene = "res://game/inventory_items/house_cue/inventory_item_house_cue.tscn"

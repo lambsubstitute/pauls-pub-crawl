@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://bolcdu0e8a884"]
+
+[ext_resource type="Script" path="res://game/inventory_items/cue_shaft/inventory_item_cue_shaft_state.gd" id="1_veh8l"]
+
+[resource]
+resource_name = "CueShaft"
+script = ExtResource("1_veh8l")
+script_name = "CueShaft"
+scene = "res://game/inventory_items/cue_shaft/inventory_item_cue_shaft.tscn"

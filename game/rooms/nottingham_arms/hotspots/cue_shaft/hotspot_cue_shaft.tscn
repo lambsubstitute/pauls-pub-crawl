@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dt2bsrc57s3x6"]
+
+[ext_resource type="Script" path="res://game/rooms/nottingham_arms/hotspots/cue_shaft/hotspot_cue_shaft.gd" id="1_kfn31"]
+
+[node name="CueShaft" type="Area2D" unique_id=504746403]
+script = ExtResource("1_kfn31")
+script_name = "CueShaft"
+description = "Cue Shaft"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1153457784]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

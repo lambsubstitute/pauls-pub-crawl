@@ -74,9 +74,38 @@ CHARS = {
         "build": 0.9, "hair_style": "perm", "beard": False, "apron": False, "collar": (240, 236, 226),
         "stature": 0.88, "glasses": True,
     },
+    # Nottingham Arms: Jackie the landlady (auburn bob), Gaz the pool king (waistcoat, tache),
+    # Norman the old regular (bald, white walrus moustache, glasses, cardigan, a bit stooped)
+    "jackie": {
+        "skin": (238, 190, 160), "skin_d": (198, 140, 114),
+        "hair": (150, 52, 34), "hair_d": (98, 30, 20),
+        "top": (40, 118, 128), "top_d": (24, 76, 84),
+        "legs": (36, 34, 44), "legs_d": (22, 20, 28),
+        "shoe": (40, 24, 24), "shoe_d": (24, 14, 14),
+        "build": 0.98, "hair_style": "bob", "beard": False, "apron": False, "collar": (240, 236, 226),
+        "earrings": (250, 204, 80),
+    },
+    "gaz": {
+        "skin": (230, 174, 140), "skin_d": (188, 126, 98),
+        "hair": (40, 32, 30), "hair_d": (22, 18, 16),
+        "top": (236, 234, 228), "top_d": (180, 178, 172),
+        "legs": (30, 30, 36), "legs_d": (18, 18, 22),
+        "shoe": (20, 18, 18), "shoe_d": (10, 10, 10),
+        "build": 0.96, "hair_style": "short", "beard": False, "apron": False, "collar": None,
+        "waistcoat": (36, 34, 40), "waistcoat_d": (20, 18, 24), "tache": True, "tie": (150, 24, 30),
+    },
+    "norman": {
+        "skin": (232, 182, 156), "skin_d": (190, 132, 110),
+        "hair": (232, 232, 228), "hair_d": (176, 176, 172),
+        "top": (132, 98, 58), "top_d": (92, 66, 36),
+        "legs": (84, 80, 70), "legs_d": (56, 52, 46),
+        "shoe": (58, 34, 22), "shoe_d": (34, 20, 12),
+        "build": 1.04, "hair_style": "bald", "beard": False, "apron": False, "collar": (226, 222, 208),
+        "tache": True, "glasses": True, "stature": 0.93,
+    },
 }
 SIZES = {"paul": (30, 46), "landlord": (30, 46), "barmaid": (30, 46), "reg": (30, 46),
-         "clive": (30, 46), "dot": (30, 46)}
+         "clive": (30, 46), "dot": (30, 46), "jackie": (30, 46), "gaz": (30, 46), "norman": (30, 46)}
 
 
 def poly(d, pts, fill, s, ox, oy):
@@ -165,6 +194,14 @@ def draw(c, H, frame):
         poly(d, [(-6 * k, y(66)), (-1 * k, y(66)), (0, y(30)), (-5 * k, y(30))], c["apron_d"], s, ox, oy)
     if c.get("collar"):
         poly(d, [(-1, y(78)), (8, y(78)), (6, y(73)), (2, y(74))], c["collar"], s, ox, oy)
+    if c.get("waistcoat"):
+        # open-fronted waistcoat over the shirt: shirt shows in a V down the chest, with a tie
+        poly(d, [(-11 * k, y(48)), (11 * k, y(48)), (12 * k, y(73)), (6 * k, y(78)), (4, y(77)), (5, y(56)),
+                 (3, y(50)), (-7 * k, y(78)), (-12 * k, y(73))], c["waistcoat"], s, ox, oy)
+        poly(d, [(-11 * k, y(48)), (-3 * k, y(48)), (-4 * k, y(78)), (-7 * k, y(78)), (-12 * k, y(73))],
+             c["waistcoat_d"], s, ox, oy)
+        if c.get("tie"):
+            poly(d, [(3, y(77)), (6, y(77)), (6, y(58)), (4.5, y(55)), (3, y(58))], c["tie"], s, ox, oy)
     # belt line / hips
     poly(d, [(-11 * k, y(49)), (11 * k, y(49)), (11 * k, y(46)), (-11 * k, y(46))], c["legs_d"], s, ox, oy)
 
@@ -192,6 +229,13 @@ def draw(c, H, frame):
         poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx + 3, y(hy + 13)), (hx + 9, y(hy + 9)),
                  (hx + 15, y(hy + 6)), (hx + 14, y(hy + 4)), (hx + 6, y(hy + 5))], c["cap"], s, ox, oy)  # flat cap + peak
         poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx - 3, y(hy + 12)), (hx - 4, y(hy + 4))], c["cap_d"], s, ox, oy)
+    elif c["hair_style"] == "bob":
+        # chin-length bob with a fringe, swinging forward past the cheek
+        poly(d, [(hx - 11, y(hy - 9)), (hx - 11, y(hy + 7)), (hx - 4, y(hy + 13)), (hx + 6, y(hy + 13)),
+                 (hx + 11, y(hy + 7)), (hx + 10, y(hy + 3)), (hx + 3, y(hy + 5)), (hx - 3, y(hy + 3)),
+                 (hx - 4, y(hy - 9))], c["hair"], s, ox, oy)
+        poly(d, [(hx - 11, y(hy - 9)), (hx - 11, y(hy + 7)), (hx - 6, y(hy + 10)), (hx - 6, y(hy - 9))],
+             c["hair_d"], s, ox, oy)
     elif c["hair_style"] == "perm":
         # tight grey curls: a cloud of small blobs over the crown and down to the ears
         for (dx, dy, r) in ((-9, 2, 4.2), (-8, 7, 4.4), (-4, 11, 4.6), (2, 12.5, 4.6), (6, 11, 3.8),
@@ -213,6 +257,12 @@ def draw(c, H, frame):
         d.point((ox + ex * s, oy + y(hy + 1) * s + 1), fill=(20, 16, 18, 255))
         d.line([ox + (ex - 2) * s, oy + y(hy + 4.5) * s, ox + (ex + 2) * s, oy + y(hy + 5) * s],
                fill=c["hair_d"] if c["hair_style"] == "short" else c["hair"])
+    if c.get("tache"):
+        # bushy moustache under the nose (Norman's is white, Gaz's is dark)
+        poly(d, [(hx + 2, y(hy - 3)), (hx + 11, y(hy - 3)), (hx + 11, y(hy - 6)), (hx + 7, y(hy - 5)),
+                 (hx + 3, y(hy - 6))], c["hair"], s, ox, oy)
+    if c.get("earrings") and H >= 40:
+        d.point((ox + (hx - 6) * s, oy + y(hy - 4) * s), fill=(*c["earrings"], 255))
     if c.get("glasses"):
         # thin silver rims: a bar across the eye line plus the arm back to the ear (a black
         # outline at this size reads as a mask)
@@ -353,3 +403,74 @@ if __name__ == "__main__":
     darts_sprite().save(ROOT / "game" / "rooms" / "berkeley_arms" / "props" / "beam_darts.png")
     darts_icon().save(ROOT / "game" / "inventory_items" / "darts" / "darts.png")
     print("wrote beam_darts.png and darts.png")
+
+
+# --------------------------------------------------- Nottingham Arms props ----
+WOOD, WOOD_D, BRASS = (196, 148, 92, 255), (120, 80, 44, 255), (230, 180, 70, 255)
+
+
+def cue_butt_sprite():
+    """The house cue's butt end standing in the wall rack: thick dark-wood half with a brass
+    joint at the top (the shaft screws in there)."""
+    img = Image.new("RGBA", (5, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rectangle([1, 3, 3, 15], fill=(70, 36, 20, 255))       # ebony butt
+    d.line([1, 3, 1, 15], fill=(40, 20, 12, 255))
+    d.rectangle([1, 9, 3, 11], fill=(150, 30, 30, 255))       # red wrap
+    d.rectangle([1, 1, 3, 2], fill=BRASS)                     # joint
+    d.point((2, 0), fill=BRASS)
+    return img
+
+
+def cue_shaft_sprite():
+    """Norman's 'jukebox poker': the house cue's top half, light ash, blue chalky tip,
+    leaning against the wall."""
+    img = Image.new("RGBA", (6, 27), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.line([1, 0, 4, 24], fill=WOOD)
+    d.line([2, 0, 5, 24], fill=WOOD_D)
+    d.point((1, 0), fill=(70, 110, 220, 255))                 # chalked tip
+    d.rectangle([3, 24, 5, 26], fill=BRASS)                   # brass joint at the bottom
+    return img
+
+
+def pool_rest_sprite():
+    """The pool rest leaning on the wall: long stick with a brass X head at the top."""
+    img = Image.new("RGBA", (9, 32), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.line([3, 5, 5, 31], fill=WOOD_D)
+    d.line([4, 5, 6, 31], fill=WOOD)
+    d.line([0, 0, 7, 6], fill=BRASS)                          # cross head
+    d.line([7, 0, 0, 6], fill=BRASS)
+    d.point((4, 3), fill=(150, 110, 40, 255))
+    return img
+
+
+def _icon_stick(parts):
+    icon = Image.new("RGBA", (24, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(icon)
+    for (x0, y0, x1, y1), col in parts:
+        d.line([x0, y0, x1, y1], fill=col, width=2)
+    return icon
+
+
+def cue_icons():
+    tip = (70, 110, 220, 255)
+    butt = _icon_stick([((3, 13, 12, 7), (70, 36, 20, 255)), ((7, 10, 9, 9), (150, 30, 30, 255)),
+                        ((12, 7, 14, 6), BRASS)])
+    shaft = _icon_stick([((8, 11, 20, 3), WOOD), ((6, 12, 8, 11), BRASS), ((20, 3, 21, 2), tip)])
+    cue = _icon_stick([((2, 14, 9, 10), (70, 36, 20, 255)), ((9, 10, 10, 9), BRASS), ((10, 9, 21, 2), WOOD),
+                       ((21, 2, 22, 1), tip)])
+    rest = _icon_stick([((3, 14, 16, 5), WOOD), ((15, 2, 21, 8), BRASS), ((21, 2, 15, 8), BRASS)])
+    return {"cue_butt": butt, "cue_shaft": shaft, "house_cue": cue, "pool_rest": rest}
+
+
+if __name__ == "__main__":
+    props = ROOT / "game" / "rooms" / "nottingham_arms" / "props"
+    props.mkdir(parents=True, exist_ok=True)
+    cue_butt_sprite().save(props / "cue_butt.png")
+    outline(cue_shaft_sprite()).save(props / "cue_shaft.png")
+    outline(pool_rest_sprite()).save(props / "pool_rest.png")
+    for k, im in cue_icons().items():
+        outline(im).save(ROOT / "game" / "inventory_items" / k / f"{k}.png")
+    print("wrote Nottingham Arms props and cue/rest icons")

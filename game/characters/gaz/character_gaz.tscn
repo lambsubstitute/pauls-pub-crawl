@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cvu1k87wvdc3h"]
+
+[ext_resource type="Script" path="res://game/characters/gaz/character_gaz.gd" id="1_r6e1o"]
+[ext_resource type="Texture2D" path="res://game/characters/gaz/gaz_46.png" id="9_gaztex"]
+
+[node name="CharacterGaz" type="Area2D" unique_id=377724926]
+script = ExtResource("1_r6e1o")
+script_name = "Gaz"
+description = "Gaz"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/gaz/gaz"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=1729609368]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=947164607]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=184059567]
+texture = ExtResource("9_gaztex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1901064763]
+visible = false
+polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=1493056346]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

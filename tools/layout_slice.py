@@ -58,8 +58,17 @@ ROOMS = {
         "Dartboard": {}, "Scoreboard": {}, "BeamDarts": {},
         "npcs": {},
     },
+    # the pool table stands in the middle of the floor: a hole in the walkable area plus a
+    # y-sorted cut-out sprite (see table_cutout)
+    "nottingham_arms": {
+        "Floor": {"poly": rect(4, 110, 316, 147)},
+        "Bar": {}, "Pumps": {}, "WaterJug": {}, "ExitDoor": {"desc_override": "Door to High Street"}, "Fireplace": {"desc_override": "Fireplace"},
+        "CueRack": {}, "PoolTable": {}, "PoolRest": {}, "Jukebox": {}, "CueShaft": {},
+        "LeagueBoard": {},
+        "npcs": {},
+    },
 }
-BAR_ROOMS = {"cross_house_tavern", "hop_pole", "berkeley_arms"}
+BAR_ROOMS = {"cross_house_tavern", "hop_pole", "berkeley_arms", "nottingham_arms"}
 
 import json
 
@@ -71,6 +80,8 @@ DESC = {
     "Memorial": "War memorial", "ToChurchSt": "Church Street", "ToHighSt": "High Street",
     "Pumps": "Beer pumps", "WaterJug": "Water jug", "Snug": "Snug", "Fireplace": "Inglenook",
     "Post": "Oak post", "Dartboard": "Dartboard", "Scoreboard": "Chalk scoreboard", "BeamDarts": "Darts",
+    "CueRack": "Cue rack", "PoolTable": "Pool table", "PoolRest": "Pool rest", "Jukebox": "Jukebox",
+    "CueShaft": "Cue shaft", "LeagueBoard": "League board",
 }
 
 
@@ -79,7 +90,12 @@ def from_render(room, fallback):
     if not j.exists():
         return fallback
     d = json.loads(j.read_text())
-    spec = {"Floor": {"poly": [(round(x), round(y)) for x, y in d["floor"]]}, "npcs": {}}
+    spec = {"Floor": {"poly": [(round(x), round(y)) for x, y in d["floor"]],
+                      # holes wound the other way round (TL, BL, BR, TR): Godot's bake unions
+                      # same-winding outlines, so only a reversed one is cut out
+                      "holes": [[(round(x), round(y)) for x, y in (h[0], h[3], h[2], h[1])]
+                                for h in d.get("floor_holes", [])]},
+            "npcs": {}}
     for name in fallback:
         if name in ("Floor", "npcs"):
             continue
@@ -93,7 +109,8 @@ def from_render(room, fallback):
         if name == "Bar":
             y0 = max(y0, y1 - 18)  # counter front only, so the landlord behind it stays clickable
         wy = min(146, max(spec["Floor"]["poly"][0][1] + 2, wy))
-        spec[name] = {"poly": rect(x0, y0, x1, y1), "walk": (round(wx), round(wy)), "desc": DESC.get(name, name),
+        desc = fallback[name].get("desc_override") or DESC.get(name, name)
+        spec[name] = {"poly": rect(x0, y0, x1, y1), "walk": (round(wx), round(wy)), "desc": desc,
                       "baseline": y1 if name != "Abbey" else 0}
     if "landlord_pos" in d:
         spec["npcs"]["Landlord"] = tuple(round(v) for v in d["landlord_pos"])
@@ -122,7 +139,7 @@ def from_render(room, fallback):
 
 
 CHAR_SCENES = {c: f"res://game/characters/{c.lower()}/character_{c.lower()}.tscn"
-               for c in ("Landlord", "Barmaid", "Reg", "Clive", "Dot")}
+               for c in ("Landlord", "Barmaid", "Reg", "Clive", "Dot", "Jackie", "Gaz", "Norman")}
 
 
 def vec_array(pts):
@@ -159,8 +176,9 @@ def layout(room, spec):
         if name in ("npcs", "npc_walk", "_meta"):
             continue
         if name == "Floor":
+            outlines = ", ".join(vec_array(o) for o in [s["poly"]] + s.get("holes", []))
             text = set_node_props(text, "Floor", "WalkableAreas", {
-                "interaction_polygon": f"Array[PackedVector2Array]([{vec_array(s['poly'])}])",
+                "interaction_polygon": f"Array[PackedVector2Array]([{outlines}])",
             })
             continue
         wx, wy = s["walk"]
@@ -207,7 +225,7 @@ def layout(room, spec):
     print("laid out", room)
 
 
-def bake_floor(room, poly):
+def bake_floor(room, poly, holes=()):
     """Write the floor polygon into the walkable area's own scene, pre-baked.
 
     Popochiu rebakes navigation at runtime from the room's interaction_polygon, but the web
@@ -218,17 +236,26 @@ def bake_floor(room, poly):
     t = p.read_text()
     arr = vec_array(poly)
     idx = ", ".join(str(i) for i in range(len(poly)))
+    outlines, verts, polys = arr, arr, f"PackedInt32Array({idx})"
+    if holes:
+        # One quad hole in a quad floor (the pool table): outer 0-3 (TL, TR, BR, BL), hole 4-7
+        # reversed (TL, BL, BR, TR), split into four convex quads round the hole.
+        (h,) = holes
+        outlines = ", ".join(vec_array(o) for o in [poly, h])
+        verts = vec_array(list(poly) + list(h))
+        polys = ", ".join(f"PackedInt32Array({q})" for q in
+                          ("0, 1, 7, 4", "7, 1, 2, 6", "5, 6, 2, 3", "0, 4, 5, 3"))
     t = re.sub(r"outlines = Array\[PackedVector2Array\]\(\[.*?\]\)\n(?:vertices = .*\n)?(?:polygons = .*\n)?",
-               f"outlines = Array[PackedVector2Array]([{arr}])\nvertices = {arr}\npolygons = [PackedInt32Array({idx})]\n", t)
+               f"outlines = Array[PackedVector2Array]([{outlines}])\nvertices = {verts}\npolygons = [{polys}]\n", t)
     t = re.sub(r"(\[node name=\"Floor\" type=\"Node2D\"[^\]]*\]\n)position = Vector2\([^)]*\)\n", r"\1position = Vector2(0, 0)\n", t)
-    t = re.sub(r"^interaction_polygon = .*$", f"interaction_polygon = Array[PackedVector2Array]([{arr}])", t, flags=re.M)
+    t = re.sub(r"^interaction_polygon = .*$", f"interaction_polygon = Array[PackedVector2Array]([{outlines}])", t, flags=re.M)
     p.write_text(t)
     print("baked floor", room)
 
 
 def sprite_chars():
     """Point each character at its 46px sprite sheet (10 frames). PixelActor swaps sizes per room."""
-    for c in ("paul", "landlord", "barmaid", "reg", "clive", "dot"):
+    for c in ("paul", "landlord", "barmaid", "reg", "clive", "dot", "jackie", "gaz", "norman"):
         p = ROOT / f"game/characters/{c}/character_{c}.tscn"
         t = p.read_text()
         if f'id="9_{c}tex"' not in t:
@@ -295,6 +322,72 @@ def beam_darts_sprite(room, spec):
     print("beam darts sprite", (x, y))
 
 
+def _prop_sprite(text, room, node, png, pos, offset):
+    """(Re)place a Sprite2D under Props, before the Hotspots node."""
+    text = re.sub(r'\n\[node name="%s" type="Sprite2D"[^\]]*\]\n(?:[^\[\n][^\n]*\n)*' % node, "\n", text)
+    res = f"res://game/rooms/{room}/props/{png}"
+    if f'path="{res}"' not in text:
+        text = add_ext(text, f'[ext_resource type="Texture2D" path="{res}" id="{next_ext_id(text)}_{node.lower()}"]')
+    eid = re.search(r'path="%s" id="([^"]+)"' % re.escape(res), text).group(1)
+    node_txt = (f'[node name="{node}" type="Sprite2D" parent="Props"]\n'
+                f'position = Vector2({pos[0]}, {pos[1]})\ntexture_filter = 1\ntexture = ExtResource("{eid}")\n'
+                f'centered = false\noffset = Vector2({offset[0]}, {offset[1]})\n\n')
+    text = text.replace('[node name="Hotspots"', node_txt + '[node name="Hotspots"', 1)
+    return re.sub(r"\n{3,}", "\n\n", text)
+
+
+def table_cutout(room, spec):
+    """Cut the pool table out of the background as a y-sorted sprite, using the table-only alpha
+    mask Blender rendered (art/renders/<room>_table.png), so Paul is hidden behind it from the
+    back and drawn over it from the front. Without the mask a rectangle would hide him behind
+    plain wall too."""
+    meta = spec.get("_meta", {})
+    mask_png = ROOT / "art" / "renders" / f"{room}_table.png"
+    if "table_baseline" not in meta:
+        return
+    from PIL import Image
+    out = ROOT / f"game/rooms/{room}/props/pool_table_front.png"
+    if mask_png.exists():
+        bg = Image.open(ROOT / f"game/rooms/{room}/props/bg_{room}.png").convert("RGBA")
+        a = Image.open(mask_png).getchannel("A").resize((320, 200), Image.Resampling.BOX)
+        a = a.point(lambda v: 255 if v >= 110 else 0)
+        x0, y0, x1, y1 = a.getbbox()
+        crop = bg.crop((x0, y0, x1, y1))
+        crop.putalpha(a.crop((x0, y0, x1, y1)))
+        crop.save(out)
+        meta["_table_box"] = (x0, y0, x1, y1)
+        (ROOT / "art" / "renders" / f"{room}_table_box.json").write_text(json.dumps([x0, y0, x1, y1]))
+    else:  # renders are not committed: keep the box the last cut used
+        box = ROOT / "art" / "renders" / f"{room}_table_box.json"
+        if not box.exists() or not out.exists():
+            return
+        x0, y0, x1, y1 = json.loads(box.read_text())
+    base = round(meta["table_baseline"])
+    path = ROOT / f"game/rooms/{room}/room_{room}.tscn"
+    text = _prop_sprite(path.read_text(), room, "PoolTableFront", "pool_table_front.png", (0, base), (x0, y0 - base))
+    path.write_text(text)
+    print("table cut-out", (x0, y0, x1, y1), "baseline", base)
+
+
+def pickup_sprites(room, spec):
+    """Things Paul picks up in the Nottingham Arms (drawn by tools/sprites.py): the cue butt in
+    the rack, the pool rest leaning on the wall and Norman's cue shaft by the fireplace. Each
+    anchor is the bottom of the object; the room script hides them once taken."""
+    meta = spec.get("_meta", {})
+    if room != "nottingham_arms" or "cue_butt" not in meta:
+        return
+    from PIL import Image
+    path = ROOT / f"game/rooms/{room}/room_{room}.tscn"
+    text = path.read_text()
+    for node, key, png in (("CueButt", "cue_butt", "cue_butt.png"), ("PoolRestProp", "pool_rest", "pool_rest.png"),
+                           ("CueShaftProp", "cue_shaft", "cue_shaft.png")):
+        im = Image.open(ROOT / f"game/rooms/{room}/props/{png}")
+        x, y = (round(v) for v in meta[key])
+        text = _prop_sprite(text, room, node, png, (x, y), (-(im.width // 2), -im.height))
+    path.write_text(text)
+    print("pickup sprites")
+
+
 def bar_front(room, spec):
     """Cut the bar counter out of the background as a y-sorted sprite, so the landlord stands
     behind it and Paul in front of it."""
@@ -323,7 +416,7 @@ def bar_front(room, spec):
 
 
 def item_icons():
-    for k in ("coin", "pint", "crawl_card", "skittle_pin", "darts"):
+    for k in ("coin", "pint", "crawl_card", "skittle_pin", "darts", "cue_butt", "cue_shaft", "house_cue", "pool_rest"):
         p = ROOT / f"game/inventory_items/{k}/inventory_item_{k}.tscn"
         t = p.read_text()
         if "texture = " in t:
@@ -341,9 +434,11 @@ if __name__ == "__main__":
     for r, s in ROOMS.items():
         s = from_render(r, s)
         layout(r, s)
-        bake_floor(r, s["Floor"]["poly"])
+        bake_floor(r, s["Floor"]["poly"], s["Floor"].get("holes", ()))
         bar_front(r, s)
         doorstop_sprite(r)
         beam_darts_sprite(r, s)
+        table_cutout(r, s)
+        pickup_sprites(r, s)
     sprite_chars()
     item_icons()
