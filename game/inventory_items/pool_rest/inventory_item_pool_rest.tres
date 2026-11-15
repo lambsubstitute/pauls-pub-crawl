@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://dma58mjgrmfn"]
+
+[ext_resource type="Script" path="res://game/inventory_items/pool_rest/inventory_item_pool_rest_state.gd" id="1_mc6ik"]
+
+[resource]
+resource_name = "PoolRest"
+script = ExtResource("1_mc6ik")
+script_name = "PoolRest"
+scene = "res://game/inventory_items/pool_rest/inventory_item_pool_rest.tscn"

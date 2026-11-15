@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dij807juh2soi"]
+
+[ext_resource type="Script" path="res://game/characters/jackie/character_jackie.gd" id="1_cb21w"]
+[ext_resource type="Texture2D" path="res://game/characters/jackie/jackie_46.png" id="9_jackietex"]
+
+[node name="CharacterJackie" type="Area2D" unique_id=298430690]
+script = ExtResource("1_cb21w")
+script_name = "Jackie"
+description = "Jackie"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/jackie/jackie"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=488838278]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=150055344]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1743081783]
+texture = ExtResource("9_jackietex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=5634772]
+visible = false
+polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=1360450578]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

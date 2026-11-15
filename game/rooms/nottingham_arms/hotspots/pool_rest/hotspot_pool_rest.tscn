@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://caovj4ppwmwvp"]
+
+[ext_resource type="Script" path="res://game/rooms/nottingham_arms/hotspots/pool_rest/hotspot_pool_rest.gd" id="1_ffbkp"]
+
+[node name="PoolRest" type="Area2D" unique_id=1425971844]
+script = ExtResource("1_ffbkp")
+script_name = "PoolRest"
+description = "Pool Rest"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=36745334]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

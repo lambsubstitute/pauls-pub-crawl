@@ -1,7 +1,7 @@
 @tool
 extends PopochiuHotspot
-## Nottingham Arms, 129 High St (stop 5). Stub until its room is built: then send Paul in with
-## R.goto_room("NottinghamArms"); HighSt already has its spawn (last_room "NottinghamArms").
+## Nottingham Arms, 129 High St (stop 5). Coming back out, HighSt spawns Paul at from_nottingham
+## (the room sets Globals.last_room = "NottinghamArms").
 
 
 func _on_click() -> void:
@@ -27,4 +27,6 @@ func on_walk_to() -> void:
 
 func _go_in() -> void:
 	await C.player.walk_to_clicked()
-	await C.player.say("Not yet - one pub at a time.")
+	if Globals.stamps < 4:
+		await C.player.say("Britannia's stamp should come first... but a quick look won't hurt.")
+	R.goto_room("NottinghamArms")

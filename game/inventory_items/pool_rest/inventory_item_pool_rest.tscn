@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://boibqya5hsodh"]
+
+[ext_resource type="Script" path="res://game/inventory_items/pool_rest/inventory_item_pool_rest.gd" id="1_jiwx5"]
+[ext_resource type="Texture2D" path="res://game/inventory_items/pool_rest/pool_rest.png" id="9_pool_rest"]
+
+[node name="ItemPoolRest" type="TextureRect" unique_id=256181576]
+texture = ExtResource("9_pool_rest")
+texture_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 0
+stretch_mode = 5
+script = ExtResource("1_jiwx5")
+script_name = "PoolRest"
+description = "Pool Rest"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=781748275]

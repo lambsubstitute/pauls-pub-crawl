@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bndhay2ahmixc"]
+
+[ext_resource type="Script" path="res://game/rooms/nottingham_arms/hotspots/bar/hotspot_bar.gd" id="1_4fbc3"]
+
+[node name="Bar" type="Area2D" unique_id=717707454]
+script = ExtResource("1_4fbc3")
+script_name = "Bar"
+description = "Bar"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=136815270]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cend7w5uo4agb"]
+
+[ext_resource type="Script" path="res://game/characters/norman/character_norman.gd" id="1_fwaga"]
+[ext_resource type="Texture2D" path="res://game/characters/norman/norman_46.png" id="9_normantex"]
+
+[node name="CharacterNorman" type="Area2D" unique_id=1015992140]
+script = ExtResource("1_fwaga")
+script_name = "Norman"
+description = "Norman"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/norman/norman"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=1077189176]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=829248943]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=478459587]
+texture = ExtResource("9_normantex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=758142600]
+visible = false
+polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=744657304]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

@@ -1,0 +1,176 @@
+[gd_scene format=3 uid="uid://bpmnds3qh1trc"]
+
+[ext_resource type="Script" path="res://game/rooms/nottingham_arms/room_nottingham_arms.gd" id="1_k625x"]
+[ext_resource type="PackedScene" uid="uid://dnslut5e4kjrl" path="res://game/rooms/nottingham_arms/walkable_areas/floor/walkable_area_floor.tscn" id="2_rhvd6"]
+[ext_resource type="PackedScene" uid="uid://bndhay2ahmixc" path="res://game/rooms/nottingham_arms/hotspots/bar/hotspot_bar.tscn" id="3_5evos"]
+[ext_resource type="PackedScene" uid="uid://bgdibmhsr4qr" path="res://game/rooms/nottingham_arms/hotspots/pumps/hotspot_pumps.tscn" id="4_3ikjv"]
+[ext_resource type="PackedScene" uid="uid://cw1n7ncedqbpx" path="res://game/rooms/nottingham_arms/hotspots/water_jug/hotspot_water_jug.tscn" id="5_6qj5s"]
+[ext_resource type="PackedScene" uid="uid://cdoq8jbad4s3i" path="res://game/rooms/nottingham_arms/hotspots/exit_door/hotspot_exit_door.tscn" id="6_2wduy"]
+[ext_resource type="PackedScene" uid="uid://b8q4aiq60dn2o" path="res://game/rooms/nottingham_arms/hotspots/cue_rack/hotspot_cue_rack.tscn" id="7_87wcr"]
+[ext_resource type="PackedScene" uid="uid://dbrr2w0hso30o" path="res://game/rooms/nottingham_arms/hotspots/pool_table/hotspot_pool_table.tscn" id="8_vujsg"]
+[ext_resource type="PackedScene" uid="uid://caovj4ppwmwvp" path="res://game/rooms/nottingham_arms/hotspots/pool_rest/hotspot_pool_rest.tscn" id="9_jyc8v"]
+[ext_resource type="PackedScene" uid="uid://bflljp4hsjdh3" path="res://game/rooms/nottingham_arms/hotspots/jukebox/hotspot_jukebox.tscn" id="10_1vwbm"]
+[ext_resource type="PackedScene" uid="uid://cppip4ffgpo5e" path="res://game/rooms/nottingham_arms/hotspots/fireplace/hotspot_fireplace.tscn" id="11_av8uv"]
+[ext_resource type="PackedScene" uid="uid://dt2bsrc57s3x6" path="res://game/rooms/nottingham_arms/hotspots/cue_shaft/hotspot_cue_shaft.tscn" id="12_4ocp2"]
+[ext_resource type="PackedScene" uid="uid://nho1nm54q02" path="res://game/rooms/nottingham_arms/hotspots/league_board/hotspot_league_board.tscn" id="13_i1hro"]
+[ext_resource type="Texture2D" path="res://game/rooms/nottingham_arms/props/bg_nottingham_arms.png" id="14_bg"]
+[ext_resource type="PackedScene" path="res://game/characters/jackie/character_jackie.tscn" id="15_jackie"]
+[ext_resource type="PackedScene" path="res://game/characters/gaz/character_gaz.tscn" id="16_gaz"]
+[ext_resource type="PackedScene" path="res://game/characters/norman/character_norman.tscn" id="17_norman"]
+[ext_resource type="Texture2D" path="res://game/rooms/nottingham_arms/props/bar_front.png" id="18_barfront"]
+[ext_resource type="Texture2D" path="res://game/rooms/nottingham_arms/props/pool_table_front.png" id="19_pooltablefront"]
+[ext_resource type="Texture2D" path="res://game/rooms/nottingham_arms/props/cue_butt.png" id="20_cuebutt"]
+[ext_resource type="Texture2D" path="res://game/rooms/nottingham_arms/props/pool_rest.png" id="21_poolrestprop"]
+[ext_resource type="Texture2D" path="res://game/rooms/nottingham_arms/props/cue_shaft.png" id="22_cueshaftprop"]
+
+[node name="RoomNottinghamArms" type="Node2D" unique_id=678262026]
+script = ExtResource("1_k625x")
+script_name = "NottinghamArms"
+width = 320
+height = 200
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+texture = ExtResource("14_bg")
+centered = false
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=416555925]
+
+[node name="Floor" parent="WalkableAreas" unique_id=1153341787 instance=ExtResource("2_rhvd6")]
+position = Vector2(0, 0)
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 109, 316, 109, 316, 147, 4, 147), PackedVector2Array(157, 114, 156, 123, 222, 123, 215, 114)])
+
+[node name="Props" type="Node2D" parent="." unique_id=240612888]
+
+[node name="BarFront" type="Sprite2D" parent="Props"]
+position = Vector2(0, 109)
+texture_filter = 1
+texture = ExtResource("18_barfront")
+centered = false
+offset = Vector2(0, -26)
+
+[node name="PoolTableFront" type="Sprite2D" parent="Props"]
+position = Vector2(0, 122)
+texture_filter = 1
+texture = ExtResource("19_pooltablefront")
+centered = false
+offset = Vector2(159, -26)
+
+[node name="CueButt" type="Sprite2D" parent="Props"]
+position = Vector2(142, 91)
+texture_filter = 1
+texture = ExtResource("20_cuebutt")
+centered = false
+offset = Vector2(-2, -16)
+
+[node name="PoolRestProp" type="Sprite2D" parent="Props"]
+position = Vector2(157, 102)
+texture_filter = 1
+texture = ExtResource("21_poolrestprop")
+centered = false
+offset = Vector2(-4, -32)
+
+[node name="CueShaftProp" type="Sprite2D" parent="Props"]
+position = Vector2(292, 102)
+texture_filter = 1
+texture = ExtResource("22_cueshaftprop")
+centered = false
+offset = Vector2(-3, -27)
+
+[node name="Hotspots" type="Node2D" parent="." unique_id=1861279839]
+
+[node name="Bar" parent="Hotspots" unique_id=717707454 instance=ExtResource("3_5evos")]
+position = Vector2(0, 0)
+description = "Bar"
+baseline = 109
+walk_to_point = Vector2(45, 111)
+interaction_polygon = PackedVector2Array(0, 91, 81, 91, 81, 109, 0, 109)
+
+[node name="Pumps" parent="Hotspots" unique_id=850201440 instance=ExtResource("4_3ikjv")]
+position = Vector2(0, 0)
+description = "Beer pumps"
+baseline = 83
+walk_to_point = Vector2(22, 111)
+interaction_polygon = PackedVector2Array(10, 70, 39, 70, 39, 83, 10, 83)
+
+[node name="WaterJug" parent="Hotspots" unique_id=1974862319 instance=ExtResource("5_6qj5s")]
+position = Vector2(0, 0)
+description = "Water jug"
+baseline = 85
+walk_to_point = Vector2(74, 111)
+interaction_polygon = PackedVector2Array(73, 77, 80, 77, 80, 85, 73, 85)
+
+[node name="ExitDoor" parent="Hotspots" unique_id=624289734 instance=ExtResource("6_2wduy")]
+position = Vector2(0, 0)
+description = "Door to High Street"
+baseline = 103
+walk_to_point = Vector2(101, 111)
+interaction_polygon = PackedVector2Array(96, 62, 119, 62, 119, 103, 96, 103)
+
+[node name="CueRack" parent="Hotspots" unique_id=391751204 instance=ExtResource("7_87wcr")]
+position = Vector2(0, 0)
+description = "Cue rack"
+baseline = 92
+walk_to_point = Vector2(136, 111)
+interaction_polygon = PackedVector2Array(130, 62, 146, 62, 146, 92, 130, 92)
+
+[node name="PoolTable" parent="Hotspots" unique_id=1233874752 instance=ExtResource("8_vujsg")]
+position = Vector2(0, 0)
+description = "Pool table"
+baseline = 122
+walk_to_point = Vector2(182, 125)
+interaction_polygon = PackedVector2Array(158, 94, 220, 94, 220, 122, 158, 122)
+
+[node name="PoolRest" parent="Hotspots" unique_id=1425971844 instance=ExtResource("9_jyc8v")]
+position = Vector2(0, 0)
+description = "Pool rest"
+baseline = 103
+walk_to_point = Vector2(157, 111)
+interaction_polygon = PackedVector2Array(153, 69, 160, 69, 160, 103, 153, 103)
+
+[node name="Jukebox" parent="Hotspots" unique_id=1968617384 instance=ExtResource("10_1vwbm")]
+position = Vector2(0, 0)
+description = "Jukebox"
+baseline = 104
+walk_to_point = Vector2(206, 111)
+interaction_polygon = PackedVector2Array(200, 69, 221, 69, 221, 104, 200, 104)
+
+[node name="Fireplace" parent="Hotspots" unique_id=32494485 instance=ExtResource("11_av8uv")]
+position = Vector2(0, 0)
+description = "Fireplace"
+baseline = 103
+walk_to_point = Vector2(279, 111)
+interaction_polygon = PackedVector2Array(262, 79, 285, 79, 285, 103, 262, 103)
+
+[node name="CueShaft" parent="Hotspots" unique_id=504746403 instance=ExtResource("12_4ocp2")]
+position = Vector2(0, 0)
+description = "Cue shaft"
+baseline = 103
+walk_to_point = Vector2(296, 111)
+interaction_polygon = PackedVector2Array(288, 73, 296, 73, 296, 103, 288, 103)
+
+[node name="LeagueBoard" parent="Hotspots" unique_id=489731855 instance=ExtResource("13_i1hro")]
+position = Vector2(0, 0)
+description = "League board"
+baseline = 74
+walk_to_point = Vector2(182, 111)
+interaction_polygon = PackedVector2Array(167, 58, 192, 58, 192, 74, 167, 74)
+
+[node name="Regions" type="Node2D" parent="." unique_id=732354333]
+
+[node name="Markers" type="Node2D" parent="." unique_id=1329735215]
+
+[node name="Characters" type="Node2D" parent="." unique_id=128101294]
+
+[node name="CharacterJackie" parent="Characters" instance=ExtResource("15_jackie")]
+position = Vector2(58, 104)
+walk_to_point = Vector2(3, 6)
+
+[node name="CharacterGaz" parent="Characters" instance=ExtResource("16_gaz")]
+position = Vector2(234, 124)
+walk_to_point = Vector2(-17, 2)
+
+[node name="CharacterNorman" parent="Characters" instance=ExtResource("17_norman")]
+position = Vector2(250, 111)
+walk_to_point = Vector2(-16, 1)

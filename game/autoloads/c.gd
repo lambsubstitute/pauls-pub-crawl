@@ -10,6 +10,9 @@ const PCClive := preload("res://game/characters/clive/character_clive.gd")
 const PCDot := preload("res://game/characters/dot/character_dot.gd")
 const PCGwen := preload("res://game/characters/gwen/character_gwen.gd")
 const PCStan := preload("res://game/characters/stan/character_stan.gd")
+const PCJackie := preload("res://game/characters/jackie/character_jackie.gd")
+const PCGaz := preload("res://game/characters/gaz/character_gaz.gd")
+const PCNorman := preload("res://game/characters/norman/character_norman.gd")
 # ---- classes
 
 # nodes ----
@@ -21,6 +24,9 @@ var Clive: PCClive : get = get_Clive
 var Dot: PCDot : get = get_Dot
 var Gwen: PCGwen : get = get_Gwen
 var Stan: PCStan : get = get_Stan
+var Jackie: PCJackie : get = get_Jackie
+var Gaz: PCGaz : get = get_Gaz
+var Norman: PCNorman : get = get_Norman
 # ---- nodes
 
 # functions ----
@@ -32,5 +38,8 @@ func get_Clive() -> PCClive: return get_runtime_character("Clive")
 func get_Dot() -> PCDot: return get_runtime_character("Dot")
 func get_Gwen() -> PCGwen: return get_runtime_character("Gwen")
 func get_Stan() -> PCStan: return get_runtime_character("Stan")
+func get_Jackie() -> PCJackie: return get_runtime_character("Jackie")
+func get_Gaz() -> PCGaz: return get_runtime_character("Gaz")
+func get_Norman() -> PCNorman: return get_runtime_character("Norman")
 # ---- functions
 

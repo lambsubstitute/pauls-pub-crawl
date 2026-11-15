@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cppip4ffgpo5e"]
+
+[ext_resource type="Script" path="res://game/rooms/nottingham_arms/hotspots/fireplace/hotspot_fireplace.gd" id="1_wt27b"]
+
+[node name="Fireplace" type="Area2D" unique_id=32494485]
+script = ExtResource("1_wt27b")
+script_name = "Fireplace"
+description = "Fireplace"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1307052027]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

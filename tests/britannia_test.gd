@@ -89,9 +89,13 @@ func _ready() -> void:
 	_ok(C.player.position.distance_to(Vector2(310, 125)) < 4, "arrive at the Cross's right edge (%s)" % C.player.position)
 	await _act(_hot("ToHighSt"), "on_use", "HighSt")
 
-	# --- stub doors for the later pubs say no and leave Paul on High St
-	await _act(_hot("NottinghamDoor"), "on_open")
-	_ok(_room() == "HighSt", "Nottingham Arms door is a polite stub")
+	# --- the Nottingham Arms door goes in; its exit brings Paul back out by that door
+	await _act(_hot("NottinghamDoor"), "on_open", "NottinghamArms")
+	_ok(_room() == "NottinghamArms", "Nottingham Arms door leads inside")
+	await _act(_hot("ExitDoor"), "on_open", "HighSt")
+	_ok(_room() == "HighSt", "Nottingham Arms exit leads back to High St")
+	_ok(C.player.position.distance_to(Vector2(159, 123)) < 4, "arrive outside the Nottingham door (%s)" % C.player.position)
+	# --- the Black Bear door is still a stub and leaves Paul on High St
 	await _act(_hot("BlackBearDoor"), "on_walk_to")
 	_ok(_room() == "HighSt", "Black Bear door is a polite stub")
 	_ok(_hot("BlackBearDoor").get_node("InteractionPolygon").polygon[0].x > 200, "Black Bear is at the far right")

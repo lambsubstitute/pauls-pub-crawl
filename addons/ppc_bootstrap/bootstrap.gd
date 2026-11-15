@@ -39,12 +39,22 @@ const ROOMS := {
 			"Window",
 		],
 	},
+	"NottinghamArms": {
+		"main": false,
+		"hotspots": [
+			"Bar", "Pumps", "WaterJug", "ExitDoor", "CueRack", "PoolTable", "PoolRest", "Jukebox",
+			"Fireplace", "CueShaft", "LeagueBoard",
+		],
+	},
 }
 const CHARACTERS := {
 	"Paul": true, "Landlord": false, "Barmaid": false, "Reg": false, "Clive": false, "Dot": false,
 	"Gwen": false, "Stan": false,
+	"Jackie": false, "Gaz": false, "Norman": false,
 }
-const ITEMS := ["CrawlCard", "Coin", "Pint", "SkittlePin", "Darts", "Halfpenny"]
+const ITEMS := [
+	"CrawlCard", "Coin", "Pint", "SkittlePin", "Darts", "Halfpenny", "CueButt", "CueShaft", "HouseCue", "PoolRest",
+]
 const PopochiuGuiTemplatesHelper = preload(
 	"res://addons/popochiu/editor/helpers/popochiu_gui_templates_helper.gd"
 )

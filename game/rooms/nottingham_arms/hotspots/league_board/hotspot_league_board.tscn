@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://nho1nm54q02"]
+
+[ext_resource type="Script" path="res://game/rooms/nottingham_arms/hotspots/league_board/hotspot_league_board.gd" id="1_sohwa"]
+
+[node name="LeagueBoard" type="Area2D" unique_id=489731855]
+script = ExtResource("1_sohwa")
+script_name = "LeagueBoard"
+description = "League Board"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1728121636]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

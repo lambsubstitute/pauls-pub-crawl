@@ -25,4 +25,9 @@ func _ready() -> void:
 	await get_tree().create_timer(3.0).timeout
 	_check(C.Gwen)
 	_check(C.Stan)
+	R.goto_room("NottinghamArms")
+	await get_tree().create_timer(3.0).timeout
+	_check(C.Jackie)
+	_check(C.Gaz)
+	_check(C.Norman)
 	get_tree().quit()
