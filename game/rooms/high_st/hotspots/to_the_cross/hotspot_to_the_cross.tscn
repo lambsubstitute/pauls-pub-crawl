@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://disxov2pj16k8"]
+
+[ext_resource type="Script" path="res://game/rooms/high_st/hotspots/to_the_cross/hotspot_to_the_cross.gd" id="1_wifkg"]
+
+[node name="ToTheCross" type="Area2D" unique_id=1933376476]
+script = ExtResource("1_wifkg")
+script_name = "ToTheCross"
+description = "To The Cross"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=624311372]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -11,6 +11,9 @@ const PUBS := [
 ## Merry enough to sway into things (DESIGN.md: 30+ is cursor drift and screen sway). The
 ## Berkeley Arms darts only come down when Paul leans on the post this wobbly.
 const WOBBLY := 30
+## Seeing double (DESIGN.md: 60+). Mini-games draw a ghost copy; in the Britannia a hidden
+## picture only exists in Paul's double vision.
+const SEEING_DOUBLE := 60
 
 ## 0 sober .. 100 "has a sit down". See DESIGN.md drunk table.
 var drunk := 0: set = set_drunk
@@ -31,6 +34,13 @@ var darts_given := false      # handed them to Dot, so she'll play
 var darts_won := false
 var darts_best := 0
 var berkeley_halves := 0      # halves Clive has pulled for Paul
+# Britannia Inn
+var magic_eye_seen := false   # saw the hidden clock + ha'penny in the Magic Eye, seeing double
+var halfpenny_found := false  # took Ernie's fifth ha'penny out of the long-case clock
+var halfpenny_given := false  # gave it to Stan: a full set of five, so he'll play
+var shove_won := false
+var shove_best := 0
+var britannia_halves := 0     # halves Gwen has pulled for Paul
 
 var _t := 0.0
 var _hud: CanvasLayer

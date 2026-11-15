@@ -1,7 +1,7 @@
 @tool
 extends PopochiuRoom
 ## The Cross: the top of Church St where it meets High St and Barton St. The Berkeley Arms is
-## on the left; High Street (later pubs) runs away north on the right.
+## on the left; High Street (the Britannia and the later pubs) runs away north on the right.
 
 const Data := preload('room_the_cross_state.gd')
 
@@ -14,6 +14,10 @@ func _on_room_entered() -> void:
 	C.player.set_height(30)
 	if Globals.last_room == "BerkeleyArms":
 		C.player.position = Vector2(78, 123)   # from_berkeley
+	elif Globals.last_room == "HighSt":
+		C.player.position = Vector2(310, 125)  # from_high_st: just in from the right-hand edge
+		C.player.face_left()
+		return
 	else:
 		C.player.position = Vector2(23, 130)   # from_church_st: in from the left-hand edge
 	C.player.face_right()

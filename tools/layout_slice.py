@@ -58,8 +58,19 @@ ROOMS = {
         "Dartboard": {}, "Scoreboard": {}, "BeamDarts": {},
         "npcs": {},
     },
+    "high_st": {
+        "Floor": {"poly": rect(4, 119, 316, 148)},
+        "ToTheCross": {}, "BritanniaDoor": {}, "BritanniaSign": {}, "NottinghamDoor": {}, "BlackBearDoor": {},
+        "npcs": {},
+    },
+    "britannia": {
+        "Floor": {"poly": rect(4, 124, 316, 147)},
+        "Bar": {}, "Pumps": {}, "WaterJug": {}, "ExitDoor": {}, "MagicEye": {}, "GhostPicture": {}, "Clock": {},
+        "ShoveBoard": {}, "Window": {},
+        "npcs": {},
+    },
 }
-BAR_ROOMS = {"cross_house_tavern", "hop_pole", "berkeley_arms"}
+BAR_ROOMS = {"cross_house_tavern", "hop_pole", "berkeley_arms", "britannia"}
 
 import json
 
@@ -71,6 +82,9 @@ DESC = {
     "Memorial": "War memorial", "ToChurchSt": "Church Street", "ToHighSt": "High Street",
     "Pumps": "Beer pumps", "WaterJug": "Water jug", "Snug": "Snug", "Fireplace": "Inglenook",
     "Post": "Oak post", "Dartboard": "Dartboard", "Scoreboard": "Chalk scoreboard", "BeamDarts": "Darts",
+    "BritanniaDoor": "Britannia Inn door", "BritanniaSign": "Pub sign", "NottinghamDoor": "Nottingham Arms door",
+    "BlackBearDoor": "Ye Olde Black Bear door", "MagicEye": "Magic Eye picture", "GhostPicture": "Hidden picture",
+    "Clock": "Grandfather clock", "ShoveBoard": "Shove ha'penny board", "Window": "Window",
 }
 
 
@@ -93,7 +107,8 @@ def from_render(room, fallback):
         if name == "Bar":
             y0 = max(y0, y1 - 18)  # counter front only, so the landlord behind it stays clickable
         wy = min(146, max(spec["Floor"]["poly"][0][1] + 2, wy))
-        spec[name] = {"poly": rect(x0, y0, x1, y1), "walk": (round(wx), round(wy)), "desc": DESC.get(name, name),
+        desc = "Door to High Street" if (room == "britannia" and name == "ExitDoor") else DESC.get(name, name)
+        spec[name] = {"poly": rect(x0, y0, x1, y1), "walk": (round(wx), round(wy)), "desc": desc,
                       "baseline": y1 if name != "Abbey" else 0}
     if "landlord_pos" in d:
         spec["npcs"]["Landlord"] = tuple(round(v) for v in d["landlord_pos"])
@@ -122,7 +137,7 @@ def from_render(room, fallback):
 
 
 CHAR_SCENES = {c: f"res://game/characters/{c.lower()}/character_{c.lower()}.tscn"
-               for c in ("Landlord", "Barmaid", "Reg", "Clive", "Dot")}
+               for c in ("Landlord", "Barmaid", "Reg", "Clive", "Dot", "Gwen", "Stan")}
 
 
 def vec_array(pts):
@@ -228,7 +243,7 @@ def bake_floor(room, poly):
 
 def sprite_chars():
     """Point each character at its 46px sprite sheet (10 frames). PixelActor swaps sizes per room."""
-    for c in ("paul", "landlord", "barmaid", "reg", "clive", "dot"):
+    for c in ("paul", "landlord", "barmaid", "reg", "clive", "dot", "gwen", "stan"):
         p = ROOT / f"game/characters/{c}/character_{c}.tscn"
         t = p.read_text()
         if f'id="9_{c}tex"' not in t:
@@ -295,6 +310,37 @@ def beam_darts_sprite(room, spec):
     print("beam darts sprite", (x, y))
 
 
+def _sprite_node(room, name, png, pos, offset):
+    """(Re)place a Props/<name> Sprite2D showing props/<png>, idempotently."""
+    path = ROOT / f"game/rooms/{room}/room_{room}.tscn"
+    text = path.read_text()
+    text = re.sub(r'\n\[node name="%s" type="Sprite2D"[^\]]*\]\n(?:[^\[\n][^\n]*\n)*' % name, "\n", text)
+    res = f"res://game/rooms/{room}/props/{png}"
+    if f'path="{res}"' not in text:
+        text = add_ext(text, f'[ext_resource type="Texture2D" path="{res}" id="{next_ext_id(text)}_{name.lower()}"]')
+    eid = re.search(r'path="%s" id="([^"]+)"' % re.escape(res), text).group(1)
+    node = (f'[node name="{name}" type="Sprite2D" parent="Props"]\n'
+            f'position = Vector2({pos[0]}, {pos[1]})\ntexture_filter = 1\ntexture = ExtResource("{eid}")\n'
+            f'centered = false\noffset = Vector2({offset[0]}, {offset[1]})\n\n')
+    text = text.replace('[node name="Hotspots"', node + '[node name="Hotspots"', 1)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    path.write_text(text)
+
+
+def magic_eye_sprites(room, spec):
+    """Britannia: the Magic Eye's dots (drawn by tools/sprites.py, crisper than the render) and
+    its double-vision copy, which floats ghost_dx px to the right and only shows from drunk 60
+    (the room script toggles Props/GhostPicture with the GhostPicture hotspot)."""
+    if room != "britannia" or "magic_eye" not in spec.get("_meta", {}):
+        return
+    x0, y0, x1, y1 = spec["_meta"]["magic_eye"]
+    dx = spec["_meta"]["ghost_dx"]
+    # sort them just behind everything else on the wall: position at the picture's bottom edge
+    _sprite_node(room, "MagicEyeDots", "magic_eye.png", (x0, y1), (0, y0 - y1))
+    _sprite_node(room, "GhostPicture", "ghost_picture.png", (x0 + dx, y1), (0, y0 - y1))
+    print("magic eye sprites", (x0, y0, x1, y1), dx)
+
+
 def bar_front(room, spec):
     """Cut the bar counter out of the background as a y-sorted sprite, so the landlord stands
     behind it and Paul in front of it."""
@@ -323,7 +369,7 @@ def bar_front(room, spec):
 
 
 def item_icons():
-    for k in ("coin", "pint", "crawl_card", "skittle_pin", "darts"):
+    for k in ("coin", "pint", "crawl_card", "skittle_pin", "darts", "halfpenny"):
         p = ROOT / f"game/inventory_items/{k}/inventory_item_{k}.tscn"
         t = p.read_text()
         if "texture = " in t:
@@ -345,5 +391,6 @@ if __name__ == "__main__":
         bar_front(r, s)
         doorstop_sprite(r)
         beam_darts_sprite(r, s)
+        magic_eye_sprites(r, s)
     sprite_chars()
     item_icons()

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ee1vlnyjua2b"]
+
+[ext_resource type="Script" path="res://game/rooms/britannia/hotspots/bar/hotspot_bar.gd" id="1_wnt3d"]
+
+[node name="Bar" type="Area2D" unique_id=759274292]
+script = ExtResource("1_wnt3d")
+script_name = "Bar"
+description = "Bar"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1221080037]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

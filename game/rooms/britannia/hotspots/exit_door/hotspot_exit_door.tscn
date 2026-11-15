@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bk2egmeg8kodm"]
+
+[ext_resource type="Script" path="res://game/rooms/britannia/hotspots/exit_door/hotspot_exit_door.gd" id="1_r3dtt"]
+
+[node name="ExitDoor" type="Area2D" unique_id=189098751]
+script = ExtResource("1_r3dtt")
+script_name = "ExitDoor"
+description = "Exit Door"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=296865997]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dqdsnb06idayv"]
+
+[ext_resource type="Script" path="res://game/rooms/britannia/hotspots/shove_board/hotspot_shove_board.gd" id="1_ptybk"]
+
+[node name="ShoveBoard" type="Area2D" unique_id=1132063565]
+script = ExtResource("1_ptybk")
+script_name = "ShoveBoard"
+description = "Shove Board"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=858828491]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

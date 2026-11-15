@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://ds83ax1i84jeg"]
+
+[ext_resource type="Script" path="res://game/inventory_items/halfpenny/inventory_item_halfpenny_state.gd" id="1_6f0k7"]
+
+[resource]
+resource_name = "Halfpenny"
+script = ExtResource("1_6f0k7")
+script_name = "Halfpenny"
+scene = "res://game/inventory_items/halfpenny/inventory_item_halfpenny.tscn"

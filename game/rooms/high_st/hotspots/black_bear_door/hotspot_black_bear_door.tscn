@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cjaoawdo6q4p2"]
+
+[ext_resource type="Script" path="res://game/rooms/high_st/hotspots/black_bear_door/hotspot_black_bear_door.gd" id="1_qjot8"]
+
+[node name="BlackBearDoor" type="Area2D" unique_id=855446680]
+script = ExtResource("1_qjot8")
+script_name = "BlackBearDoor"
+description = "Black Bear Door"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=389500604]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

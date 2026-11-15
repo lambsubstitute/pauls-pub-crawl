@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://d0hm60i16m1ly"]
+
+[ext_resource type="Script" path="res://game/rooms/britannia/hotspots/pumps/hotspot_pumps.gd" id="1_r55cy"]
+
+[node name="Pumps" type="Area2D" unique_id=9174740]
+script = ExtResource("1_r55cy")
+script_name = "Pumps"
+description = "Pumps"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=133603856]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

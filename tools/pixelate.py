@@ -25,10 +25,15 @@ ROOM_FX = {
     # Berkeley sign red + white kept as accents so the shield doesn't dither into brown
     "the_cross": {"stars": 70, "sky_rows": 40, "moon": (52, 12, 7),
                   "accents": [(170, 24, 20), (236, 232, 220), (255, 190, 70)]},
+    # Britannia navy/white/red sign, Black Bear gold, lamp glow
+    "high_st": {"stars": 70, "sky_rows": 40, "moon": (200, 10, 7),
+                "accents": [(170, 24, 20), (236, 232, 220), (30, 50, 140), (230, 170, 50), (255, 190, 70)]},
     # accents: palette slots kept for small saturated details median-cut would merge into brown
     "hop_pole": {"accents": [(40, 92, 64), (150, 26, 26), (240, 232, 214), (255, 190, 70), (70, 110, 200)]},
     # dartboard red/green/cream, water-jug blue, brass and fire
     "berkeley_arms": {"accents": [(190, 30, 24), (30, 140, 60), (236, 222, 180), (255, 190, 70), (120, 170, 230)]},
+    # Magic Eye rainbow dots, navy dado, water blue, brass
+    "britannia": {"accents": [(40, 180, 230), (240, 210, 40), (60, 200, 90), (255, 190, 70)]},
     "cross_house_tavern": {"accents": [(70, 140, 255), (40, 70, 170), (70, 220, 100), (170, 35, 30), (255, 190, 70)]},
 }
 

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://benh0a0gu2tqx"]
+
+[ext_resource type="Script" path="res://game/rooms/britannia/hotspots/magic_eye/hotspot_magic_eye.gd" id="1_73l5r"]
+
+[node name="MagicEye" type="Area2D" unique_id=1035063182]
+script = ExtResource("1_73l5r")
+script_name = "MagicEye"
+description = "Magic Eye"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1660422197]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

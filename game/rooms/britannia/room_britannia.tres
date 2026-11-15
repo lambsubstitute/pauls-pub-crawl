@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://u0blc7v1adcx"]
+
+[ext_resource type="Script" uid="uid://f8t2if15s0b3" path="res://game/rooms/britannia/room_britannia_state.gd" id="1_nsjau"]
+
+[resource]
+resource_name = "Britannia"
+script = ExtResource("1_nsjau")
+script_name = "Britannia"
+scene = "res://game/rooms/britannia/room_britannia.tscn"

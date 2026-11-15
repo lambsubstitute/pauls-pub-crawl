@@ -313,7 +313,8 @@ data = {
         "ToChurchSt": to_px((-8.3, -2.2, 0.14)),
         "ToHighSt": to_px((11.0, -1.0, 0.14)),
     },
-    "spawn": {"from_church_st": to_px((-7.4, -2.2, 0.14)), "from_berkeley": to_px((door_x, -1.2, 0.14))},
+    "spawn": {"from_church_st": to_px((-7.4, -2.2, 0.14)), "from_berkeley": to_px((door_x, -1.2, 0.14)),
+              "from_high_st": to_px((10.3, -1.5, 0.14))},
     "floor": [list(p) for p in floor],
     "person_px": to_px((0, -2.2, 0.14))[1] - to_px((0, -2.2, 1.94))[1],
 }

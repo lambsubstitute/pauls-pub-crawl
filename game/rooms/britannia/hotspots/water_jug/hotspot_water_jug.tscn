@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c4d7wus2btli0"]
+
+[ext_resource type="Script" path="res://game/rooms/britannia/hotspots/water_jug/hotspot_water_jug.gd" id="1_vakl8"]
+
+[node name="WaterJug" type="Area2D" unique_id=1395225718]
+script = ExtResource("1_vakl8")
+script_name = "WaterJug"
+description = "Water Jug"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1142152354]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

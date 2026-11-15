@@ -28,11 +28,23 @@ const ROOMS := {
 			"Scoreboard", "BeamDarts",
 		],
 	},
+	"HighSt": {
+		"main": false,
+		"hotspots": ["ToTheCross", "BritanniaDoor", "BritanniaSign", "NottinghamDoor", "BlackBearDoor"],
+	},
+	"Britannia": {
+		"main": false,
+		"hotspots": [
+			"Bar", "Pumps", "WaterJug", "ExitDoor", "MagicEye", "GhostPicture", "Clock", "ShoveBoard",
+			"Window",
+		],
+	},
 }
 const CHARACTERS := {
 	"Paul": true, "Landlord": false, "Barmaid": false, "Reg": false, "Clive": false, "Dot": false,
+	"Gwen": false, "Stan": false,
 }
-const ITEMS := ["CrawlCard", "Coin", "Pint", "SkittlePin", "Darts"]
+const ITEMS := ["CrawlCard", "Coin", "Pint", "SkittlePin", "Darts", "Halfpenny"]
 const PopochiuGuiTemplatesHelper = preload(
 	"res://addons/popochiu/editor/helpers/popochiu_gui_templates_helper.gd"
 )

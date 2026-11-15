@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ct7nl6aosf2wp"]
+
+[ext_resource type="Script" path="res://game/rooms/high_st/hotspots/nottingham_door/hotspot_nottingham_door.gd" id="1_dcohl"]
+
+[node name="NottinghamDoor" type="Area2D" unique_id=1215456367]
+script = ExtResource("1_dcohl")
+script_name = "NottinghamDoor"
+description = "Nottingham Door"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1122166068]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://bwmagk0f8v2a1"]
+
+[ext_resource type="Script" uid="uid://dyc2mvas81pf6" path="res://game/rooms/britannia/room_britannia.gd" id="1_24es0"]
+[ext_resource type="PackedScene" uid="uid://7keli8xke2l3" path="res://game/rooms/britannia/walkable_areas/floor/walkable_area_floor.tscn" id="2_j31al"]
+[ext_resource type="PackedScene" uid="uid://ee1vlnyjua2b" path="res://game/rooms/britannia/hotspots/bar/hotspot_bar.tscn" id="3_hfyfc"]
+[ext_resource type="PackedScene" uid="uid://d0hm60i16m1ly" path="res://game/rooms/britannia/hotspots/pumps/hotspot_pumps.tscn" id="4_hljvs"]
+[ext_resource type="PackedScene" uid="uid://c4d7wus2btli0" path="res://game/rooms/britannia/hotspots/water_jug/hotspot_water_jug.tscn" id="5_ey0lc"]
+[ext_resource type="PackedScene" uid="uid://bk2egmeg8kodm" path="res://game/rooms/britannia/hotspots/exit_door/hotspot_exit_door.tscn" id="6_22w53"]
+[ext_resource type="PackedScene" uid="uid://benh0a0gu2tqx" path="res://game/rooms/britannia/hotspots/magic_eye/hotspot_magic_eye.tscn" id="7_cxx3t"]
+[ext_resource type="PackedScene" uid="uid://rdko8gudmemi" path="res://game/rooms/britannia/hotspots/ghost_picture/hotspot_ghost_picture.tscn" id="8_34c25"]
+[ext_resource type="PackedScene" uid="uid://uy0mmgeuw7my" path="res://game/rooms/britannia/hotspots/clock/hotspot_clock.tscn" id="9_rgrn8"]
+[ext_resource type="PackedScene" uid="uid://dqdsnb06idayv" path="res://game/rooms/britannia/hotspots/shove_board/hotspot_shove_board.tscn" id="10_3f7rg"]
+[ext_resource type="PackedScene" uid="uid://cpic3n0iyiyme" path="res://game/rooms/britannia/hotspots/window/hotspot_window.tscn" id="11_4f26r"]
+[ext_resource type="Texture2D" path="res://game/rooms/britannia/props/bg_britannia.png" id="12_bg"]
+[ext_resource type="PackedScene" path="res://game/characters/gwen/character_gwen.tscn" id="13_gwen"]
+[ext_resource type="PackedScene" path="res://game/characters/stan/character_stan.tscn" id="14_stan"]
+[ext_resource type="Texture2D" path="res://game/rooms/britannia/props/bar_front.png" id="15_barfront"]
+[ext_resource type="Texture2D" path="res://game/rooms/britannia/props/magic_eye.png" id="16_magiceyedots"]
+[ext_resource type="Texture2D" path="res://game/rooms/britannia/props/ghost_picture.png" id="17_ghostpicture"]
+
+[node name="RoomBritannia" type="Node2D" unique_id=41150684]
+script = ExtResource("1_24es0")
+script_name = "Britannia"
+width = 320
+height = 200
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+texture = ExtResource("12_bg")
+centered = false
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=343838382]
+
+[node name="Floor" parent="WalkableAreas" unique_id=775085449 instance=ExtResource("2_j31al")]
+position = Vector2(0, 0)
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 124, 316, 124, 316, 147, 4, 147)])
+
+[node name="Props" type="Node2D" parent="." unique_id=730925610]
+
+[node name="BarFront" type="Sprite2D" parent="Props"]
+position = Vector2(0, 123)
+texture_filter = 1
+texture = ExtResource("15_barfront")
+centered = false
+offset = Vector2(0, -28)
+
+[node name="MagicEyeDots" type="Sprite2D" parent="Props"]
+position = Vector2(138, 89)
+texture_filter = 1
+texture = ExtResource("16_magiceyedots")
+centered = false
+offset = Vector2(0, -14)
+
+[node name="GhostPicture" type="Sprite2D" parent="Props"]
+position = Vector2(162, 89)
+texture_filter = 1
+texture = ExtResource("17_ghostpicture")
+centered = false
+offset = Vector2(0, -14)
+
+[node name="Hotspots" type="Node2D" parent="." unique_id=1551741862]
+
+[node name="Bar" parent="Hotspots" unique_id=759274292 instance=ExtResource("3_hfyfc")]
+position = Vector2(0, 0)
+description = "Bar"
+baseline = 123
+walk_to_point = Vector2(40, 126)
+interaction_polygon = PackedVector2Array(0, 105, 90, 105, 90, 123, 0, 123)
+
+[node name="Pumps" parent="Hotspots" unique_id=9174740 instance=ExtResource("4_hljvs")]
+position = Vector2(0, 0)
+description = "Beer pumps"
+baseline = 93
+walk_to_point = Vector2(50, 126)
+interaction_polygon = PackedVector2Array(39, 79, 73, 79, 73, 93, 39, 93)
+
+[node name="WaterJug" parent="Hotspots" unique_id=1395225718 instance=ExtResource("5_ey0lc")]
+position = Vector2(0, 0)
+description = "Water jug"
+baseline = 96
+walk_to_point = Vector2(78, 126)
+interaction_polygon = PackedVector2Array(78, 88, 84, 88, 84, 96, 78, 96)
+
+[node name="ExitDoor" parent="Hotspots" unique_id=189098751 instance=ExtResource("6_22w53")]
+position = Vector2(0, 0)
+description = "Door to High Street"
+baseline = 115
+walk_to_point = Vector2(106, 126)
+interaction_polygon = PackedVector2Array(106, 72, 127, 72, 127, 115, 106, 115)
+
+[node name="MagicEye" parent="Hotspots" unique_id=1035063182 instance=ExtResource("7_cxx3t")]
+position = Vector2(0, 0)
+description = "Magic Eye picture"
+baseline = 90
+walk_to_point = Vector2(145, 126)
+interaction_polygon = PackedVector2Array(137, 74, 158, 74, 158, 90, 137, 90)
+
+[node name="GhostPicture" parent="Hotspots" unique_id=99621157 instance=ExtResource("8_34c25")]
+position = Vector2(0, 0)
+description = "Hidden picture"
+baseline = 90
+walk_to_point = Vector2(162, 126)
+interaction_polygon = PackedVector2Array(162, 74, 182, 74, 182, 90, 162, 90)
+
+[node name="Clock" parent="Hotspots" unique_id=347335666 instance=ExtResource("9_rgrn8")]
+position = Vector2(0, 0)
+description = "Grandfather clock"
+baseline = 115
+walk_to_point = Vector2(197, 126)
+interaction_polygon = PackedVector2Array(192, 70, 206, 70, 206, 115, 192, 115)
+
+[node name="ShoveBoard" parent="Hotspots" unique_id=1132063565 instance=ExtResource("10_3f7rg")]
+position = Vector2(0, 0)
+description = "Shove ha'penny board"
+baseline = 106
+walk_to_point = Vector2(262, 126)
+interaction_polygon = PackedVector2Array(242, 92, 270, 92, 270, 106, 242, 106)
+
+[node name="Window" parent="Hotspots" unique_id=1509181086 instance=ExtResource("11_4f26r")]
+position = Vector2(0, 0)
+description = "Window"
+baseline = 96
+walk_to_point = Vector2(317, 126)
+interaction_polygon = PackedVector2Array(302, 68, 317, 68, 317, 96, 302, 96)
+
+[node name="Regions" type="Node2D" parent="." unique_id=1247784247]
+
+[node name="Markers" type="Node2D" parent="." unique_id=1410254954]
+
+[node name="Characters" type="Node2D" parent="." unique_id=1702636874]
+
+[node name="CharacterGwen" parent="Characters" instance=ExtResource("13_gwen")]
+position = Vector2(25, 119)
+walk_to_point = Vector2(10, 6)
+
+[node name="CharacterStan" parent="Characters" instance=ExtResource("14_stan")]
+position = Vector2(290, 127)
+walk_to_point = Vector2(-23, -1)

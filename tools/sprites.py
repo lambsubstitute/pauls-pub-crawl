@@ -74,9 +74,30 @@ CHARS = {
         "build": 0.9, "hair_style": "perm", "beard": False, "apron": False, "collar": (240, 236, 226),
         "stature": 0.88, "glasses": True,
     },
+    # Britannia Inn: Gwen the landlady (dark bob, navy cardigan over a white blouse, red apron)
+    # and Stan, retired maths teacher and shove ha'penny man (bald, glasses, mustard cardigan,
+    # bow tie, a touch shorter)
+    "gwen": {
+        "skin": (232, 186, 150), "skin_d": (192, 136, 106),
+        "hair": (52, 34, 30), "hair_d": (30, 20, 18),
+        "top": (40, 52, 104), "top_d": (24, 30, 66),
+        "legs": (52, 48, 58), "legs_d": (32, 28, 36),
+        "shoe": (34, 24, 22), "shoe_d": (20, 14, 12),
+        "build": 0.95, "hair_style": "bob", "beard": False, "apron": (196, 64, 60), "apron_d": (140, 40, 38),
+        "collar": (240, 238, 232),
+    },
+    "stan": {
+        "skin": (230, 176, 144), "skin_d": (188, 128, 100),
+        "hair": (206, 204, 198), "hair_d": (150, 148, 144),
+        "top": (196, 150, 50), "top_d": (138, 100, 28),
+        "legs": (78, 70, 62), "legs_d": (50, 44, 38),
+        "shoe": (66, 40, 26), "shoe_d": (40, 24, 14),
+        "build": 0.98, "hair_style": "bald", "beard": False, "apron": False, "collar": (236, 232, 222),
+        "glasses": True, "bowtie": (150, 30, 40), "stature": 0.95,
+    },
 }
 SIZES = {"paul": (30, 46), "landlord": (30, 46), "barmaid": (30, 46), "reg": (30, 46),
-         "clive": (30, 46), "dot": (30, 46)}
+         "clive": (30, 46), "dot": (30, 46), "gwen": (30, 46), "stan": (30, 46)}
 
 
 def poly(d, pts, fill, s, ox, oy):
@@ -165,6 +186,8 @@ def draw(c, H, frame):
         poly(d, [(-6 * k, y(66)), (-1 * k, y(66)), (0, y(30)), (-5 * k, y(30))], c["apron_d"], s, ox, oy)
     if c.get("collar"):
         poly(d, [(-1, y(78)), (8, y(78)), (6, y(73)), (2, y(74))], c["collar"], s, ox, oy)
+    if c.get("bowtie"):
+        poly(d, [(1, y(78)), (4, y(76)), (7, y(78)), (7, y(74)), (4, y(76)), (1, y(74))], c["bowtie"], s, ox, oy)
     # belt line / hips
     poly(d, [(-11 * k, y(49)), (11 * k, y(49)), (11 * k, y(46)), (-11 * k, y(46))], c["legs_d"], s, ox, oy)
 
@@ -199,6 +222,13 @@ def draw(c, H, frame):
             ell(d, hx + dx, y(hy + dy), r, r, c["hair"], s, ox, oy)
         for (dx, dy, r) in ((-10, 3, 2.4), (-9, -3, 2.2), (-6, 10, 2.2), (0, 13, 2.0)):
             ell(d, hx + dx, y(hy + dy), r, r, c["hair_d"], s, ox, oy)
+    elif c["hair_style"] == "bob":
+        # chin-length bob with a straight fringe, framing the face
+        poly(d, [(hx - 11, y(hy - 5)), (hx - 11, y(hy + 7)), (hx - 4, y(hy + 13)), (hx + 6, y(hy + 13)),
+                 (hx + 11, y(hy + 7)), (hx + 11, y(hy + 4)), (hx + 3, y(hy + 5)), (hx - 3, y(hy + 4)),
+                 (hx - 5, y(hy - 5))], c["hair"], s, ox, oy)
+        poly(d, [(hx - 11, y(hy - 5)), (hx - 11, y(hy + 7)), (hx - 6, y(hy + 10)), (hx - 6, y(hy - 5))],
+             c["hair_d"], s, ox, oy)
     else:  # bald on top, grey at the sides
         poly(d, [(hx - 10, y(hy - 2)), (hx - 9, y(hy + 5)), (hx - 5, y(hy + 4)), (hx - 6, y(hy - 3))], c["hair"], s, ox, oy)
         ell(d, hx + 2, y(hy + 7), 3, 1.5, (255, 220, 190, 255), s, ox, oy)  # shine
@@ -353,3 +383,64 @@ if __name__ == "__main__":
     darts_sprite().save(ROOT / "game" / "rooms" / "berkeley_arms" / "props" / "beam_darts.png")
     darts_icon().save(ROOT / "game" / "inventory_items" / "darts" / "darts.png")
     print("wrote beam_darts.png and darts.png")
+
+
+# ------------------------------------------------- Britannia: ha'penny, Magic Eye ----
+def halfpenny_icon():
+    """An old pre-decimal ha'penny: worn bronze disc with a little galleon on it."""
+    icon = Image.new("RGBA", (24, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(icon)
+    d.ellipse([6, 2, 17, 13], fill=(176, 112, 52, 255))
+    d.ellipse([7, 3, 16, 12], fill=(204, 140, 70, 255))
+    d.ellipse([8, 3, 14, 8], fill=(226, 170, 98, 255))           # shine
+    d.line([9, 9, 14, 9], fill=(120, 72, 32, 255))                # hull
+    d.line([11, 5, 11, 9], fill=(120, 72, 32, 255))               # mast
+    d.polygon([(12, 5), (14, 7), (12, 8)], fill=(150, 92, 40, 255))  # sail
+    return outline(icon)
+
+
+MAGIC_EYE_COLS = [(220, 50, 150), (40, 180, 230), (240, 210, 40), (60, 200, 90), (150, 70, 220), (250, 120, 40)]
+
+
+def magic_eye(w, h, hidden=False, seed=5):
+    """Random-dot stereogram, w x h px: the dots repeat in strips, like the real ones.
+    hidden=True is how Paul sees it with his eyes out of step: a long-case clock with a gold
+    ha'penny in its trunk stands out of the dots."""
+    import random
+    rng = random.Random(seed)
+    strip = 5
+    base = [[rng.choice(MAGIC_EYE_COLS) for _ in range(strip)] for _ in range(h)]
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 255))
+    px = img.load()
+    for yy in range(h):
+        for xx in range(w):
+            px[xx, yy] = base[yy][xx % strip] + (255,)
+    if hidden:
+        cx = w // 2
+        shape = Image.new("L", (w, h), 0)
+        sd = ImageDraw.Draw(shape)
+        sd.rectangle([cx - 3, 1, cx + 3, 4], fill=255)          # hood
+        sd.rectangle([cx - 2, 5, cx + 2, h - 4], fill=255)      # trunk
+        sd.rectangle([cx - 3, h - 3, cx + 3, h - 2], fill=255)  # base
+        sp = shape.load()
+        for yy in range(h):
+            for xx in range(w):
+                if sp[xx, yy]:
+                    r, g, b, _ = px[xx, yy]
+                    px[xx, yy] = ((r + 3 * 70) // 4, (g + 3 * 40) // 4, (b + 3 * 30) // 4, 255)
+        d = ImageDraw.Draw(img)
+        d.ellipse([cx - 1, h // 2, cx + 1, h // 2 + 2], fill=(255, 200, 70, 255))   # the ha'penny
+        d.point((cx, 2), fill=(240, 236, 220, 255))                                 # clock face
+    return img
+
+
+if __name__ == "__main__":
+    import json
+    halfpenny_icon().save(ROOT / "game" / "inventory_items" / "halfpenny" / "halfpenny.png")
+    jb = ROOT / "art" / "renders" / "britannia.json"
+    if jb.exists():
+        x0, y0, x1, y1 = json.loads(jb.read_text())["magic_eye"]
+        props = ROOT / "game" / "rooms" / "britannia" / "props"
+        magic_eye(x1 - x0, y1 - y0).save(props / "magic_eye.png")
+        magic_eye(x1 - x0, y1 - y0, hidden=True).save(props / "ghost_picture.png")
+    print("wrote halfpenny.png, magic_eye.png and ghost_picture.png")

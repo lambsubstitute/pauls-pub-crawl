@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://dsm8awf6qcawa"]
+
+[ext_resource type="Script" uid="uid://dhrjhcrwonl4g" path="res://game/rooms/high_st/room_high_st_state.gd" id="1_pwbva"]
+
+[resource]
+resource_name = "HighSt"
+script = ExtResource("1_pwbva")
+script_name = "HighSt"
+scene = "res://game/rooms/high_st/room_high_st.tscn"
