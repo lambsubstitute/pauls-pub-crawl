@@ -351,13 +351,17 @@ func _draw_game() -> void:
 	_text(c, Vector2(10, 92), "Clean in a bed", Color("c8b890"))
 	_text(c, Vector2(10, 102), "scores its number.", Color("c8b890"))
 	_text(c, Vector2(10, 112), "Lines score 0.", Color("c8b890"))
-	var hint := ""
+	# instructions and the last result live in the left column, clear of the board's near end
+	var lines: Array = []
 	match phase:
-		Phase.AIM: hint = (_msg + "  " if _msg != "" else "") + "Aim with the mouse, hold to power up"
-		Phase.CHARGE: hint = "Let go to shove!"
-		Phase.SLIDING: hint = "..."
-		Phase.DONE: hint = _msg + "  Click to finish"
-	_text(c, Vector2(10, 184), hint, Color("b8e0ff"))
+		Phase.AIM: lines = ["Mouse: aim", "Hold: power up", "Let go: shove"]
+		Phase.CHARGE: lines = ["Let go to shove!"]
+		Phase.SLIDING: lines = ["..."]
+		Phase.DONE: lines = ["Click to finish"]
+	for i in lines.size():
+		_text(c, Vector2(10, 136 + i * 11), lines[i], Color("b8e0ff"))
+	if _msg != "" and phase != Phase.SLIDING:
+		_text(c, Vector2(10, 178), _msg, Color("fad278"))
 
 
 func _text(c: Control, pos: Vector2, s: String, col: Color) -> void:
