@@ -28,7 +28,7 @@ the Mythe end.
 | 1 | Cross House Tavern | 108 Church St | Quiz machine | Tutorial: verbs, inventory, first stamp |
 | 2 | Royal Hop Pole | 94 Church St | Skittles | Pin chain: Cross House doorstop pin -> Reg -> skittles -> Bev stamps |
 | 3 | Berkeley Arms | 8 Church St | Darts | Darts intro, drunk meter matters: house darts stuck in the beam over the oche -> get merry (a pint, or Clive's free halves) and wobble into the oak post to shake them down -> give them to Dot -> beat her 70 with three darts (drink widens the aim wobble, water sobers) -> Clive stamps |
-| 4 | Britannia Inn | 30 High St | Shove ha'penny | Double-vision puzzle |
+| 4 | Britannia Inn | 30 High St | Shove ha'penny | Double-vision puzzle: Stan won't play, the house set is one ha'penny short -> Gwen says old Ernie hid the fifth and left the clue in his Magic Eye picture -> seeing double (60+: Gwen's free halves, she stops at 60) a ghost copy of the picture floats beside it, and only in the copy does the hidden clock-with-a-coin show -> open the long-case clock (works sober once seen) -> give the ha'penny to Stan -> beat his 20 with five coins (drink jitters the power, tilts the table and doubles the board; water sobers) -> Gwen stamps. A win before stamp 3 is stamped on return |
 | 5 | Nottingham Arms | 129 High St | Pool | Hardest mid-game puzzle |
 | 6 | Ye Olde Black Bear | 68 High St | Darts + pool rematch | Finale vs the pub champion |
 
@@ -36,8 +36,9 @@ Fallbacks if any close: Anchor 1774 (42 High St), New Plough (85 Barton St).
 
 Street scenes between pubs: Abbey gates, Church St, the Cross, High St,
 riverside / Mill Avon, Mythe bridge (ending).
-Built so far: Church St (Cross House, Hop Pole; walk off the right edge towards the Cross) and
-the Cross (Berkeley Arms; High St exit on the right waits for the next pubs).
+Built so far: Church St (Cross House, Hop Pole; walk off the right edge towards the Cross),
+the Cross (Berkeley Arms; High St off the right edge) and High St (Britannia; Nottingham Arms and
+the Black Bear at the far right are stub doors with spawns waiting for their rooms).
 
 ## Controls / UI
 - 320×200 game area, integer-scaled. Bottom panel: verb grid + inventory.
@@ -68,7 +69,9 @@ No hard fail state — family friendly; overdoing it costs time, not the game.
   with the meter; hold to steady (limited breath).
 - **Pool** — top-down 8-ball. Cue guide shortens and wobbles; power bar jitters.
 - **Skittles** — West Country alley; ball line sways, timing window shrinks.
-- **Shove ha'penny** — flick power + angle; table "tilts" when drunk.
+- **Shove ha'penny** — five coins up nine beds; clean in a bed scores its number. Mouse sets the
+  angle, hold to fill the power bar, release to shove; coins knock each other on. Drunk: aim
+  wanders, power jitters, the table "tilts" (coins drift), ghost board from 60.
 - **Quiz machine** — Tewkesbury/general trivia; letters swim when drunk.
 
 ## Art pipeline

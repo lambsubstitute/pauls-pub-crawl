@@ -77,8 +77,10 @@ func _ready() -> void:
 	_ok(_room() == "ChurchSt", "the Cross -> Church St, nothing needed")
 	_ok(C.player.position.distance_to(Vector2(307, 130)) < 4, "arrive at Church St's right edge (%s)" % C.player.position)
 	await _act(_hot("ToTheCross"), "on_walk_to", "TheCross")
-	await _act(_hot("ToHighSt"), "on_walk_to")
-	_ok(_room() == "TheCross", "High St exit is a polite no for now (stays at the Cross)")
+	await _act(_hot("ToHighSt"), "on_walk_to", "HighSt")
+	_ok(_room() == "HighSt", "High St exit is open, even before stamp 3")
+	await _act(_hot("ToTheCross"), "on_walk_to", "TheCross")
+	_ok(_room() == "TheCross", "and back to the Cross from High St")
 
 	# --- into the Berkeley, and straight out again with nothing
 	await _act(_hot("BerkeleyDoor"), "on_walk_to", "BerkeleyArms")
