@@ -273,7 +273,7 @@ def draw(c, H, frame):
         poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx + 3, y(hy + 13)), (hx + 9, y(hy + 9)),
                  (hx + 15, y(hy + 6)), (hx + 14, y(hy + 4)), (hx + 6, y(hy + 5))], c["cap"], s, ox, oy)  # flat cap + peak
         poly(d, [(hx - 11, y(hy + 4)), (hx - 9, y(hy + 11)), (hx - 3, y(hy + 12)), (hx - 4, y(hy + 4))], c["cap_d"], s, ox, oy)
-    elif c["hair_style"] == "bob":
+    elif c["hair_style"] == "bob_fringe":
         # chin-length bob with a fringe, swinging forward past the cheek
         poly(d, [(hx - 11, y(hy - 9)), (hx - 11, y(hy + 7)), (hx - 4, y(hy + 13)), (hx + 6, y(hy + 13)),
                  (hx + 11, y(hy + 7)), (hx + 10, y(hy + 3)), (hx + 3, y(hy + 5)), (hx - 3, y(hy + 3)),
@@ -287,7 +287,7 @@ def draw(c, H, frame):
             ell(d, hx + dx, y(hy + dy), r, r, c["hair"], s, ox, oy)
         for (dx, dy, r) in ((-10, 3, 2.4), (-9, -3, 2.2), (-6, 10, 2.2), (0, 13, 2.0)):
             ell(d, hx + dx, y(hy + dy), r, r, c["hair_d"], s, ox, oy)
-    elif c["hair_style"] == "bob_fringe":
+    elif c["hair_style"] == "bob":
         # chin-length bob with a straight fringe, framing the face
         poly(d, [(hx - 11, y(hy - 5)), (hx - 11, y(hy + 7)), (hx - 4, y(hy + 13)), (hx + 6, y(hy + 13)),
                  (hx + 11, y(hy + 7)), (hx + 11, y(hy + 4)), (hx + 3, y(hy + 5)), (hx - 3, y(hy + 4)),
