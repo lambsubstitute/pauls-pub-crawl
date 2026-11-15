@@ -17,7 +17,6 @@ const LINE_DELAY := 0.25
 
 const LINES := [
 	["THE END", GOLD, 16],
-	["", CREAM, 8],
 	["PAUL'S PUB CRAWL", CREAM, 8],
 	["Made for Paul", GOLD, 8],
 	["", CREAM, 8],
@@ -65,10 +64,10 @@ func _ready() -> void:
 	shade.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(shade)
 	_box = VBoxContainer.new()
-	_box.position = Vector2(8, 8)
+	_box.position = Vector2(8, 4)
 	_box.size = Vector2(304, 160)
 	_box.alignment = BoxContainer.ALIGNMENT_BEGIN
-	_box.add_theme_constant_override("separation", -2)
+	_box.add_theme_constant_override("separation", -4)
 	add_child(_box)
 	for l in LINES:
 		var lab := Label.new()
@@ -85,7 +84,7 @@ func _ready() -> void:
 		_box.add_child(lab)
 		_labels.append(lab)
 	_buttons = HBoxContainer.new()
-	_buttons.position = Vector2(40, 174)
+	_buttons.position = Vector2(40, 178)
 	_buttons.size = Vector2(240, 18)
 	_buttons.alignment = BoxContainer.ALIGNMENT_CENTER
 	_buttons.add_theme_constant_override("separation", 16)
