@@ -13,6 +13,8 @@ const PCStan := preload("res://game/characters/stan/character_stan.gd")
 const PCJackie := preload("res://game/characters/jackie/character_jackie.gd")
 const PCGaz := preload("res://game/characters/gaz/character_gaz.gd")
 const PCNorman := preload("res://game/characters/norman/character_norman.gd")
+const PCBernie := preload("res://game/characters/bernie/character_bernie.gd")
+const PCRosie := preload("res://game/characters/rosie/character_rosie.gd")
 # ---- classes
 
 # nodes ----
@@ -27,6 +29,8 @@ var Stan: PCStan : get = get_Stan
 var Jackie: PCJackie : get = get_Jackie
 var Gaz: PCGaz : get = get_Gaz
 var Norman: PCNorman : get = get_Norman
+var Bernie: PCBernie : get = get_Bernie
+var Rosie: PCRosie : get = get_Rosie
 # ---- nodes
 
 # functions ----
@@ -41,5 +45,7 @@ func get_Stan() -> PCStan: return get_runtime_character("Stan")
 func get_Jackie() -> PCJackie: return get_runtime_character("Jackie")
 func get_Gaz() -> PCGaz: return get_runtime_character("Gaz")
 func get_Norman() -> PCNorman: return get_runtime_character("Norman")
+func get_Bernie() -> PCBernie: return get_runtime_character("Bernie")
+func get_Rosie() -> PCRosie: return get_runtime_character("Rosie")
 # ---- functions
 

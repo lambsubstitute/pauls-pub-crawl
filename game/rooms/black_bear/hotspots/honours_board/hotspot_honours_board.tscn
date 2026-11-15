@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ctd2bch15yupv"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/honours_board/hotspot_honours_board.gd" id="1_w3k5o"]
+
+[node name="HonoursBoard" type="Area2D" unique_id=789673867]
+script = ExtResource("1_w3k5o")
+script_name = "HonoursBoard"
+description = "Honours Board"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1196793327]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

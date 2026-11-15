@@ -12,6 +12,7 @@ const PIICueButt := preload("res://game/inventory_items/cue_butt/inventory_item_
 const PIICueShaft := preload("res://game/inventory_items/cue_shaft/inventory_item_cue_shaft.gd")
 const PIIHouseCue := preload("res://game/inventory_items/house_cue/inventory_item_house_cue.gd")
 const PIIPoolRest := preload("res://game/inventory_items/pool_rest/inventory_item_pool_rest.gd")
+const PIIWedge := preload("res://game/inventory_items/wedge/inventory_item_wedge.gd")
 # ---- classes
 
 # nodes ----
@@ -25,6 +26,7 @@ var CueButt: PIICueButt : get = get_CueButt
 var CueShaft: PIICueShaft : get = get_CueShaft
 var HouseCue: PIIHouseCue : get = get_HouseCue
 var PoolRest: PIIPoolRest : get = get_PoolRest
+var Wedge: PIIWedge : get = get_Wedge
 # ---- nodes
 
 # functions ----
@@ -38,5 +40,6 @@ func get_CueButt() -> PIICueButt: return get_item_instance("CueButt")
 func get_CueShaft() -> PIICueShaft: return get_item_instance("CueShaft")
 func get_HouseCue() -> PIIHouseCue: return get_item_instance("HouseCue")
 func get_PoolRest() -> PIIPoolRest: return get_item_instance("PoolRest")
+func get_Wedge() -> PIIWedge: return get_item_instance("Wedge")
 # ---- functions
 

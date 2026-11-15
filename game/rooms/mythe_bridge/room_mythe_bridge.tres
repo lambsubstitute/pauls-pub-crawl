@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://py1yklkq42vr"]
+
+[ext_resource type="Script" uid="uid://cdksloathuhy2" path="res://game/rooms/mythe_bridge/room_mythe_bridge_state.gd" id="1_hpuwn"]
+
+[resource]
+resource_name = "MytheBridge"
+script = ExtResource("1_hpuwn")
+script_name = "MytheBridge"
+scene = "res://game/rooms/mythe_bridge/room_mythe_bridge.tscn"

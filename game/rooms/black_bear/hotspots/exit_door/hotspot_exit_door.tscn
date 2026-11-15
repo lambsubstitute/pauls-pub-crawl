@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://peq5qqfgxc88"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/exit_door/hotspot_exit_door.gd" id="1_34hrg"]
+
+[node name="ExitDoor" type="Area2D" unique_id=523101805]
+script = ExtResource("1_34hrg")
+script_name = "ExitDoor"
+description = "Exit Door"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=2048733887]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

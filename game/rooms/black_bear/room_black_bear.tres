@@ -1,0 +1,9 @@
+[gd_resource type="Resource" format=3 uid="uid://cbywsqye6hjxh"]
+
+[ext_resource type="Script" uid="uid://be21xi6spu5qq" path="res://game/rooms/black_bear/room_black_bear_state.gd" id="1_180fn"]
+
+[resource]
+resource_name = "BlackBear"
+script = ExtResource("1_180fn")
+script_name = "BlackBear"
+scene = "res://game/rooms/black_bear/room_black_bear.tscn"

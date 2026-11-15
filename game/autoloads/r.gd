@@ -10,6 +10,8 @@ const PRBerkeleyArms := preload("res://game/rooms/berkeley_arms/room_berkeley_ar
 const PRHighSt := preload("res://game/rooms/high_st/room_high_st.gd")
 const PRBritannia := preload("res://game/rooms/britannia/room_britannia.gd")
 const PRNottinghamArms := preload("res://game/rooms/nottingham_arms/room_nottingham_arms.gd")
+const PRBlackBear := preload("res://game/rooms/black_bear/room_black_bear.gd")
+const PRMytheBridge := preload("res://game/rooms/mythe_bridge/room_mythe_bridge.gd")
 # ---- classes
 
 # nodes ----
@@ -21,6 +23,8 @@ var BerkeleyArms: PRBerkeleyArms : get = get_BerkeleyArms
 var HighSt: PRHighSt : get = get_HighSt
 var Britannia: PRBritannia : get = get_Britannia
 var NottinghamArms: PRNottinghamArms : get = get_NottinghamArms
+var BlackBear: PRBlackBear : get = get_BlackBear
+var MytheBridge: PRMytheBridge : get = get_MytheBridge
 # ---- nodes
 
 # functions ----
@@ -32,5 +36,7 @@ func get_BerkeleyArms() -> PRBerkeleyArms: return get_runtime_room("BerkeleyArms
 func get_HighSt() -> PRHighSt: return get_runtime_room("HighSt")
 func get_Britannia() -> PRBritannia: return get_runtime_room("Britannia")
 func get_NottinghamArms() -> PRNottinghamArms: return get_runtime_room("NottinghamArms")
+func get_BlackBear() -> PRBlackBear: return get_runtime_room("BlackBear")
+func get_MytheBridge() -> PRMytheBridge: return get_runtime_room("MytheBridge")
 # ---- functions
 

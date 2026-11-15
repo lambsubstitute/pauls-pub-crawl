@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://rbyogl1gasou"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/ursula/hotspot_ursula.gd" id="1_63wfb"]
+
+[node name="Ursula" type="Area2D" unique_id=1105435396]
+script = ExtResource("1_63wfb")
+script_name = "Ursula"
+description = "Ursula"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=11793612]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

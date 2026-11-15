@@ -36,6 +36,11 @@ ROOM_FX = {
     "britannia": {"accents": [(40, 180, 230), (240, 210, 40), (60, 200, 90), (255, 190, 70)]},
     # baize green, jukebox pink + amber, ball red/yellow, brass, night-window blue
     "nottingham_arms": {"accents": [(30, 150, 70), (236, 70, 150), (255, 170, 50), (200, 30, 24), (120, 150, 230)]},
+    # Black Bear: dartboard red/green, baize, night window blue, brass and fire
+    "black_bear": {"accents": [(190, 30, 24), (30, 140, 60), (110, 140, 230), (255, 190, 70), (236, 222, 180)]},
+    # the Mythe bridge at night: moon glints, toll-house window, cold iron
+    "mythe_bridge": {"stars": 90, "sky_rows": 60, "moon": (64, 14, 7),
+                     "accents": [(255, 180, 70), (200, 210, 240), (90, 110, 170)]},
     "cross_house_tavern": {"accents": [(70, 140, 255), (40, 70, 170), (70, 220, 100), (170, 35, 30), (255, 190, 70)]},
 }
 

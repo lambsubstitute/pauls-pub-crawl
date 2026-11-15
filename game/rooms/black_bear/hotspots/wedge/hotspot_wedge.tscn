@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://sdk12eiyhfdv"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/wedge/hotspot_wedge.gd" id="1_a23nw"]
+
+[node name="Wedge" type="Area2D" unique_id=2059825180]
+script = ExtResource("1_a23nw")
+script_name = "Wedge"
+description = "Wedge"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1302560771]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

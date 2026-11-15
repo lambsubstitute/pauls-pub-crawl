@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://p54axxss33gx"]
+
+[ext_resource type="Script" path="res://game/characters/bernie/character_bernie.gd" id="1_rd6ck"]
+[ext_resource type="Texture2D" path="res://game/characters/bernie/bernie_46.png" id="9_bernietex"]
+
+[node name="CharacterBernie" type="Area2D" unique_id=1541927261]
+script = ExtResource("1_rd6ck")
+script_name = "Bernie"
+description = "Bernie"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/bernie/bernie"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=110030878]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1859421433]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=588481785]
+texture = ExtResource("9_bernietex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=691354107]
+visible = false
+polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=2075809446]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

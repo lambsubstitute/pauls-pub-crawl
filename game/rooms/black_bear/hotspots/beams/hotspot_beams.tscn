@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cyvjjqip3tw0j"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/beams/hotspot_beams.gd" id="1_jm6ek"]
+
+[node name="Beams" type="Area2D" unique_id=486790771]
+script = ExtResource("1_jm6ek")
+script_name = "Beams"
+description = "Beams"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1203494786]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

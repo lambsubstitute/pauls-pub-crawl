@@ -51,6 +51,15 @@ var cue_given := false        # handed the house cue to Gaz, so he'll play
 var pool_won := false
 var pool_best := 0            # most balls Paul has potted in one match
 var nottingham_halves := 0    # halves Jackie has pulled for Paul
+# Ye Olde Black Bear (the finale)
+var ursula_moved := false     # a hiccup woke Ursula and she moved off the table wedge
+var wedge_taken := false      # picked the wedge up off the hearth rug
+var table_level := false      # the wedge is under the pool table's short leg
+var bernie_met := false       # Bernie has explained the Black Bear double
+var finale_won := false       # beat Bernie, the pub champion
+var finale_matches := 0       # matches played against Bernie
+var black_bear_halves := 0    # halves Rosie has pulled for Paul
+var ending_seen := false      # watched the ending on the Mythe bridge
 
 var _t := 0.0
 var _hud: CanvasLayer
@@ -83,6 +92,12 @@ func drink(amount := 15) -> void:
 ## Water, chips, fresh air: the other way down the drunk table.
 func sober(amount := 25) -> void:
 	drunk -= amount
+
+
+## Merry Paul has the hiccups (a sober Paul can't do one on purpose). In the Black Bear they are
+## the only thing that wakes Ursula the dog; water cures them along with the wobble.
+func has_hiccups() -> bool:
+	return drunk >= WOBBLY
 
 
 ## How far things wobble right now, in pixels. Mini-games use this too.

@@ -124,9 +124,30 @@ CHARS = {
         "build": 1.04, "hair_style": "bald", "beard": False, "apron": False, "collar": (226, 222, 208),
         "tache": True, "glasses": True, "stature": 0.93,
     },
+    # Ye Olde Black Bear: Bernie "the Bear", the pub champion (a big gentle man, dark beard, black
+    # darts shirt with a gold collar), and Rosie the landlady (silver bun, glasses, plum cardigan,
+    # cream apron)
+    "bernie": {
+        "skin": (226, 170, 136), "skin_d": (184, 122, 96),
+        "hair": (46, 34, 30), "hair_d": (26, 18, 16),
+        "top": (34, 32, 38), "top_d": (18, 16, 22),
+        "legs": (52, 56, 74), "legs_d": (32, 34, 48),
+        "shoe": (26, 20, 18), "shoe_d": (14, 10, 10),
+        "build": 1.24, "hair_style": "short", "beard": True, "apron": False, "collar": (230, 176, 60),
+    },
+    "rosie": {
+        "skin": (238, 192, 164), "skin_d": (198, 144, 118),
+        "hair": (214, 210, 214), "hair_d": (156, 152, 160),
+        "top": (112, 44, 84), "top_d": (72, 24, 52),
+        "legs": (44, 40, 50), "legs_d": (26, 22, 30),
+        "shoe": (40, 26, 24), "shoe_d": (24, 14, 14),
+        "build": 1.0, "hair_style": "bun", "beard": False, "apron": (226, 214, 188), "apron_d": (176, 162, 136),
+        "collar": (240, 236, 226), "glasses": True, "stature": 0.95,
+    },
 }
 SIZES = {"paul": (30, 46), "landlord": (30, 46), "barmaid": (30, 46), "reg": (30, 46),
-         "clive": (30, 46), "dot": (30, 46), "gwen": (30, 46), "stan": (30, 46), "jackie": (30, 46), "gaz": (30, 46), "norman": (30, 46)}
+         "clive": (30, 46), "dot": (30, 46), "gwen": (30, 46), "stan": (30, 46), "jackie": (30, 46), "gaz": (30, 46), "norman": (30, 46),
+         "bernie": (30, 46), "rosie": (30, 46)}
 
 
 def poly(d, pts, fill, s, ox, oy):
@@ -563,3 +584,96 @@ if __name__ == "__main__":
     for k, im in cue_icons().items():
         outline(im).save(ROOT / "game" / "inventory_items" / k / f"{k}.png")
     print("wrote Nottingham Arms props and cue/rest icons")
+
+
+# ------------------------------------------------------- Ye Olde Black Bear ----
+def ursula_sprite(asleep=True):
+    """Ursula, the Black Bear's Newfoundland: a big, black, shaggy dog lying down, facing right.
+    Asleep: head down on her paws, eyes shut. Awake: head up, one eye open, tongue out."""
+    w, h = 30, 15
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    fur, fur_l, fur_d = (34, 30, 36, 255), (70, 64, 76, 255), (16, 14, 18, 255)
+    d.ellipse([1, 4, 23, 14], fill=fur)                    # body
+    d.ellipse([3, 5, 15, 10], fill=fur_l)                  # moonlit back
+    d.ellipse([0, 8, 6, 14], fill=fur)                     # haunch
+    d.line([0, 12, 0, 9], fill=fur_d)                      # tail tuft
+    for x in range(3, 22, 3):                              # shaggy edge
+        d.point((x, 4 + (x % 2)), fill=fur_l)
+    if asleep:
+        d.ellipse([18, 7, 29, 14], fill=fur)               # head down on the paws
+        d.ellipse([20, 6, 25, 10], fill=fur_d)             # ear
+        d.line([24, 10, 26, 10], fill=(110, 100, 110, 255))  # shut eye
+        d.rectangle([27, 11, 28, 12], fill=fur_d)          # nose
+        d.rectangle([18, 13, 27, 14], fill=fur_d)          # paws
+    else:
+        d.ellipse([18, 1, 29, 10], fill=fur)               # head up
+        d.ellipse([19, 2, 24, 8], fill=fur_d)              # ear
+        d.point((25, 4), fill=(236, 230, 210, 255))        # eye
+        d.rectangle([27, 6, 28, 7], fill=fur_d)            # nose
+        d.point((27, 9), fill=(214, 90, 110, 255))         # tongue
+        d.rectangle([18, 13, 27, 14], fill=fur_d)
+    return outline(img)
+
+
+def wedge_sprite():
+    """The Black Bear's oak table wedge: a chunky little wooden doorstop shape, chewed at one end."""
+    img = Image.new("RGBA", (9, 5), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.polygon([(0, 4), (8, 4), (8, 0)], fill=(176, 120, 64, 255))
+    d.line([2, 4, 8, 1], fill=(214, 160, 96, 255))
+    d.point((8, 0), fill=(120, 76, 40, 255))
+    return outline(img)
+
+
+def wedge_icon():
+    icon = Image.new("RGBA", (24, 16), (0, 0, 0, 0))
+    d = ImageDraw.Draw(icon)
+    d.polygon([(3, 12), (20, 12), (20, 4)], fill=(176, 120, 64, 255))
+    d.polygon([(3, 12), (20, 12), (20, 10)], fill=(130, 84, 44, 255))
+    d.line([7, 11, 19, 6], fill=(214, 160, 96, 255))
+    for x in (19, 20):                                     # tooth marks
+        d.point((x, 5), fill=(90, 56, 30, 255))
+    return outline(icon)
+
+
+def car_sprite():
+    """Paul's lift home, seen side-on from across the river: a little car with its lights on,
+    facing right (it drives along the Mythe bridge towards Tewkesbury)."""
+    img = Image.new("RGBA", (16, 7), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    body, glass = (150, 40, 40, 255), (120, 150, 200, 255)
+    d.rectangle([0, 3, 15, 5], fill=body)
+    d.polygon([(3, 3), (5, 0), (11, 0), (13, 3)], fill=body)
+    d.polygon([(5, 2), (6, 1), (10, 1), (11, 2)], fill=glass)
+    d.ellipse([2, 4, 5, 6], fill=(20, 20, 20, 255))
+    d.ellipse([10, 4, 13, 6], fill=(20, 20, 20, 255))
+    d.point((15, 3), fill=(255, 240, 180, 255))            # headlight
+    d.point((0, 3), fill=(230, 40, 30, 255))               # tail light
+    return img
+
+
+def headlight_beam():
+    """A soft cone of headlight thrown ahead of the car."""
+    img = Image.new("RGBA", (18, 7), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for i in range(18):
+        a = int(150 * (1 - i / 18))
+        d.line([i, 3 - i * 3 // 18, i, 3 + i * 3 // 18], fill=(255, 236, 170, a))
+    return img
+
+
+if __name__ == "__main__":
+    props = ROOT / "game" / "rooms" / "black_bear" / "props"
+    props.mkdir(parents=True, exist_ok=True)
+    ursula_sprite(True).save(props / "ursula_asleep.png")
+    ursula_sprite(False).save(props / "ursula_awake.png")
+    wedge_sprite().save(props / "wedge.png")
+    wi = ROOT / "game" / "inventory_items" / "wedge"
+    if wi.exists():
+        wedge_icon().save(wi / "wedge.png")
+    mb = ROOT / "game" / "rooms" / "mythe_bridge" / "props"
+    mb.mkdir(parents=True, exist_ok=True)
+    car_sprite().save(mb / "car.png")
+    headlight_beam().save(mb / "headlights.png")
+    print("wrote Black Bear props (Ursula, wedge), wedge icon and the Mythe bridge car")

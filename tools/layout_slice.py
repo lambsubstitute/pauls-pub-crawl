@@ -78,8 +78,23 @@ ROOMS = {
         "LeagueBoard": {},
         "npcs": {},
     },
+    # the finale: Ursula the dog and the table wedge are sprites over the background (see
+    # black_bear_props); the pool table is behind the walk band, so no hole
+    "black_bear": {
+        "Floor": {"poly": rect(4, 124, 316, 147)},
+        "Bar": {}, "Pumps": {}, "WaterJug": {}, "ExitDoor": {"desc_override": "Door to High Street"},
+        "Beams": {}, "Window": {}, "Fireplace": {}, "Ursula": {}, "Wedge": {}, "HonoursBoard": {},
+        "Dartboard": {}, "PoolTable": {},
+        "npcs": {},
+    },
+    # the ending: the bridge and river are polygons from the render (JSON "polys")
+    "mythe_bridge": {
+        "Floor": {"poly": rect(4, 121, 316, 148)},
+        "Bridge": {}, "River": {}, "Bench": {}, "Signpost": {}, "ToHighSt": {"desc_override": "Back to town"},
+        "npcs": {},
+    },
 }
-BAR_ROOMS = {"cross_house_tavern", "hop_pole", "berkeley_arms", "britannia", "nottingham_arms"}
+BAR_ROOMS = {"cross_house_tavern", "hop_pole", "berkeley_arms", "britannia", "nottingham_arms", "black_bear"}
 
 import json
 
@@ -96,6 +111,8 @@ DESC = {
     "Clock": "Grandfather clock", "ShoveBoard": "Shove ha'penny board", "Window": "Window",
     "CueRack": "Cue rack", "PoolTable": "Pool table", "PoolRest": "Pool rest", "Jukebox": "Jukebox",
     "CueShaft": "Cue shaft", "LeagueBoard": "League board",
+    "Beams": "Low beam", "Ursula": "Big black dog", "Wedge": "Wooden wedge", "HonoursBoard": "Honours board",
+    "Bridge": "Mythe Bridge", "River": "River Severn", "Signpost": "Fingerpost",
 }
 
 
@@ -118,13 +135,18 @@ def from_render(room, fallback):
                 spec[name] = fallback[name]
             continue
         x0, y0, x1, y1 = d["hotspots"][name]
+        poly = d.get("polys", {}).get(name)
+        if poly:  # a real outline (the Mythe bridge's arch), clamped to the game area
+            poly = [(round(min(320, max(0, x))), round(min(150, max(0, y)))) for x, y in poly]
+            x0, x1 = min(p[0] for p in poly), max(p[0] for p in poly)
+            y0, y1 = min(p[1] for p in poly), max(p[1] for p in poly)
         wx, wy = d["walk_points"].get(name, ((x0 + x1) / 2, y1 + 4))
         wx = min(x1, max(x0, wx))  # perspective can push floor points past the object's own width
         if name == "Bar":
             y0 = max(y0, y1 - 18)  # counter front only, so the landlord behind it stays clickable
         wy = min(146, max(spec["Floor"]["poly"][0][1] + 2, wy))
         desc = fallback[name].get("desc_override") or DESC.get(name, name)
-        spec[name] = {"poly": rect(x0, y0, x1, y1), "walk": (round(wx), round(wy)), "desc": desc,
+        spec[name] = {"poly": poly or rect(x0, y0, x1, y1), "walk": (round(wx), round(wy)), "desc": desc,
                       "baseline": y1 if name != "Abbey" else 0}
     if "landlord_pos" in d:
         spec["npcs"]["Landlord"] = tuple(round(v) for v in d["landlord_pos"])
@@ -136,6 +158,8 @@ def from_render(room, fallback):
         bx0, bx1, by0 = nx - 12, nx + 12, ny - 48
         for name, h in spec.items():
             if name in ("Floor", "npcs", "_meta", "Bar") or not isinstance(h, dict) or "poly" not in h:
+                continue
+            if len(h["poly"]) != 4:
                 continue
             (x0, y0), _, (x1, y1), _ = h["poly"]
             if x0 < bx1 and x1 > bx0 and y1 > by0:
@@ -153,7 +177,8 @@ def from_render(room, fallback):
 
 
 CHAR_SCENES = {c: f"res://game/characters/{c.lower()}/character_{c.lower()}.tscn"
-               for c in ("Landlord", "Barmaid", "Reg", "Clive", "Dot", "Gwen", "Stan", "Jackie", "Gaz", "Norman")}
+               for c in ("Landlord", "Barmaid", "Reg", "Clive", "Dot", "Gwen", "Stan", "Jackie", "Gaz", "Norman",
+                         "Bernie", "Rosie")}
 
 
 def vec_array(pts):
@@ -269,7 +294,8 @@ def bake_floor(room, poly, holes=()):
 
 def sprite_chars():
     """Point each character at its 46px sprite sheet (10 frames). PixelActor swaps sizes per room."""
-    for c in ("paul", "landlord", "barmaid", "reg", "clive", "dot", "gwen", "stan", "jackie", "gaz", "norman"):
+    for c in ("paul", "landlord", "barmaid", "reg", "clive", "dot", "gwen", "stan", "jackie", "gaz", "norman",
+              "bernie", "rosie"):
         p = ROOT / f"game/characters/{c}/character_{c}.tscn"
         t = p.read_text()
         if f'id="9_{c}tex"' not in t:
@@ -431,6 +457,42 @@ def pickup_sprites(room, spec):
     print("pickup sprites")
 
 
+def black_bear_props(room, spec):
+    """Ye Olde Black Bear: Ursula asleep on the hearth (the room script swaps her texture and
+    moves her to the window once a hiccup wakes her) and the table wedge she was lying on (moved
+    under the pool table's short leg once levelled). Anchors are bottom-centre."""
+    meta = spec.get("_meta", {})
+    if room != "black_bear" or "ursula" not in meta:
+        return
+    from PIL import Image
+    path = ROOT / f"game/rooms/{room}/room_{room}.tscn"
+    text = path.read_text()
+    for node, key, png in (("Ursula", "ursula", "ursula_asleep.png"), ("WedgeProp", "wedge", "wedge.png")):
+        im = Image.open(ROOT / f"game/rooms/{room}/props/{png}")
+        x, y = (round(v) for v in meta[key])
+        text = _prop_sprite(text, room, node, png, (x, y), (-(im.width // 2), -im.height))
+    path.write_text(text)
+    print("black bear props")
+
+
+def mythe_props(room, spec):
+    """The Mythe bridge ending: Paul's lift home and its headlights, hidden until the ending
+    drives them along the deck (the room script tweens them from deck_far to deck_near)."""
+    meta = spec.get("_meta", {})
+    if room != "mythe_bridge" or "deck_far" not in meta:
+        return
+    path = ROOT / f"game/rooms/{room}/room_{room}.tscn"
+    text = path.read_text()
+    x, y = (round(v) for v in meta["deck_far"])
+    text = _prop_sprite(text, room, "Headlights", "headlights.png", (x, y), (16, -6))
+    text = _prop_sprite(text, room, "Car", "car.png", (x, y), (0, -7))
+    for node in ("Car", "Headlights"):
+        text = text.replace('[node name="%s" type="Sprite2D" parent="Props"]\n' % node,
+                            '[node name="%s" type="Sprite2D" parent="Props"]\nvisible = false\n' % node)
+    path.write_text(text)
+    print("mythe props")
+
+
 def bar_front(room, spec):
     """Cut the bar counter out of the background as a y-sorted sprite, so the landlord stands
     behind it and Paul in front of it."""
@@ -459,7 +521,8 @@ def bar_front(room, spec):
 
 
 def item_icons():
-    for k in ("coin", "pint", "crawl_card", "skittle_pin", "darts", "halfpenny", "cue_butt", "cue_shaft", "house_cue", "pool_rest"):
+    for k in ("coin", "pint", "crawl_card", "skittle_pin", "darts", "halfpenny", "cue_butt", "cue_shaft", "house_cue", "pool_rest",
+              "wedge"):
         p = ROOT / f"game/inventory_items/{k}/inventory_item_{k}.tscn"
         t = p.read_text()
         if "texture = " in t:
@@ -484,5 +547,7 @@ if __name__ == "__main__":
         magic_eye_sprites(r, s)
         table_cutout(r, s)
         pickup_sprites(r, s)
+        black_bear_props(r, s)
+        mythe_props(r, s)
     sprite_chars()
     item_icons()

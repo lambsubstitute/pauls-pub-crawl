@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://qmsdywalwj17"]
+
+[ext_resource type="Script" path="res://game/characters/rosie/character_rosie.gd" id="1_qa0c2"]
+[ext_resource type="Texture2D" path="res://game/characters/rosie/rosie_46.png" id="9_rosietex"]
+
+[node name="CharacterRosie" type="Area2D" unique_id=603065775]
+script = ExtResource("1_qa0c2")
+script_name = "Rosie"
+description = "Rosie"
+cursor = 8
+flips_when = 2
+sheet_base = "res://game/characters/rosie/rosie"
+interaction_polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ScalingPolygon" type="CollisionPolygon2D" parent="." unique_id=1035455275]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=903333913]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1069302910]
+texture = ExtResource("9_rosietex")
+hframes = 10
+offset = Vector2(0, -23)
+texture_filter = 1
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1546403023]
+visible = false
+polygon = PackedVector2Array(-10, -46, 10, -46, 10, 0, -10, 0)
+
+[node name="ObstaclePolygon" type="NavigationObstacle2D" parent="." unique_id=2128534894]
+visible = false
+affect_navigation_mesh = true
+carve_navigation_mesh = true

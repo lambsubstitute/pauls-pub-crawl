@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://t03ydc6sooi4"]
+
+[ext_resource type="Script" path="res://game/rooms/mythe_bridge/hotspots/bench/hotspot_bench.gd" id="1_gopp4"]
+
+[node name="Bench" type="Area2D" unique_id=1776601482]
+script = ExtResource("1_gopp4")
+script_name = "Bench"
+description = "Bench"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=362166590]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

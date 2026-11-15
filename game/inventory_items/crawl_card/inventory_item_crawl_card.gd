@@ -13,6 +13,8 @@ func on_look_at() -> void:
 	await C.player.say("Paul's Pub Crawl card. %d of 6 stamped." % Globals.stamps)
 	if Globals.stamps < 6:
 		await C.player.say("Next up: %s." % Globals.PUBS[Globals.stamps])
+	else:
+		await C.player.say("Full house! Signed by the champion of the Black Bear. Me.")
 
 
 

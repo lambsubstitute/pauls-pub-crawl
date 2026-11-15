@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c3cswcmh88g72"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/pool_table/hotspot_pool_table.gd" id="1_dc05i"]
+
+[node name="PoolTable" type="Area2D" unique_id=155946179]
+script = ExtResource("1_dc05i")
+script_name = "PoolTable"
+description = "Pool Table"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=143472483]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

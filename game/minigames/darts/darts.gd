@@ -5,6 +5,7 @@ extends CanvasLayer
 ## to throw. Run out of breath and the hand shakes worse than before.
 ##
 ##   var score: int = await Darts.play(get_tree(), dot_score)
+##   var score: int = await Darts.play(get_tree(), bernie_total, "Bernie")   # the finale
 ##
 ## Scoring and the throw itself are static, node-free maths (score_at, drift, simulate_dart,
 ## simulate_match), so tests can drive them headless.
@@ -32,6 +33,7 @@ const OUT_OF_BREATH := 1.6  # held too long: the arm starts to shake
 enum Phase { AIM, FLYING, DONE }
 
 var target := 70
+var opponent := "Dot"
 var score := 0
 var dart := 0
 var phase := Phase.AIM
@@ -47,9 +49,10 @@ var _rng := RandomNumberGenerator.new()
 var _canvas: Control
 
 
-static func play(tree: SceneTree, to_beat := 70) -> int:
+static func play(tree: SceneTree, to_beat := 70, opponent_name := "Dot") -> int:
 	var s = load("res://game/minigames/darts/darts.gd").new()
 	s.target = to_beat
+	s.opponent = opponent_name
 	tree.root.add_child(s)
 	var result: int = await s.finished
 	s.queue_free()
@@ -213,7 +216,7 @@ func _process(delta: float) -> void:
 			_msg = describe(_fly_to) + ("" if pts == 0 or describe(_fly_to).is_valid_int() else "  (%d)" % pts)
 			if dart >= DARTS:
 				phase = Phase.DONE
-				_msg = "%d. %s" % [score, "You beat Dot!" if score > target else "A tie!" if score == target else "Dot wins."]
+				_msg = "%d. %s" % [score, "You beat %s!" % opponent if score > target else "A tie!" if score == target else "%s wins." % opponent]
 			else:
 				phase = Phase.AIM
 	_canvas.queue_redraw()
@@ -304,8 +307,8 @@ func _draw_game() -> void:
 	c.draw_rect(Rect2(233, 139 - bh, 6, bh), Color.from_hsv(lerpf(0.0, 0.55, breath), 0.7, 0.95))
 	_text(c, Vector2(226, 150), "BREATH", Color("b8e0ff"))
 	# score lines
-	_text(c, Vector2(78, 14), "DARTS  vs  DOT", Color("fad278"))
-	_text(c, Vector2(78, 162), "Dart %d/%d   You: %d   Dot: %d" % [mini(dart + 1, DARTS), DARTS, score, target], Color.WHITE)
+	_text(c, Vector2(78, 14), "DARTS  vs  %s" % opponent.to_upper(), Color("fad278"))
+	_text(c, Vector2(78, 162), "Dart %d/%d   You: %d   %s: %d" % [mini(dart + 1, DARTS), DARTS, score, opponent, target], Color.WHITE)
 	var hint := ""
 	match phase:
 		Phase.AIM:

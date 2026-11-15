@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ci7leun0uneyn"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/fireplace/hotspot_fireplace.gd" id="1_3qby3"]
+
+[node name="Fireplace" type="Area2D" unique_id=1534622940]
+script = ExtResource("1_3qby3")
+script_name = "Fireplace"
+description = "Fireplace"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1522770607]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dtcpcgwvo7vlm"]
+
+[ext_resource type="Script" path="res://game/rooms/mythe_bridge/hotspots/river/hotspot_river.gd" id="1_3l44e"]
+
+[node name="River" type="Area2D" unique_id=1944972031]
+script = ExtResource("1_3l44e")
+script_name = "River"
+description = "River"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1073341270]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

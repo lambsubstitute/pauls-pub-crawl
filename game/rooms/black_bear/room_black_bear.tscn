@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://chbtxw7j520ei"]
+
+[ext_resource type="Script" uid="uid://ctyxgvgnusdgm" path="res://game/rooms/black_bear/room_black_bear.gd" id="1_evdtj"]
+[ext_resource type="PackedScene" uid="uid://cgkrovqotkuqv" path="res://game/rooms/black_bear/walkable_areas/floor/walkable_area_floor.tscn" id="2_jsvny"]
+[ext_resource type="PackedScene" uid="uid://cgkvmdggeq56c" path="res://game/rooms/black_bear/hotspots/bar/hotspot_bar.tscn" id="3_aa3ec"]
+[ext_resource type="PackedScene" uid="uid://ccvk5rohie3mb" path="res://game/rooms/black_bear/hotspots/pumps/hotspot_pumps.tscn" id="4_omhsn"]
+[ext_resource type="PackedScene" uid="uid://3i11pfaxebrs" path="res://game/rooms/black_bear/hotspots/water_jug/hotspot_water_jug.tscn" id="5_xd7jc"]
+[ext_resource type="PackedScene" uid="uid://peq5qqfgxc88" path="res://game/rooms/black_bear/hotspots/exit_door/hotspot_exit_door.tscn" id="6_p8w7a"]
+[ext_resource type="PackedScene" uid="uid://cyvjjqip3tw0j" path="res://game/rooms/black_bear/hotspots/beams/hotspot_beams.tscn" id="7_ehjn3"]
+[ext_resource type="PackedScene" uid="uid://biknssut56cwn" path="res://game/rooms/black_bear/hotspots/window/hotspot_window.tscn" id="8_8yslu"]
+[ext_resource type="PackedScene" uid="uid://ci7leun0uneyn" path="res://game/rooms/black_bear/hotspots/fireplace/hotspot_fireplace.tscn" id="9_hwqdq"]
+[ext_resource type="PackedScene" uid="uid://rbyogl1gasou" path="res://game/rooms/black_bear/hotspots/ursula/hotspot_ursula.tscn" id="10_ssa4a"]
+[ext_resource type="PackedScene" uid="uid://sdk12eiyhfdv" path="res://game/rooms/black_bear/hotspots/wedge/hotspot_wedge.tscn" id="11_l73ks"]
+[ext_resource type="PackedScene" uid="uid://ctd2bch15yupv" path="res://game/rooms/black_bear/hotspots/honours_board/hotspot_honours_board.tscn" id="12_nunv8"]
+[ext_resource type="PackedScene" uid="uid://dcpgru42gjn06" path="res://game/rooms/black_bear/hotspots/dartboard/hotspot_dartboard.tscn" id="13_5u54s"]
+[ext_resource type="PackedScene" uid="uid://c3cswcmh88g72" path="res://game/rooms/black_bear/hotspots/pool_table/hotspot_pool_table.tscn" id="14_5tetu"]
+[ext_resource type="Texture2D" path="res://game/rooms/black_bear/props/bg_black_bear.png" id="15_bg"]
+[ext_resource type="PackedScene" path="res://game/characters/rosie/character_rosie.tscn" id="16_rosie"]
+[ext_resource type="PackedScene" path="res://game/characters/bernie/character_bernie.tscn" id="17_bernie"]
+[ext_resource type="Texture2D" path="res://game/rooms/black_bear/props/bar_front.png" id="18_barfront"]
+[ext_resource type="Texture2D" path="res://game/rooms/black_bear/props/ursula_asleep.png" id="19_ursula"]
+[ext_resource type="Texture2D" path="res://game/rooms/black_bear/props/wedge.png" id="20_wedgeprop"]
+
+[node name="RoomBlackBear" type="Node2D" unique_id=876548171]
+script = ExtResource("1_evdtj")
+script_name = "BlackBear"
+width = 320
+height = 200
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+texture = ExtResource("15_bg")
+centered = false
+
+[node name="WalkableAreas" type="Node2D" parent="." unique_id=1325168653]
+
+[node name="Floor" parent="WalkableAreas" unique_id=295495558 instance=ExtResource("2_jsvny")]
+position = Vector2(0, 0)
+interaction_polygon = Array[PackedVector2Array]([PackedVector2Array(4, 124, 316, 124, 316, 147, 4, 147)])
+
+[node name="Props" type="Node2D" parent="." unique_id=1380028099]
+
+[node name="BarFront" type="Sprite2D" parent="Props"]
+position = Vector2(0, 124)
+texture_filter = 1
+texture = ExtResource("18_barfront")
+centered = false
+offset = Vector2(0, -30)
+
+[node name="Ursula" type="Sprite2D" parent="Props"]
+position = Vector2(174, 119)
+texture_filter = 1
+texture = ExtResource("19_ursula")
+centered = false
+offset = Vector2(-15, -15)
+
+[node name="WedgeProp" type="Sprite2D" parent="Props"]
+position = Vector2(182, 118)
+texture_filter = 1
+texture = ExtResource("20_wedgeprop")
+centered = false
+offset = Vector2(-4, -5)
+
+[node name="Hotspots" type="Node2D" parent="." unique_id=1560891878]
+
+[node name="Bar" parent="Hotspots" unique_id=777010952 instance=ExtResource("3_aa3ec")]
+position = Vector2(0, 0)
+description = "Bar"
+baseline = 124
+walk_to_point = Vector2(40, 126)
+interaction_polygon = PackedVector2Array(0, 106, 90, 106, 90, 124, 0, 124)
+
+[node name="Pumps" parent="Hotspots" unique_id=1552429421 instance=ExtResource("4_omhsn")]
+position = Vector2(0, 0)
+description = "Beer pumps"
+baseline = 94
+walk_to_point = Vector2(50, 126)
+interaction_polygon = PackedVector2Array(39, 80, 73, 80, 73, 94, 39, 94)
+
+[node name="WaterJug" parent="Hotspots" unique_id=1851761926 instance=ExtResource("5_xd7jc")]
+position = Vector2(0, 0)
+description = "Water jug"
+baseline = 97
+walk_to_point = Vector2(78, 126)
+interaction_polygon = PackedVector2Array(78, 89, 84, 89, 84, 97, 78, 97)
+
+[node name="ExitDoor" parent="Hotspots" unique_id=523101805 instance=ExtResource("6_p8w7a")]
+position = Vector2(0, 0)
+description = "Door to High Street"
+baseline = 116
+walk_to_point = Vector2(100, 126)
+interaction_polygon = PackedVector2Array(100, 79, 120, 79, 120, 116, 100, 116)
+
+[node name="Beams" parent="Hotspots" unique_id=486790771 instance=ExtResource("7_ehjn3")]
+position = Vector2(0, 0)
+description = "Low beam"
+baseline = 74
+walk_to_point = Vector2(96, 126)
+interaction_polygon = PackedVector2Array(84, 67, 111, 67, 111, 74, 84, 74)
+
+[node name="Window" parent="Hotspots" unique_id=1267560109 instance=ExtResource("8_8yslu")]
+position = Vector2(0, 0)
+description = "Window"
+baseline = 96
+walk_to_point = Vector2(128, 126)
+interaction_polygon = PackedVector2Array(125, 82, 143, 82, 143, 96, 125, 96)
+
+[node name="Fireplace" parent="Hotspots" unique_id=1534622940 instance=ExtResource("9_hwqdq")]
+position = Vector2(0, 0)
+description = "Inglenook"
+baseline = 116
+walk_to_point = Vector2(165, 126)
+interaction_polygon = PackedVector2Array(141, 79, 202, 79, 202, 116, 141, 116)
+
+[node name="Ursula" parent="Hotspots" unique_id=1105435396 instance=ExtResource("10_ssa4a")]
+position = Vector2(0, 0)
+description = "Big black dog"
+baseline = 119
+walk_to_point = Vector2(164, 126)
+interaction_polygon = PackedVector2Array(160, 104, 187, 104, 187, 119, 160, 119)
+
+[node name="Wedge" parent="Hotspots" unique_id=2059825180 instance=ExtResource("11_l73ks")]
+position = Vector2(0, 0)
+description = "Wooden wedge"
+baseline = 119
+walk_to_point = Vector2(185, 126)
+interaction_polygon = PackedVector2Array(176, 113, 186, 113, 186, 119, 176, 119)
+
+[node name="HonoursBoard" parent="Hotspots" unique_id=789673867 instance=ExtResource("12_nunv8")]
+position = Vector2(0, 0)
+description = "Honours board"
+baseline = 87
+walk_to_point = Vector2(217, 126)
+interaction_polygon = PackedVector2Array(199, 72, 217, 72, 217, 87, 199, 87)
+
+[node name="Dartboard" parent="Hotspots" unique_id=3916085 instance=ExtResource("13_5u54s")]
+position = Vector2(0, 0)
+description = "Dartboard"
+baseline = 90
+walk_to_point = Vector2(237, 126)
+interaction_polygon = PackedVector2Array(220, 73, 237, 73, 237, 90, 220, 90)
+
+[node name="PoolTable" parent="Hotspots" unique_id=155946179 instance=ExtResource("14_5tetu")]
+position = Vector2(0, 0)
+description = "Pool table"
+baseline = 121
+walk_to_point = Vector2(282, 126)
+interaction_polygon = PackedVector2Array(282, 97, 312, 97, 312, 121, 282, 121)
+
+[node name="Regions" type="Node2D" parent="." unique_id=1540552904]
+
+[node name="Markers" type="Node2D" parent="." unique_id=1718119935]
+
+[node name="Characters" type="Node2D" parent="." unique_id=1318861802]
+
+[node name="CharacterRosie" parent="Characters" instance=ExtResource("16_rosie")]
+position = Vector2(27, 119)
+
+[node name="CharacterBernie" parent="Characters" instance=ExtResource("17_bernie")]
+position = Vector2(270, 126)

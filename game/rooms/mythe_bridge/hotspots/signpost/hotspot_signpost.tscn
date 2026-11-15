@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c6mxu8rpg5g5u"]
+
+[ext_resource type="Script" path="res://game/rooms/mythe_bridge/hotspots/signpost/hotspot_signpost.gd" id="1_310i5"]
+
+[node name="Signpost" type="Area2D" unique_id=1512294784]
+script = ExtResource("1_310i5")
+script_name = "Signpost"
+description = "Signpost"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=547437750]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

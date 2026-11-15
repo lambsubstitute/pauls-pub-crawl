@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dcpgru42gjn06"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/dartboard/hotspot_dartboard.gd" id="1_o1g5k"]
+
+[node name="Dartboard" type="Area2D" unique_id=3916085]
+script = ExtResource("1_o1g5k")
+script_name = "Dartboard"
+description = "Dartboard"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1912981707]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

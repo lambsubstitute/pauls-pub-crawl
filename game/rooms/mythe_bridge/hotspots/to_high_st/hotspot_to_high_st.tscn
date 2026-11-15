@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://k2x3axdc5x1b"]
+
+[ext_resource type="Script" path="res://game/rooms/mythe_bridge/hotspots/to_high_st/hotspot_to_high_st.gd" id="1_a6rqb"]
+
+[node name="ToHighSt" type="Area2D" unique_id=1202035787]
+script = ExtResource("1_a6rqb")
+script_name = "ToHighSt"
+description = "To High St"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1342061150]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)

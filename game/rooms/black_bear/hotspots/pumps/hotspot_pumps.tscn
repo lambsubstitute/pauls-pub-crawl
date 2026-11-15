@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ccvk5rohie3mb"]
+
+[ext_resource type="Script" path="res://game/rooms/black_bear/hotspots/pumps/hotspot_pumps.gd" id="1_qkxg5"]
+
+[node name="Pumps" type="Area2D" unique_id=1552429421]
+script = ExtResource("1_qkxg5")
+script_name = "Pumps"
+description = "Pumps"
+cursor = 1
+interaction_polygon = PackedVector2Array()
+
+[node name="InteractionPolygon" type="CollisionPolygon2D" parent="." unique_id=1687404027]
+visible = false
+modulate = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
