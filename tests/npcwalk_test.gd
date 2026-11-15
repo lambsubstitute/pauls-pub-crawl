@@ -39,4 +39,8 @@ func _ready() -> void:
 	print("[test] ", await _walk_to_npc(C.Jackie))
 	print("[test] ", await _walk_to_npc(C.Gaz))
 	print("[test] ", await _walk_to_npc(C.Norman))
+	R.goto_room("BlackBear")
+	await get_tree().create_timer(3.0).timeout
+	print("[test] ", await _walk_to_npc(C.Rosie))
+	print("[test] ", await _walk_to_npc(C.Bernie))
 	get_tree().quit()

@@ -30,15 +30,25 @@ the Mythe end.
 | 3 | Berkeley Arms | 8 Church St | Darts | Darts intro, drunk meter matters: house darts stuck in the beam over the oche -> get merry (a pint, or Clive's free halves) and wobble into the oak post to shake them down -> give them to Dot -> beat her 70 with three darts (drink widens the aim wobble, water sobers) -> Clive stamps |
 | 4 | Britannia Inn | 30 High St | Shove ha'penny | Double-vision puzzle: Stan won't play, the house set is one ha'penny short -> Gwen says old Ernie hid the fifth and left the clue in his Magic Eye picture -> seeing double (60+: Gwen's free halves, she stops at 60) a ghost copy of the picture floats beside it, and only in the copy does the hidden clock-with-a-coin show -> open the long-case clock (works sober once seen) -> give the ha'penny to Stan -> beat his 20 with five coins (drink jitters the power, tilts the table and doubles the board; water sobers) -> Gwen stamps. A win before stamp 3 is stamped on return |
 | 5 | Nottingham Arms | 129 High St | Pool | Hardest mid-game puzzle: Gaz (league champ) plays anyone with a proper cue, but the house cue is in halves -> take the butt from the rack -> get merry (Jackie's free halves) so Paul laughs at Norman's Severn Bore story (sober Paul asks sensible questions and Norman sulks) -> take the pool rest off the wall and give it to Norman, a longer jukebox poker, for the cue shaft -> screw shaft + butt together -> give the house cue to Gaz and win a race to 3 (drink wobbles the aim, shortens the guide, jitters the power; water sobers) -> Jackie stamps (a win before stamp 4 is stamped on the next visit) |
-| 6 | Ye Olde Black Bear | 68 High St | Darts + pool rematch | Finale vs the pub champion |
+| 6 | Ye Olde Black Bear | 68 High St | Darts + pool rematch | Finale: Bernie "the Bear" (darts and pool champion since 1999) only plays a full card (5 stamps), and never on a leaning table: the pool table's wedge is missing -> Rosie says Ursula, her huge Newfoundland asleep by the fire, sleeps on it and only ever wakes for a hiccup -> get merry (30+: Rosie's free halves, she stops at 60) and Paul has the hiccups -> hiccup at Ursula, she gets up to check on him and flops down under the window -> take the wedge, put it under the short leg (or give it to Bernie; works before stamp 5 and is remembered) -> the Black Bear double: a darts leg (beat Bernie's three darts, ties rethrown), a pool leg (race to 3, difficulty 0.8), and a darts decider at one all (sober ~60% per leg, ~63% the match; drunk at 80 under 10% a leg; water sobers and cures the hiccups) -> lose and play again any time; win: Rosie stamps 6/6, the pub cheers, *time please*, and Paul walks out to the Mythe bridge for the ending |
 
 Fallbacks if any close: Anchor 1774 (42 High St), New Plough (85 Barton St).
 
 Street scenes between pubs: Abbey gates, Church St, the Cross, High St,
 riverside / Mill Avon, Mythe bridge (ending).
 Built so far: Church St (Cross House, Hop Pole; walk off the right edge towards the Cross),
-the Cross (Berkeley Arms; High St off the right edge) and High St (Britannia,
-Nottingham Arms; the Black Bear at the far right is a stub door with a spawn waiting for its room).
+the Cross (Berkeley Arms; High St off the right edge), High St (Britannia, Nottingham Arms and
+Ye Olde Black Bear at the far right) and the Mythe bridge (the ending).
+
+## Ending
+Winning at the Black Bear sends Paul out to the Mythe bridge (Telford's iron arch over the Severn
+at night). He looks back on the night; sober or merry he walks home along the river, but if he's
+seeing double (60+) Rosie has rung his family and his lift comes over the bridge to collect the
+champion. Then THE END / credits ("Paul's Pub Crawl - Made for Paul", the pubs and their
+regulars) with "Keep exploring" (back on the riverside path; the path leads back to High St's
+Mythe end, every pub stays open, the bench rolls the credits again) or "Start again" (reloads the
+game). Nothing about the ending glamorises drink: the last line of the credits is that Paul
+always has a glass of water between halves.
 
 ## Controls / UI
 - 320×200 game area, integer-scaled. Bottom panel: verb grid + inventory.
@@ -50,8 +60,8 @@ Nottingham Arms; the Black Bear at the far right is a stub door with a spawn wai
 | Level | Effect |
 |-------|--------|
 | 0–30 | Clean controls |
-| 30–60 | Cursor drift, slight screen sway |
-| 60–80 | Double vision on targets, input lag, hiccups interrupt |
+| 30–60 | Cursor drift, slight screen sway, hiccups |
+| 60–80 | Double vision on targets, input lag |
 | 80–95 | Heavy wobble, slurred lines, odd dialogue options |
 | 95+ | "Paul has a sit down" — wakes on a bench, lost time, meter reset to 60 |
 
@@ -62,6 +72,8 @@ No hard fail state — family friendly; overdoing it costs time, not the game.
 - **Double vision:** some hotspots only exist in the ghost image (60+).
 - **Wobble physics:** Paul sways into a shelf, knocks down an item out of reach.
 - **Tipsy logic:** certain locals only chat to a merry Paul; extra dialogue options.
+- **Hiccups:** from 30 Paul has the hiccups (water cures them); Ursula, the Black Bear's dog, wakes
+  for nothing else.
 - **Sobering up:** chips shop, water at the bar, a riverside walk.
 
 ## Mini-games

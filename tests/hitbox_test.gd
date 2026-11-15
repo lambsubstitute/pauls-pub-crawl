@@ -30,4 +30,8 @@ func _ready() -> void:
 	_check(C.Jackie)
 	_check(C.Gaz)
 	_check(C.Norman)
+	R.goto_room("BlackBear")
+	await get_tree().create_timer(3.0).timeout
+	_check(C.Rosie)
+	_check(C.Bernie)
 	get_tree().quit()
